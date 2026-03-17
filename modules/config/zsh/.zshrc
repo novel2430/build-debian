@@ -1,0 +1,84 @@
+autoload -U compinit && compinit
+source $HOME/.zsh-scripts/zsh-autosuggestions/zsh-autosuggestions.zsh
+ZSH_AUTOSUGGEST_STRATEGY=(history)
+
+
+# History options should be set in .zshrc and after oh-my-zsh sourcing.
+# See https://github.com/nix-community/home-manager/issues/177.
+HISTSIZE="10000"
+SAVEHIST="10000"
+
+HISTFILE="/home/novel2430/.zsh_history"
+mkdir -p "$(dirname "$HISTFILE")"
+
+setopt HIST_FCNTL_LOCK
+
+# Enabled history options
+enabled_opts=(
+  HIST_IGNORE_DUPS HIST_IGNORE_SPACE SHARE_HISTORY autocd
+)
+for opt in "${enabled_opts[@]}"; do
+  setopt "$opt"
+done
+unset opt enabled_opts
+
+# Disabled history options
+disabled_opts=(
+  APPEND_HISTORY EXTENDED_HISTORY HIST_EXPIRE_DUPS_FIRST HIST_FIND_NO_DUPS
+  HIST_IGNORE_ALL_DUPS HIST_SAVE_NO_DUPS
+)
+for opt in "${disabled_opts[@]}"; do
+  unsetopt "$opt"
+done
+unset opt disabled_opts
+
+[ -f "$HOME/.private_env" ] && source "$HOME/.private_env"
+
+setopt hist_verify
+setopt NO_BEEP
+setopt HIST_IGNORE_ALL_DUPS
+setopt no_nomatch
+
+bindkey '^?' backward-delete-char
+bindkey '^[[3~' delete-char
+bindkey '^L' clear-screen
+
+
+zstyle ":completion:*" menu select
+zstyle ":completion:*" special-dirs true
+zstyle ":completion:*" list-colors ${(s.:.)LS_COLORS} 
+
+autoload -Uz vcs_info
+
+preexec() {
+  print -Pn "\e]0;$1\a"
+}
+precmd() { 
+  vcs_info 
+  print -Pn "\e]0;%n@%m:%~\a"
+  
+}
+setopt prompt_subst
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' stagedstr '%F{green}+%f'
+zstyle ':vcs_info:git:*' unstagedstr '%F{yellow}!%f'
+zstyle ':vcs_info:git:*' formats '(%F{red}%b%f)%u%c '
+
+export PROMPT='%B%F{blue}[%n:%F{green}%~%F{blue}]$%f%b ${vcs_info_msg_0_}'
+source $HOME/.zsh-scripts/zsh-history-substring-search/zsh-history-substring-search.zsh
+bindkey '^P' history-substring-search-up
+bindkey '^N' history-substring-search-down
+bindkey '^[[1;5A' history-substring-search-up
+bindkey '^[[1;5B' history-substring-search-down
+
+source $HOME/.zsh-scripts/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+alias -- gitall='git add . && git commit -m '\''update'\'' && git push'
+alias -- ls='eza --icons auto'
+alias -- neofetch=fastfetch
+alias -- visudo='sudo EDITOR=vim visudo'
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

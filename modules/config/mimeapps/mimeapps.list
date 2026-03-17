@@ -1,0 +1,17 @@
+[Default Applications]
+image/png=com.github.weclaw1.ImageRoll.desktop
+application/pdf=org.gnome.Papers.desktop
+application/zip=org.gnome.FileRoller.desktop
+audio/mpeg=vlc.desktop
+video/mp4=mpv.desktop
+video/x-matroska=mpv.desktop
+audio/vnd.wave=vlc.desktop
+
+[Added Associations]
+image/png=com.github.weclaw1.ImageRoll.desktop;
+application/pdf=org.gnome.Papers.desktop;
+application/zip=org.gnome.FileRoller.desktop;
+audio/mpeg=vlc.desktop;
+video/mp4=mpv.desktop;
+video/x-matroska=mpv.desktop;
+audio/vnd.wave=vlc.desktop;

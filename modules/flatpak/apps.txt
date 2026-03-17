@@ -1,0 +1,26 @@
+# remote app-id
+
+# Base
+flathub org.mozilla.firefox
+flathub app.zen_browser.zen
+flathub com.obsproject.Studio
+flathub com.saivert.pwvucontrol
+flathub com.spotify.Client
+flathub org.gnome.clocks
+flathub com.github.weclaw1.ImageRoll
+
+# Game
+flathub net.lutris.Lutris
+flathub com.valvesoftware.Steam
+flathub org.ppsspp.PPSSPP
+
+# Media
+flathub org.audacityteam.Audacity
+flathub org.shotcut.Shotcut
+flathub be.alexandervanhee.gradia
+flathub org.gnome.Papers
+
+# China
+flathub cn.wps.wps_365
+flathub com.tencent.WeChat
+flathub com.tencent.wemeet

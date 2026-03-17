@@ -1,0 +1,66 @@
+# base
+vim
+curl
+git
+zsh
+tmux
+net-tools
+mesa-utils
+mesa-vulkan-drivers
+vulkan-tools
+libgl1-mesa-dri
+libglx-mesa0
+mesa-vulkan-drivers
+rsync
+
+# utils
+socat
+jq
+zip
+unzip
+ripgrep
+htop
+
+# dev build
+build-essential
+openjdk-21-jdk
+pkg-config
+
+# desktop base
+pipewire
+wireplumber
+xdg-desktop-portal
+xdg-desktop-portal-gtk
+xdg-desktop-portal-wlr
+fcitx5
+fcitx5-chewing
+fcitx5-chinese-addons
+fcitx5-config-qt
+dunst
+wl-clipboard
+cliphist
+swaybg
+network-manager-applet
+dconf-gsettings-backend
+wlr-randr
+wl-mirror
+fonts-wqy-zenhei
+playerctl
+brightnessctl
+
+# desktop
+gnome-themes-extra
+papirus-icon-theme
+nemo
+waybar
+flatpak
+grim
+slurp
+mpv
+vlc
+
+# others
+fastfetch
+tree
+eza
+
