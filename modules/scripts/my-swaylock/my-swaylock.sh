@@ -9,7 +9,8 @@ lock_img="$HOME/.local/share/pics/wallpaper"
 swaylock \
         --ignore-empty-password \
         --image ${lock_img} \
-        --indicator-idle-visible \
+        --clock \
+        --indicator \
         --indicator-radius $indicator_radius \
         --indicator-thickness $indicator_thickness \
         --ring-color $b_color \

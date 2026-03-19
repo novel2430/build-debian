@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-# start-wm $WAYLAND_DISPLAY
+start-wm $WAYLAND_DISPLAY
 # Monitors
 # ${opt-config.wl-monitors-cli}
 # Wallpaper
@@ -24,8 +24,6 @@ systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP DISPLAY 
 dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP DISPLAY XAUTHORITY
 systemctl --user stop pipewire pipewire-pulse wireplumber xdg-desktop-portal xdg-desktop-portal-wlr xdg-desktop-portal-gtk xdg-desktop-portal-gnome
 systemctl --user start pipewire pipewire-pulse wireplumber xdg-desktop-portal xdg-desktop-portal-wlr xdg-desktop-portal-gtk
-# Swayidle
-# my-swayidle &
 # IME
 fcitx5 --replace -d &
 # Blueman-applet
@@ -35,3 +33,9 @@ nm-applet &
 # For Wemeet
 flatpak override --user --env=LD_PRELOAD=/app/lib/wemeet/libhook.so com.tencent.wemeet &
 
+systemctl --user restart idle-lock-guard.service
+
+# wlr-randr settings
+if [ ! -z "${WLR_RANDR_CLI}" ]; then
+  eval "$WLR_RANDR_CLI"
+fi

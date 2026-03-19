@@ -6,8 +6,6 @@ if [ ! -e $HOME/.zshrc ]; then
 	ln -s $SCRIPT_DIR/.zshrc $HOME/.zshrc
 fi
 
-rm $HOME/.profile && ln -s $SCRIPT_DIR/.profile $HOME/.profile
-
 if [ ! -e $HOME/.zprofile ]; then
 	ln -s $SCRIPT_DIR/.zprofile $HOME/.zprofile
 fi

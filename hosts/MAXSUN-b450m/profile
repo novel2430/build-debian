@@ -12,3 +12,6 @@ export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
 export SDL_IM_MODULE=fcitx
 export GLFW_IM_MODULE=ibus
+
+# wlr-randr monitor settings
+export WLR_RANDR_CLI="wlr-randr --output DP-1 --mode 1920x1080@60 --transform 90 --pos 0,0 && wlr-randr --output HDMI-A-1 --mode 1920x1080@60 --transform normal --pos 1080,0"

@@ -1,0 +1,11 @@
+[Unit]
+Description=Idle Lock Guard
+
+[Service]
+ExecStart=/home/novel2430/.local/bin/idle-lock-guard
+Restart=on-failure
+Type=simple
+
+[Install]
+WantedBy=default.target
+

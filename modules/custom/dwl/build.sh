@@ -6,7 +6,7 @@ repo_url="https://github.com/novel2430/DWL.git"
 target_dir="$HOME/src/DWL"
 
 # Dependecy
-sudo apt install build-essential git pkgconf \
+sudo apt install -y build-essential git pkgconf \
   libinput-dev \
   libwayland-dev \
   libxkbcommon-dev \

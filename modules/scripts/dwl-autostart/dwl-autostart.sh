@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-# start-wm $WAYLAND_DISPLAY
+start-wm $WAYLAND_DISPLAY
 # Monitors
 # ${opt-config.wl-monitors-cli}
 # Wallpaper
@@ -12,7 +12,7 @@ wl-paste --watch cliphist store &
 # Bar
 waybar -c $HOME/.config/dwl/waybar.jsonc -s $HOME/.config/dwl/waybar.css &
 # GTK title bar layout
-# ${gsettings} set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
+gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
 # GRT Dark Theme (fix for GTK4)
 gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
 gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
@@ -34,3 +34,9 @@ nm-applet &
 # For Wemeet
 flatpak override --user --env=LD_PRELOAD=/app/lib/wemeet/libhook.so com.tencent.wemeet &
 
+systemctl --user restart idle-lock-guard.service
+
+# wlr-randr settings
+if [ ! -z "${WLR_RANDR_CLI}" ]; then
+  eval "$WLR_RANDR_CLI"
+fi

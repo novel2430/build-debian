@@ -3,6 +3,12 @@
 download_src="/tmp/baidunetdisk_4.17.8_amd64.deb"
 release_dir="/opt/baidunetdisk"
 desktop_file="/usr/share/applications/baidunetdisk.desktop"
+bin_file="/usr/bin/baidunetdisk-bin"
+
+if [[ -e "$bin_file" || -e "$dekstop_file" ]]; then
+  echo "Baidu Netdisk already installed!"
+  exit 0
+fi
 
 if [ ! -e "$download_src" ]; then
 	# Installing

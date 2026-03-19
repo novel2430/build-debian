@@ -13,14 +13,18 @@ flathub com.github.weclaw1.ImageRoll
 flathub net.lutris.Lutris
 flathub com.valvesoftware.Steam
 flathub org.ppsspp.PPSSPP
+flathub org.openttd.OpenTTD
 
 # Media
 flathub org.audacityteam.Audacity
 flathub org.shotcut.Shotcut
 flathub be.alexandervanhee.gradia
 flathub org.gnome.Papers
+flathub io.github.celluloid_player.Celluloid
 
 # China
 flathub cn.wps.wps_365
 flathub com.tencent.WeChat
-flathub com.tencent.wemeet
+
+# New Stuff
+flathub org.gnome.World.Iotas

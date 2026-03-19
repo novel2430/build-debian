@@ -6,7 +6,7 @@ repo_url="https://gitlab.freedesktop.org/wlroots/wlroots.git"
 target_dir="$HOME/src/wlroots"
 
 # Dependecy
-sudo apt install \
+sudo apt install -y \
   meson pkgconf \
   libwayland-dev wayland-protocols \
   libegl1-mesa-dev libgles2-mesa-dev \

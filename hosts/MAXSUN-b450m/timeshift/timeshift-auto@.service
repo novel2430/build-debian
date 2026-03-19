@@ -1,0 +1,8 @@
+[Unit]
+Description=Timeshift %i Snapshot
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/timeshift --create --comments "Automatic Snapshot %i" --tags %i

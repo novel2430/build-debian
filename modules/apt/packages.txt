@@ -12,6 +12,7 @@ libgl1-mesa-dri
 libglx-mesa0
 mesa-vulkan-drivers
 rsync
+timeshift
 
 # utils
 socat
@@ -36,31 +37,43 @@ fcitx5
 fcitx5-chewing
 fcitx5-chinese-addons
 fcitx5-config-qt
+network-manager-applet
+dconf-gsettings-backend
+fonts-wqy-zenhei
+gnome-themes-extra
+papirus-icon-theme
+fonts-noto-color-emoji
+
+# desktop cli
+playerctl
+brightnessctl
+maim
+wlr-randr
+wl-mirror
 dunst
 wl-clipboard
 cliphist
 swaybg
-network-manager-applet
-dconf-gsettings-backend
-wlr-randr
-wl-mirror
-fonts-wqy-zenhei
-playerctl
-brightnessctl
-
-# desktop
-gnome-themes-extra
-papirus-icon-theme
-nemo
-waybar
-flatpak
 grim
 slurp
+sxhkd
+feh
+xclip
+
+# desktop gui
+nemo
+waybar
+polybar
+flatpak
 mpv
 vlc
+
+# window manager
+xinit
+openbox
+awesome
 
 # others
 fastfetch
 tree
 eza
-

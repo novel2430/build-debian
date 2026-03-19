@@ -3,6 +3,13 @@
 download_src="/tmp/com.alibabainc.dingtalk_8.1.0.6021101_amd64.deb"
 release_dir="/opt/apps/com.alibabainc.dingtalk/files/8.1.0-Release.6021101"
 desktop_file="/usr/share/applications/com.alibabainc.dingtalk.desktop"
+BIN_DIR="/usr/bin/dingtalk-bin"
+
+
+if [[ -e "$BIN_DIR" ||  -e "$desktop_file" ]]; then
+  echo "Dingtalk already installed!"
+  exit 0
+fi
 
 sudo apt install -y libpulse-dev patchelf
 

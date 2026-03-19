@@ -6,7 +6,7 @@ repo_url="https://github.com/davatorium/rofi.git"
 target_dir="$HOME/src/rofi"
 
 # Dependecy
-sudo apt install \
+sudo apt install -y \
   build-essential \
   meson ninja-build pkgconf \
   flex bison check \
@@ -26,6 +26,8 @@ sudo apt install \
   libxcb-icccm4-dev \
   libxcb-cursor-dev \
   wayland-protocols \
+  libxcb-imdkit-dev \
+  pandoc \
   libwayland-dev
 
 # Clone
@@ -39,6 +41,6 @@ fi
 (
   cd "$target_dir"
   git checkout 2.0.0
-  meson setup build
+  meson setup build --reconfigure
   ninja -C build
 )
