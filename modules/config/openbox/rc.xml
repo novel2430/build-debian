@@ -107,6 +107,11 @@
         <command>rofi -show drun</command>
       </action>
     </keybind>
+    <keybind key="W-r">
+      <action name="Execute">
+        <command>rofi -show run</command>
+      </action>
+    </keybind>
     <keybind key="W-q">
       <action name="Close"/>
     </keybind>

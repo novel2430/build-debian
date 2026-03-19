@@ -82,6 +82,7 @@ libglm-dev
 
 # =========================
 # System
+texinfo
 bash-completion
 mailutils
 ca-certificates
@@ -100,3 +101,4 @@ libelf-dev
 bc
 libncurses-dev
 libvterm-dev
+libgnutls28-dev

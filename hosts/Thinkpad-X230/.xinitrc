@@ -1,4 +1,4 @@
 xrdb ~/.Xresources
 
-# exec openbox-session
-exec awesome
+exec openbox-session
+# exec awesome

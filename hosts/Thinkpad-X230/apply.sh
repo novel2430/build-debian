@@ -87,9 +87,9 @@ if [ ! -e /usr/local/bin/wayfire ]; then
   bash "$CUSTOM_DIR/wayfire/build.sh" && bash "$CUSTOM_DIR/wayfire/install.sh"
 fi
 ## -- emacs 29.4
-# if [ ! -e /usr/local/bin/emacs ]; then
-#   bash "$CUSTOM_DIR/emacs29/build.sh" && bash "$CUSTOM_DIR/emacs29/install.sh"
-# fi
+if [ ! -e /usr/local/bin/emacs ]; then
+  bash "$CUSTOM_DIR/emacs29/build.sh" && bash "$CUSTOM_DIR/emacs29/install.sh"
+fi
 
 # Flatpak #
 echo "==== Flatpak Package Installing ===="
@@ -140,7 +140,7 @@ if [[ -e "$CUR_DIR/.Xresources" && ! -e "$HOME/.Xresources" ]]; then
 fi
 ## ------------------------------------------------
 ## -- Emacs 29.4 
-# bash "$CONFIG_DIR/emacs29/install.sh"
+bash "$CONFIG_DIR/emacs29/install.sh"
 ## -- Mpv
 bash "$CONFIG_DIR/mpv/install.sh"
 ## -- Wallpaper
