@@ -12,46 +12,6 @@ if [ ! -e "$src_dir" ]; then
   tar -xvf $file_dir -C $HOME/src
 fi
 
-sudo apt install -y \
-  build-essential \
-  pkg-config \
-  texinfo \
-  make \
-  autoconf \
-  automake \
-  libtool \
-  git \
-  wget \
-  curl \
-  xz-utils \
-  gperf \
-  python3 \
-  python3-pip \
-  libncurses-dev \
-  libgtk-3-dev \
-  libx11-dev \
-  libxaw7-dev \
-  libxpm-dev \
-  libxrandr-dev \
-  libxi-dev \
-  libotf-dev \
-  libm17n-dev \
-  libgnutls28-dev \
-  libharfbuzz-dev \
-  libxml2-dev \
-  libgif-dev \
-  libjpeg-dev \
-  libpng-dev \
-  librsvg2-dev \
-  libtiff-dev \
-  libwebkit2gtk-4.1-dev \
-  libglib2.0-dev \
-  libsqlite3-dev \
-  libselinux1-dev \
-  libdbus-1-dev \
-  mailutils \
-  ca-certificates
-
 if [ -e "$src_dir" ]; then
   (
     cd "$src_dir"

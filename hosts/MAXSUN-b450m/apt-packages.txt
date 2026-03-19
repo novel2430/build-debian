@@ -1,0 +1,16 @@
+# base
+timeshift
+
+# utils
+
+# dev build
+
+# desktop base
+
+# desktop cli
+
+# desktop gui
+
+# window manager
+
+# others

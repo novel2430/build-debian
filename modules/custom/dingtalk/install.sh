@@ -11,8 +11,6 @@ if [[ -e "$BIN_DIR" ||  -e "$desktop_file" ]]; then
   exit 0
 fi
 
-sudo apt install -y libpulse-dev patchelf
-
 if [ ! -e "$download_src" ]; then
 	# Installing
 	wget "https://dtapp-pub.dingtalk.com/dingtalk-desktop/xc_dingtalk_update/linux_deb/Release/com.alibabainc.dingtalk_8.1.0.6021101_amd64.deb" -O $download_src

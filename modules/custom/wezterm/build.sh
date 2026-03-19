@@ -5,9 +5,6 @@ set -euo pipefail
 repo_url="https://github.com/wezterm/wezterm.git"
 target_dir="$HOME/src/wezterm"
 
-# Dependecy
-sudo apt install build-essential git pkgconf rustup
-
 # Clone
 if [[ -d "$target_dir" ]]; then
   echo "Wezterm repo exists"

@@ -13,6 +13,13 @@ SYSTEMD_DIR="$MODULES_DIR/systemd"
 echo "==== APT Installing ===="
 bash "$APT_DIR/apply.sh"
 
+# APT Packages for Custom Build #
+CUSTOM_BUILD_APT_PACKAGE_FILE="$CUSTOM_DIR/dependency-packages.txt"
+if [ -f "$CUSTOM_BUILD_APT_PACKAGE_FILE" ]; then
+  echo "==== Custom Build's Apt Package Installing ===="
+  grep -vE '^\s*(#|$)' "$CUSTOM_BUILD_APT_PACKAGE_FILE" | xargs -r sudo apt install -y
+fi
+
 # Custom - Install #
 echo "==== Custom Package Installing ===="
 ## -- Latex Chinese Fonts (Simsun, Kaiti ...)
@@ -193,7 +200,27 @@ if [ ! -e "$HOME/clash" ]; then
 fi
 bash "$SYSTEMD_DIR/mihomo/install.sh"
 
-# Timeshift Backup Settings #
+# Host Specify Things #
+echo "==== Host Specity Things Installing ===="
+## -- Timeshift Backup
 if [ -e "$CUR_DIR/timeshift/install.sh" ]; then
+  echo "==== Timeshift Config Installing ===="
   bash "$CUR_DIR/timeshift/install.sh"
 fi
+## -- Apt Packages
+HOST_APT_PACKAGE_FILE="$CUR_DIR/apt-packages.txt"
+if [ -f "$HOST_APT_PACKAGE_FILE" ]; then
+  echo "==== Apt Package Installing ===="
+  grep -vE '^\s*(#|$)' "$HOST_APT_PACKAGE_FILE" | xargs -r sudo apt install -y
+fi
+## -- Flatpak Packages
+HOST_FLATPAK_PACKAGE_FILE="$CUR_DIR/flatpak-packages.txt"
+if [ -f "$HOST_FLATPAK_PACKAGE_FILE" ]; then
+  echo "==== Flatpak Package Installing ===="
+  grep -vE '^\s*(#|$)' "$HOST_FLATPAK_PACKAGE_FILE" | xargs -r flatpak install --user -y
+fi
+
+
+## Ending
+systemctl --user daemon-reload
+sudo systemctl daemon-reload

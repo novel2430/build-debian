@@ -6,18 +6,9 @@ flathub app.zen_browser.zen
 flathub com.obsproject.Studio
 flathub com.saivert.pwvucontrol
 flathub com.spotify.Client
-flathub org.gnome.clocks
 flathub com.github.weclaw1.ImageRoll
 
-# Game
-flathub net.lutris.Lutris
-flathub com.valvesoftware.Steam
-flathub org.ppsspp.PPSSPP
-flathub org.openttd.OpenTTD
-
 # Media
-flathub org.audacityteam.Audacity
-flathub org.shotcut.Shotcut
 flathub be.alexandervanhee.gradia
 flathub org.gnome.Papers
 flathub io.github.celluloid_player.Celluloid
@@ -25,6 +16,3 @@ flathub io.github.celluloid_player.Celluloid
 # China
 flathub cn.wps.wps_365
 flathub com.tencent.WeChat
-
-# New Stuff
-flathub org.gnome.World.Iotas

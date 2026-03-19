@@ -7,7 +7,6 @@ if [ ! -e $repo_dir ]; then
   git clone $repo_url $repo_dir
 fi
 
-sudo apt install -y flatpak-builder 
 flatpak --user install -y flathub \
   org.freedesktop.Platform//24.08 \
   org.freedesktop.Sdk//24.08

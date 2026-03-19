@@ -1,7 +1,5 @@
 # base
 vim
-curl
-git
 zsh
 tmux
 net-tools
@@ -10,9 +8,7 @@ mesa-vulkan-drivers
 vulkan-tools
 libgl1-mesa-dri
 libglx-mesa0
-mesa-vulkan-drivers
 rsync
-timeshift
 
 # utils
 socat
@@ -23,9 +19,7 @@ ripgrep
 htop
 
 # dev build
-build-essential
 openjdk-21-jdk
-pkg-config
 
 # desktop base
 pipewire
