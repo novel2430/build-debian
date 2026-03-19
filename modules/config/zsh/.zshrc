@@ -77,7 +77,7 @@ source $HOME/.zsh-scripts/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 alias -- gitall='git add . && git commit -m '\''update'\'' && git push'
 alias -- ls='eza --icons auto'
 alias -- neofetch=fastfetch
-alias -- visudo='sudo EDITOR=vim visudo'
+alias -- visudo='sudo EDITOR=nvim visudo'
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
