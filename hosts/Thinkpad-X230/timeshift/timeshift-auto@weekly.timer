@@ -1,0 +1,10 @@
+[Unit]
+Description=Timeshift Weekly Snapshot Timer
+
+[Timer]
+OnCalendar=Fri *-*-* 04:00:00
+Persistent=true
+Unit=timeshift-auto@W.service
+
+[Install]
+WantedBy=timers.target
