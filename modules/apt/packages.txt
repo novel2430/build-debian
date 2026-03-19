@@ -37,6 +37,8 @@ fonts-wqy-zenhei
 gnome-themes-extra
 papirus-icon-theme
 fonts-noto-color-emoji
+wlopm
+swayidle
 
 # desktop cli
 playerctl

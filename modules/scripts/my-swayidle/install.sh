@@ -3,8 +3,6 @@
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 SCRIPT_NAME="my-swayidle"
 
-sudo apt install -y wlopm swayidle
-
 chmod +x "$SCRIPT_DIR/$SCRIPT_NAME.sh"
 mkdir -p $HOME/.local/bin
 

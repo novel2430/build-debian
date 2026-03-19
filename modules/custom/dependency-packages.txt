@@ -3,6 +3,7 @@ build-essential
 git
 make
 cmake
+meson
 ninja-build
 pkgconf
 pkg-config
@@ -24,6 +25,7 @@ libxaw7-dev
 libxpm-dev
 libxrandr-dev
 libxi-dev
+xcb-proto
 libxcb1-dev
 libxcb-render-util0-dev
 libxcb-icccm4-dev
@@ -32,8 +34,10 @@ libxcb-dri3-dev
 libxcb-composite0-dev
 libxcb-present-dev
 libxcb-ewmh-dev
+libxcb-imdkit-dev
 libxcb-xinput-dev
 libxcb-res0-dev
+libxcb-icccm4-dev
 libxcb-xkb-dev
 libxcb-xinerama0-dev
 libxcb-util-dev
@@ -91,3 +95,8 @@ flex
 bison
 check
 pandoc
+libssl-dev
+libelf-dev
+bc
+libncurses-dev
+libvterm-dev

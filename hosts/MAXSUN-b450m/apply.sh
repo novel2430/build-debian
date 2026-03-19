@@ -8,6 +8,7 @@ CUSTOM_DIR="$MODULES_DIR/custom"
 FLATPAK_DIR="$MODULES_DIR/flatpak"
 SCRIPTS_DIR="$MODULES_DIR/scripts"
 SYSTEMD_DIR="$MODULES_DIR/systemd"
+SERVICES_DIR="$MODULES_DIR/services"
 
 # APT #
 echo "==== APT Installing ===="
@@ -219,6 +220,8 @@ if [ -f "$HOST_FLATPAK_PACKAGE_FILE" ]; then
   echo "==== Flatpak Package Installing ===="
   grep -vE '^\s*(#|$)' "$HOST_FLATPAK_PACKAGE_FILE" | xargs -r flatpak install --user -y
 fi
+## -- Virtual Machine
+bash "$SERVICES_DIR/virt-machine/install.sh"
 
 
 ## Ending

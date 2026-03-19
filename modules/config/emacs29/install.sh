@@ -10,6 +10,5 @@ fi
 if [ ! -e "$HOME/.emacs.d" ]; then
 	ln -s "$repo_dir" "$HOME/.emacs.d"
   npm install -g @vue/language-server
-  sudo apt install -y libvterm-dev
 fi
 
