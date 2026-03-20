@@ -18,5 +18,6 @@ fi
   rustup default stable
   git submodule update --init --recursive
   ./get-deps
-  cargo build --release -j2
+  cargo clean
+  cargo build --release -j4
 )
