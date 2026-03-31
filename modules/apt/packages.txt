@@ -26,6 +26,7 @@ fzf
 imagemagick
 resvg
 chafa
+bat
 
 # dev build
 openjdk-21-jdk
