@@ -263,3 +263,6 @@ bash "$SERVICES_DIR/virt-machine/install.sh"
 ## Ending
 systemctl --user daemon-reload
 sudo systemctl daemon-reload
+
+sudo ldconfig
+echo "==== ALL DONE ! ===="
