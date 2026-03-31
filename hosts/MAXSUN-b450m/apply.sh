@@ -61,6 +61,14 @@ else
   bash "$CUSTOM_DIR/tree-sitter/build.sh" && bash "$CUSTOM_DIR/tree-sitter/install.sh"
   sudo ldconfig
 fi
+## -- scenefx 0.4.1 (Mangowc depend on this)
+if pkg-config --exists scenefx-0.4; then
+  version=$(pkg-config --modversion scenefx-0.4)
+  echo "Scenefx already installed，version: $version"
+else
+  bash "$CUSTOM_DIR/scenefx/build.sh" && bash "$CUSTOM_DIR/scenefx/install.sh"
+  sudo ldconfig
+fi
 ## -- Zig 0.15.2 (Ghostty depend on this)
 if [ ! -e /usr/local/bin/zig ]; then
   bash "$CUSTOM_DIR/zig/install.sh"
