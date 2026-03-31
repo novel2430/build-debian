@@ -3,13 +3,9 @@ set -euo pipefail
 
 GHOSTTY_DIR="/usr/local/opt/ghostty"
 
-if [[ -L /usr/local/bin/ghostty ]]; then
-    sudo rm /usr/local/bin/ghostty
-fi
+sudo rm -rf /usr/local/bin/ghostty
 
-if [[ -L /usr/local/share/applications/com.mitchellh.ghostty.desktop ]]; then
-    sudo rm /usr/local/share/applications/com.mitchellh.ghostty.desktop
-fi
+sudo rm -rf /usr/local/share/applications/com.mitchellh.ghostty.desktop
 
 ICON_SRC="$GHOSTTY_DIR/share/icons/hicolor"
 ICON_DST="/usr/local/share/icons/hicolor"

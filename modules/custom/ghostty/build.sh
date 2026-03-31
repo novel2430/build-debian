@@ -18,5 +18,5 @@ fi
   unset https_proxy
   cd "$target_dir"
   git checkout v1.3.1
-  zig build -Doptimize=ReleaseFast
+  zig build -Doptimize=ReleaseFast 
 )

@@ -134,3 +134,4 @@ libnl-genl-3-dev
 libspdlog-dev
 libiniparser-dev
 libfftw3-dev
+libxml2-utils

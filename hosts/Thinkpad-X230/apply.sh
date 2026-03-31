@@ -99,9 +99,9 @@ if [ ! -e /usr/local/bin/wezterm ]; then
   bash "$CUSTOM_DIR/wezterm/build.sh" && bash "$CUSTOM_DIR/wezterm/install.sh"
 fi
 ## -- ghostty 1.3.1
-# if [ ! -e /usr/local/bin/ghostty ]; then
-#   bash "$CUSTOM_DIR/ghostty/build.sh" && bash "$CUSTOM_DIR/ghostty/install.sh"
-# fi
+if [ ! -e /usr/local/bin/ghostty ]; then
+  bash "$CUSTOM_DIR/ghostty/build.sh" && bash "$CUSTOM_DIR/ghostty/install.sh"
+fi
 ## -- swaylock-effects 1.7.0.0
 if [ ! -e /usr/local/bin/swaylock ]; then
   bash "$CUSTOM_DIR/swaylock-effects/build.sh" && bash "$CUSTOM_DIR/swaylock-effects/install.sh"
