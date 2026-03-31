@@ -1,1 +1,2 @@
 org.gnome.clocks
+org.shotcut.Shotcut

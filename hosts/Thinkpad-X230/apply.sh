@@ -41,6 +41,10 @@ bash "$CUSTOM_DIR/greenclip/install.sh"
 if [ ! -e "$HOME/.local/bin/hmcl" ]; then
   bash "$CUSTOM_DIR/hmcl/install.sh"
 fi
+## -- OpenTTD
+if [ ! -e "$HOME/.local/bin/openttd" ]; then
+  bash "$CUSTOM_DIR/openttd/install.sh"
+fi
 
 # Custom - Build and Install #
 echo "==== Custom Package (Build) Installing ===="
