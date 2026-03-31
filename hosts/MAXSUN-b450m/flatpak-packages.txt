@@ -5,3 +5,4 @@ org.ppsspp.PPSSPP
 org.audacityteam.Audacity
 org.shotcut.Shotcut
 org.gnome.World.Iotas
+net.agalwood.Motrix

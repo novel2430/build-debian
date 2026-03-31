@@ -43,7 +43,7 @@ case "$pick" in
     take_select && notify "Select"
     ;;
   "full & edit"|"full-edit")
-    take_full && notify "Full + Edit" && do_edit
+    sleep 1 && take_full && notify "Full + Edit" && do_edit
     ;;
   "select & edit"|"select-edit"|"edit")
     take_select && notify "Select + Edit" && do_edit
