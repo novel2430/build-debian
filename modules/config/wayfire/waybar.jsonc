@@ -13,6 +13,7 @@
         // "custom/media"
 	      // "river/tags"
         //"wlr/workspaces",
+        "wayfire/workspaces",
         "wlr/taskbar"
     ],
     "modules-center": [
@@ -56,6 +57,9 @@
     //     }
     // },
 
+    "wayfire/workspaces": {
+      "format": "{index}"
+    },
     "wlr/taskbar": {
       "format": "{icon}",
 	    "spacaing": 0,

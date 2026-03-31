@@ -90,6 +90,10 @@ fi
 if [ ! -e /usr/local/bin/rofi ]; then
   bash "$CUSTOM_DIR/rofi/build.sh" && bash "$CUSTOM_DIR/rofi/install.sh"
 fi
+## -- waybar 0.15.0
+if [ ! -e /usr/local/bin/waybar ]; then
+  bash "$CUSTOM_DIR/waybar/build.sh" && bash "$CUSTOM_DIR/waybar/install.sh"
+fi
 ## -- wezterm 20260117-154428-05343b38
 if [ ! -e /usr/local/bin/wezterm ]; then
   bash "$CUSTOM_DIR/wezterm/build.sh" && bash "$CUSTOM_DIR/wezterm/install.sh"

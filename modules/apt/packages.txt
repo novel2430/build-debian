@@ -67,7 +67,6 @@ xclip
 
 # desktop gui
 nemo
-waybar
 polybar
 flatpak
 mpv

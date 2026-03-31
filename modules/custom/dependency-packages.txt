@@ -18,6 +18,7 @@ gperf
 patchelf
 flatpak-builder
 blueprint-compiler
+cmake-extras
 
 # =========================
 # X11 / Wayland / WM
@@ -61,6 +62,7 @@ hwdata
 libdisplay-info-dev
 libliftoff-dev
 liblcms2-dev
+libxkbregistry-dev
 
 # =========================
 # Image / Font / GUI / Audio
@@ -108,3 +110,27 @@ libncurses-dev
 libvterm-dev
 libgnutls28-dev
 libev-dev
+libavcodec-dev
+libavformat-dev
+libavutil-dev
+libre2-dev
+libtomlplusplus3t64
+seatd
+libpugixml-dev
+libzip-dev
+libtomlplusplus-dev
+libmagic-dev
+clang-tidy
+libdbusmenu-gtk3-dev
+libgirepository1.0-dev
+libjsoncpp-dev
+libnl-3-dev
+libsigc++-2.0-dev
+gobject-introspection
+libfmt-dev
+libgtkmm-3.0-dev
+libmpdclient-dev
+libnl-genl-3-dev
+libspdlog-dev
+libiniparser-dev
+libfftw3-dev
