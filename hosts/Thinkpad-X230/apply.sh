@@ -74,6 +74,10 @@ fi
 if [ ! -e /usr/local/bin/dwl ]; then
   bash "$CUSTOM_DIR/dwl/build.sh" && bash "$CUSTOM_DIR/dwl/install.sh"
 fi
+## -- mangowc 0.12.7
+if [ ! -e /usr/local/bin/mango ]; then
+  bash "$CUSTOM_DIR/mangowc/build.sh" && bash "$CUSTOM_DIR/mangowc/install.sh"
+fi
 ## -- rofi 2.0.0
 if [ ! -e /usr/local/bin/rofi ]; then
   bash "$CUSTOM_DIR/rofi/build.sh" && bash "$CUSTOM_DIR/rofi/install.sh"
