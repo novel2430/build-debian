@@ -1,6 +1,6 @@
 # Web Browser
 super + shift + f
-  app.zen_browser.zen
+  org.mozilla.firefox
 
 # Lock
 super + shift + l

@@ -2,7 +2,7 @@
 export PATH=$HOME/.local/share/flatpak/exports/bin:$HOME/.local/bin:/usr/sbin:$PATH
 export EDITOR=nvim
 export TERM=xterm-256color
-export XDG_DATA_DIRS=$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share
+export XDG_DATA_DIRS=$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:$HOME/.local/share:/usr/local/share:/usr/share
 export http_proxy=http://127.0.0.1:7890
 export https_proxy=http://127.0.0.1:7890
 

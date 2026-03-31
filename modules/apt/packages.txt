@@ -17,6 +17,14 @@ zip
 unzip
 ripgrep
 htop
+ffmpeg
+7zip
+poppler-utils
+fd-find
+fzf
+imagemagick
+resvg
+chafa
 
 # dev build
 openjdk-21-jdk

@@ -37,6 +37,10 @@ bash "$CUSTOM_DIR/dingtalk/install.sh"
 bash "$CUSTOM_DIR/baidunetdisk/install.sh"
 ## -- Greenclip (X11 clipboard Daemon)
 bash "$CUSTOM_DIR/greenclip/install.sh"
+## -- HMCL
+if [ ! -e "$HOME/.local/bin/hmcl" ]; then
+  bash "$CUSTOM_DIR/hmcl/install.sh"
+fi
 
 # Custom - Build and Install #
 echo "==== Custom Package (Build) Installing ===="
@@ -57,6 +61,10 @@ else
   bash "$CUSTOM_DIR/tree-sitter/build.sh" && bash "$CUSTOM_DIR/tree-sitter/install.sh"
   sudo ldconfig
 fi
+## -- Zig 0.15.2 (Ghostty depend on this)
+if [ ! -e /usr/local/bin/zig ]; then
+  bash "$CUSTOM_DIR/zig/install.sh"
+fi
 ## ------------------------------------------------
 ## -- neovim 0.11.6
 if [ ! -e /usr/local/bin/nvim ]; then
@@ -74,6 +82,10 @@ fi
 if [ ! -e /usr/local/bin/wezterm ]; then
   bash "$CUSTOM_DIR/wezterm/build.sh" && bash "$CUSTOM_DIR/wezterm/install.sh"
 fi
+## -- ghostty 1.3.1
+# if [ ! -e /usr/local/bin/ghostty ]; then
+#   bash "$CUSTOM_DIR/ghostty/build.sh" && bash "$CUSTOM_DIR/ghostty/install.sh"
+# fi
 ## -- swaylock-effects 1.7.0.0
 if [ ! -e /usr/local/bin/swaylock ]; then
   bash "$CUSTOM_DIR/swaylock-effects/build.sh" && bash "$CUSTOM_DIR/swaylock-effects/install.sh"
@@ -89,6 +101,10 @@ fi
 ## -- emacs 29.4
 if [ ! -e /usr/local/bin/emacs ]; then
   bash "$CUSTOM_DIR/emacs29/build.sh" && bash "$CUSTOM_DIR/emacs29/install.sh"
+fi
+## -- Yazi 26.1.22
+if [ ! -e /usr/local/bin/yazi ]; then
+  bash "$CUSTOM_DIR/yazi/build.sh" && bash "$CUSTOM_DIR/yazi/install.sh"
 fi
 
 # Flatpak #
