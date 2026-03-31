@@ -147,6 +147,8 @@ bash "$CONFIG_DIR/sxhkd/install.sh"
 bash "$CONFIG_DIR/awesomewm/install.sh"
 ## -- DWL (Waybar config)
 bash "$CONFIG_DIR/dwl/install.sh"
+## -- Mangowc
+bash "$CONFIG_DIR/mangowc/install.sh"
 ## -- Openbox (Openbox config, polybar)
 bash "$CONFIG_DIR/openbox/install.sh"
 ## -- Wayfire (Wayfire config, waybar)
@@ -210,6 +212,8 @@ bash "$SCRIPTS_DIR/waybar-modules-weather/install.sh"
 bash "$SCRIPTS_DIR/wayfire-autostart/install.sh"
 ## -- [wlroot-clipboard] : show clipboard in Wayland
 bash "$SCRIPTS_DIR/wlroot-clipboard/install.sh"
+## -- [mangowc-autostart] : Mangowc autostart script
+bash "$SCRIPTS_DIR/mangowc-autostart/install.sh"
 
 # Systemd #
 echo "==== Systemd Scripts Installing ===="

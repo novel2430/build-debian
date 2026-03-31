@@ -107,3 +107,4 @@ bc
 libncurses-dev
 libvterm-dev
 libgnutls28-dev
+libev-dev

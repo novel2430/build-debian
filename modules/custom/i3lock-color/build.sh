@@ -16,6 +16,7 @@ fi
 (
   cd "$target_dir"
   git checkout 2.13.c.5
+  autoreconf -fiv
   rm -rf build && mkdir -p build && cd build
   ../configure --prefix=/usr/local --sysconfdir=/usr/local/etc
   make

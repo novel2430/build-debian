@@ -9,6 +9,7 @@ vulkan-tools
 libgl1-mesa-dri
 libglx-mesa0
 rsync
+texi2html
 
 # utils
 socat
