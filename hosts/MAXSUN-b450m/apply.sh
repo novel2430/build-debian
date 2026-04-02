@@ -78,7 +78,7 @@ if [ ! -e /usr/local/bin/zig ]; then
   bash "$CUSTOM_DIR/zig/install.sh"
 fi
 ## ------------------------------------------------
-## -- neovim 0.11.6
+## -- neovim 0.12.0
 if [ ! -e /usr/local/bin/nvim ]; then
   bash "$CUSTOM_DIR/neovim/build.sh" && bash "$CUSTOM_DIR/neovim/install.sh"
 fi

@@ -7,6 +7,7 @@ flathub com.obsproject.Studio
 flathub com.saivert.pwvucontrol
 flathub com.spotify.Client
 flathub com.github.weclaw1.ImageRoll
+flathub org.freedesktop.Platform.ffmpeg-full//24.08
 
 # Media
 flathub be.alexandervanhee.gradia
