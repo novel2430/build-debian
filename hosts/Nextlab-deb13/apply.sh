@@ -156,6 +156,8 @@ bash "$CONFIG_DIR/tmux/install.sh"
 bash "$CONFIG_DIR/nvim/install.sh"
 ## -- Pip
 bash "$CONFIG_DIR/pip/install.sh"
+## -- Condarc
+bash "$CONFIG_DIR/conda/install.sh"
 ## ------------------------------------------------
 ## -- Xdg Destop WLR Config
 # bash "$CONFIG_DIR/xdg-desktop-portal-wlr/install.sh"
