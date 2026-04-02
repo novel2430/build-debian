@@ -20,6 +20,7 @@ if [[ ! -e "$dwn_dir" ]]; then
   wget "$src_url" -O "$dwn_dir"
 fi
 if [[ ! -e "$src_dir" ]]; then
+  mkdir "$HOME/.local/bin"
   gzip -d "$dwn_dir" -c > "$src_dir"
   chmod +x "$src_dir"
 fi

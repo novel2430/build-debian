@@ -36,7 +36,7 @@ bash "$CUSTOM_DIR/hack-nerd-fonts/install.sh"
 ## -- Nodejs (npm)
 bash "$CUSTOM_DIR/nodejs/install.sh"
 ## -- Miniconda 
-bash "$CUSTOM_DIR/miniconda/install.sh"
+# bash "$CUSTOM_DIR/miniconda/install.sh"
 ## -- DingTalk
 # bash "$CUSTOM_DIR/dingtalk/install.sh"
 ## -- Baidu Netdisk
