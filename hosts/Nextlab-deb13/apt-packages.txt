@@ -1,0 +1,68 @@
+# base
+vim
+zsh
+tmux
+net-tools
+rsync
+
+# utils
+socat
+jq
+zip
+unzip
+ripgrep
+htop
+ffmpeg
+7zip
+fd-find
+fzf
+imagemagick
+resvg
+chafa
+bat
+eza
+fastfetch
+tree
+
+# dev build
+openjdk-21-jdk
+build-essential
+git
+make
+cmake
+meson
+ninja-build
+pkgconf
+pkg-config
+gettext
+autoconf
+automake
+libtool
+curl
+wget
+xz-utils
+gperf
+patchelf
+cmake-extras
+texinfo
+bash-completion
+mailutils
+ca-certificates
+scdoc
+rustup
+python3
+python3-pip
+flex
+bison
+check
+pandoc
+bc
+
+# desktop base
+
+# desktop cli
+
+# desktop gui
+
+# window manager
+

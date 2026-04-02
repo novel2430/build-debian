@@ -8,7 +8,7 @@ ZSH_AUTOSUGGEST_STRATEGY=(history)
 HISTSIZE="10000"
 SAVEHIST="10000"
 
-HISTFILE="/home/novel2430/.zsh_history"
+HISTFILE="$HOME/.zsh_history"
 mkdir -p "$(dirname "$HISTFILE")"
 
 setopt HIST_FCNTL_LOCK
