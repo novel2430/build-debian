@@ -6,3 +6,4 @@ org.audacityteam.Audacity
 org.shotcut.Shotcut
 org.gnome.World.Iotas
 net.agalwood.Motrix
+io.github.ryubing.Ryujinx

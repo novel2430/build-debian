@@ -185,10 +185,17 @@ bash "$CONFIG_DIR/mpv/install.sh"
 bash "$CONFIG_DIR/pics/install.sh"
 ## -- Rofi
 bash "$CONFIG_DIR/rofi/install.sh"
-## -- Wechat (Flatpak Settings)
-bash "$CONFIG_DIR/wechat/install.sh"
 ## -- Wezterm
 bash "$CONFIG_DIR/wezterm/install.sh"
+## ------------------------------------------------
+## -- Wechat (Flatpak Settings)
+bash "$CONFIG_DIR/wechat/install.sh"
+## -- Firefox (Flatpak Settings)
+bash "$CONFIG_DIR/firefox/install.sh"
+## -- Zen Browser (Flatpak Settings)
+bash "$CONFIG_DIR/zen/install.sh"
+## -- WPS 365 (Flatpak Settings)
+bash "$CONFIG_DIR/wps365/install.sh"
 
 # Scripts #
 echo "==== Scripts Installing ===="
