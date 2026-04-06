@@ -15,7 +15,7 @@ fi
 
 (
   cd "$target_dir"
-  git checkout v0.12.0
+  git checkout v0.12.1
   make clean
   make CMAKE_BUILD_TYPE=RelWithDebInfo
 )

@@ -16,6 +16,7 @@ fi
 (
   cd "$target_dir"
   git checkout 0.4.1
+  rm -rf build
   meson setup --reconfigure build/
   ninja -C build/
 )
