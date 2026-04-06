@@ -28,7 +28,9 @@ sudo apt install -y \
   virtinst
 
 echo "== Enable and start libvirt =="
-sudo systemctl enable --now libvirtd
+# sudo systemctl enable --now libvirtd
+sudo rc-service libvirtd start
+sudo rc-update add libvirtd default
 
 echo "== Ensure default network is active =="
 sudo virsh net-start default 2>/dev/null || true

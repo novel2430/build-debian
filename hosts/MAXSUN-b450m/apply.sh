@@ -7,7 +7,7 @@ CONFIG_DIR="$MODULES_DIR/config"
 CUSTOM_DIR="$MODULES_DIR/custom"
 FLATPAK_DIR="$MODULES_DIR/flatpak"
 SCRIPTS_DIR="$MODULES_DIR/scripts"
-SYSTEMD_DIR="$MODULES_DIR/systemd"
+OPENRC_DIR="$MODULES_DIR/openrc"
 SERVICES_DIR="$MODULES_DIR/services"
 
 # APT #
@@ -76,6 +76,7 @@ fi
 ## -- Zig 0.15.2 (Ghostty depend on this)
 if [ ! -e /usr/local/bin/zig ]; then
   bash "$CUSTOM_DIR/zig/install.sh"
+  sudo ldconfig
 fi
 ## ------------------------------------------------
 ## -- neovim 0.12.0
@@ -120,7 +121,8 @@ if [ ! -e /usr/local/bin/wayfire ]; then
 fi
 ## -- emacs 29.4
 if [ ! -e /usr/local/bin/emacs ]; then
-  bash "$CUSTOM_DIR/emacs29/build.sh" && bash "$CUSTOM_DIR/emacs29/install.sh"
+  echo "skip emacs"
+  # bash "$CUSTOM_DIR/emacs29/build.sh" && bash "$CUSTOM_DIR/emacs29/install.sh"
 fi
 ## -- Yazi 26.1.22
 if [ ! -e /usr/local/bin/yazi ]; then
@@ -237,16 +239,16 @@ bash "$SCRIPTS_DIR/wayfire-autostart/install.sh"
 bash "$SCRIPTS_DIR/wlroot-clipboard/install.sh"
 ## -- [mangowc-autostart] : Mangowc autostart script
 bash "$SCRIPTS_DIR/mangowc-autostart/install.sh"
+## -- [idle-lock-guard] : make idle only run when you lock screen (Wayland/X11)
+bash "$SCRIPTS_DIR/idle-lock-guard/install.sh"
 
-# Systemd #
-echo "==== Systemd Scripts Installing ===="
-## -- [idle-lock-guard.service] : make idle only run when you lock screen (Wayland/X11)
-bash "$SYSTEMD_DIR/idle-lock-guard/install.sh"
+# Openrc #
+echo "==== OpenRC Scripts Installing ===="
 ## -- [mihomo.service] : run mihomo 
 if [ ! -e "$HOME/clash" ]; then
   echo "You need to create $HOME/clash for using mihomo service"
 fi
-bash "$SYSTEMD_DIR/mihomo/install.sh"
+bash "$OPENRC_DIR/mihomo/install.sh"
 
 # Host Specify Things #
 echo "==== Host Specity Things Installing ===="
@@ -270,10 +272,6 @@ fi
 ## -- Virtual Machine
 bash "$SERVICES_DIR/virt-machine/install.sh"
 
-
 ## Ending
-systemctl --user daemon-reload
-sudo systemctl daemon-reload
-
 sudo ldconfig
 echo "==== ALL DONE ! ===="

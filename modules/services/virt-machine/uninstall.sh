@@ -2,8 +2,8 @@
 set -e
 
 echo "== Stopping libvirt service =="
-sudo systemctl stop libvirtd
-sudo systemctl disable libvirtd
+sudo rc-service libvirtd stop
+sudo rc-update del libvirtd
 
 echo "== Removing default libvirt network =="
 sudo virsh net-destroy default 2>/dev/null || true

@@ -5,9 +5,9 @@ logout_menu="Logout"
 res=$(printf '%s\n%s\n%s\n%s' $reboot_menu $shutdown_menu $logout_menu | rofi -dmenu -i)
 
 if [ $res = $reboot_menu ]; then
-reboot
+  loginctl reboot
 elif [ $res = $shutdown_menu ]; then
-poweroff
+  loginctl poweroff
 elif [ $res = $logout_menu ]; then
-loginctl terminate-user novel2430
+  pkill -KILL -u "$USER"
 fi

@@ -10,6 +10,7 @@ libgl1-mesa-dri
 libglx-mesa0
 rsync
 texi2html
+dkms
 
 # utils
 socat
