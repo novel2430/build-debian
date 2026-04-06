@@ -19,10 +19,9 @@ gsettings set org.gnome.desktop.interface icon-theme 'Papirus'
   env XDG_CURRENT_DESKTOP=openbox \
     dbus-update-activation-environment --systemd DISPLAY XAUTHORITY XDG_CURRENT_DESKTOP
 )
-systemctl --user stop xdg-desktop-portal xdg-desktop-portal-gtk xdg-desktop-portal-wlr
-systemctl --user restart pipewire pipewire-pulse wireplumber
-systemctl --user restart xdg-desktop-portal-gtk
-systemctl --user restart xdg-desktop-portal
+/usr/bin/pipewire &
+/usr/bin/wireplumber &
+/usr/bin/pipewire-pulse &
 # IME
 fcitx5 --replace -d &
 # Idle DPMS (sec)
@@ -37,3 +36,5 @@ nm-applet &
 flatpak override --user --unset-env=LD_PRELOAD com.tencent.wemeet &
 
 systemctl --user restart idle-lock-guard.service
+
+kill -TERM $(pgrep -f idle-lock-guard) 2>/dev/null; idle-lock-guard > $HOME/.log/idle-lock-guard/idle-lock-guard.log 2>&1 &
