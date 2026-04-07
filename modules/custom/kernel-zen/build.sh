@@ -45,6 +45,6 @@ if [ ! -e "/boot/vmlinuz-$KERNEL_VERSION-zen1-custom" ]; then
     echo "-custom" > localversion
     make -s kernelrelease
     # compile
-    make -j8
+    make -j4
   )
 fi
