@@ -2,7 +2,7 @@
 
 # Base
 flathub org.mozilla.firefox
-flathub app.zen_browser.zen
+# flathub app.zen_browser.zen
 flathub com.obsproject.Studio
 flathub com.saivert.pwvucontrol
 flathub com.spotify.Client

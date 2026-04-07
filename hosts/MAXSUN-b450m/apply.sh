@@ -79,7 +79,7 @@ if [ ! -e /usr/local/bin/zig ]; then
   sudo ldconfig
 fi
 ## ------------------------------------------------
-## -- neovim 0.12.0
+## -- neovim 0.12.1
 if [ ! -e /usr/local/bin/nvim ]; then
   bash "$CUSTOM_DIR/neovim/build.sh" && bash "$CUSTOM_DIR/neovim/install.sh"
 fi
@@ -99,7 +99,7 @@ fi
 if [ ! -e /usr/local/bin/waybar ]; then
   bash "$CUSTOM_DIR/waybar/build.sh" && bash "$CUSTOM_DIR/waybar/install.sh"
 fi
-## -- wezterm 20260117-154428-05343b38
+## -- wezterm 577474d
 if [ ! -e /usr/local/bin/wezterm ]; then
   bash "$CUSTOM_DIR/wezterm/build.sh" && bash "$CUSTOM_DIR/wezterm/install.sh"
 fi
@@ -121,12 +121,15 @@ if [ ! -e /usr/local/bin/wayfire ]; then
 fi
 ## -- emacs 29.4
 if [ ! -e /usr/local/bin/emacs ]; then
-  echo "skip emacs"
-  # bash "$CUSTOM_DIR/emacs29/build.sh" && bash "$CUSTOM_DIR/emacs29/install.sh"
+  bash "$CUSTOM_DIR/emacs29/build.sh" && bash "$CUSTOM_DIR/emacs29/install.sh"
 fi
 ## -- Yazi 26.1.22
 if [ ! -e /usr/local/bin/yazi ]; then
   bash "$CUSTOM_DIR/yazi/build.sh" && bash "$CUSTOM_DIR/yazi/install.sh"
+fi
+## -- lswt
+if [ ! -e /usr/local/bin/lswt ]; then
+  bash "$CUSTOM_DIR/lswt/build.sh" && bash "$CUSTOM_DIR/lswt/install.sh"
 fi
 
 # Flatpak #
@@ -150,6 +153,10 @@ bash "$CONFIG_DIR/zsh/install.sh"
 bash "$CONFIG_DIR/tmux/install.sh"
 ## -- Neovim
 bash "$CONFIG_DIR/nvim/install.sh"
+## -- Pip
+bash "$CONFIG_DIR/pip/install.sh"
+## -- Condarc
+bash "$CONFIG_DIR/conda/install.sh"
 ## ------------------------------------------------
 ## -- Xdg Destop WLR Config
 bash "$CONFIG_DIR/xdg-desktop-portal-wlr/install.sh"
@@ -194,8 +201,6 @@ bash "$CONFIG_DIR/wezterm/install.sh"
 bash "$CONFIG_DIR/wechat/install.sh"
 ## -- Firefox (Flatpak Settings)
 bash "$CONFIG_DIR/firefox/install.sh"
-## -- Zen Browser (Flatpak Settings)
-bash "$CONFIG_DIR/zen/install.sh"
 ## -- WPS 365 (Flatpak Settings)
 bash "$CONFIG_DIR/wps365/install.sh"
 
@@ -247,8 +252,9 @@ echo "==== OpenRC Scripts Installing ===="
 ## -- [mihomo.service] : run mihomo 
 if [ ! -e "$HOME/clash" ]; then
   echo "You need to create $HOME/clash for using mihomo service"
+else
+  bash "$OPENRC_DIR/mihomo/install.sh"
 fi
-bash "$OPENRC_DIR/mihomo/install.sh"
 
 # Host Specify Things #
 echo "==== Host Specity Things Installing ===="

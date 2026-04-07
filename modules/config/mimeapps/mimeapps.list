@@ -1,5 +1,6 @@
 [Default Applications]
 image/png=com.github.weclaw1.ImageRoll.desktop
+image/jpeg=com.github.weclaw1.ImageRoll.desktop
 application/pdf=org.gnome.Papers.desktop
 application/zip=org.gnome.FileRoller.desktop
 audio/mpeg=vlc.desktop
@@ -7,12 +8,20 @@ video/mp4=io.github.celluloid_player.Celluloid.desktop
 video/x-matroska=io.github.celluloid_player.Celluloid.desktop
 audio/vnd.wave=vlc.desktop
 x-scheme-handler/baiduyunguanjia=baidunetdisk.desktop
+x-scheme-handler/http=org.mozilla.firefox
+x-scheme-handler/https=org.mozilla.firefox
+text/html=org.mozilla.firefox
 
 [Added Associations]
-image/png=com.github.weclaw1.ImageRoll.desktop;
-application/pdf=org.gnome.Papers.desktop;
-application/zip=org.gnome.FileRoller.desktop;
-audio/mpeg=vlc.desktop;
-video/mp4=mpv.desktop;io.github.celluloid_player.Celluloid.desktop;
-video/x-matroska=mpv.desktop;io.github.celluloid_player.Celluloid.desktop;
-audio/vnd.wave=vlc.desktop;
+image/png=com.github.weclaw1.ImageRoll.desktop
+image/jpeg=com.github.weclaw1.ImageRoll.desktop
+application/pdf=org.gnome.Papers.desktop
+application/zip=org.gnome.FileRoller.desktop
+audio/mpeg=vlc.desktop
+video/mp4=io.github.celluloid_player.Celluloid.desktop
+video/x-matroska=io.github.celluloid_player.Celluloid.desktop
+audio/vnd.wave=vlc.desktop
+x-scheme-handler/baiduyunguanjia=baidunetdisk.desktop
+x-scheme-handler/http=org.mozilla.firefox
+x-scheme-handler/https=org.mozilla.firefox
+text/html=org.mozilla.firefox

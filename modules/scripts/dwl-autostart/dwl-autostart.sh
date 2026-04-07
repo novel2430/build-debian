@@ -20,9 +20,9 @@ gsettings set org.gnome.desktop.interface icon-theme 'Papirus'
 # xdg-portal
 export XDG_CURRENT_DESKTOP=wlroots
 dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP DISPLAY XAUTHORITY
-/usr/bin/pipewire &
-/usr/bin/wireplumber &
-/usr/bin/pipewire-pulse &
+killall pipewire; /usr/bin/pipewire &
+killall wireplumber; /usr/bin/wireplumber &
+killall pipewire-pulse; /usr/bin/pipewire-pulse &
 # Swayidle
 # my-swayidle &
 # IME

@@ -19,9 +19,9 @@ gsettings set org.gnome.desktop.interface icon-theme 'Papirus'
   env XDG_CURRENT_DESKTOP=openbox \
     dbus-update-activation-environment --systemd DISPLAY XAUTHORITY XDG_CURRENT_DESKTOP
 )
-/usr/bin/pipewire &
-/usr/bin/wireplumber &
-/usr/bin/pipewire-pulse &
+killall pipewire; /usr/bin/pipewire &
+killall wireplumber; /usr/bin/wireplumber &
+killall pipewire-pulse; /usr/bin/pipewire-pulse &
 # IME
 fcitx5 --replace -d &
 # Idle DPMS (sec)

@@ -7,7 +7,7 @@ CONFIG_DIR="$MODULES_DIR/config"
 CUSTOM_DIR="$MODULES_DIR/custom"
 FLATPAK_DIR="$MODULES_DIR/flatpak"
 SCRIPTS_DIR="$MODULES_DIR/scripts"
-SYSTEMD_DIR="$MODULES_DIR/systemd"
+OPENRC_DIR="$MODULES_DIR/openrc"
 SERVICES_DIR="$MODULES_DIR/services"
 
 # APT #
@@ -76,9 +76,10 @@ fi
 ## -- Zig 0.15.2 (Ghostty depend on this)
 if [ ! -e /usr/local/bin/zig ]; then
   bash "$CUSTOM_DIR/zig/install.sh"
+  sudo ldconfig
 fi
 ## ------------------------------------------------
-## -- neovim 0.11.6
+## -- neovim 0.12.1
 if [ ! -e /usr/local/bin/nvim ]; then
   bash "$CUSTOM_DIR/neovim/build.sh" && bash "$CUSTOM_DIR/neovim/install.sh"
 fi
@@ -98,14 +99,14 @@ fi
 if [ ! -e /usr/local/bin/waybar ]; then
   bash "$CUSTOM_DIR/waybar/build.sh" && bash "$CUSTOM_DIR/waybar/install.sh"
 fi
-## -- wezterm 20260117-154428-05343b38
+## -- wezterm 577474d
 if [ ! -e /usr/local/bin/wezterm ]; then
   bash "$CUSTOM_DIR/wezterm/build.sh" && bash "$CUSTOM_DIR/wezterm/install.sh"
 fi
 ## -- ghostty 1.3.1
-if [ ! -e /usr/local/bin/ghostty ]; then
-  bash "$CUSTOM_DIR/ghostty/build.sh" && bash "$CUSTOM_DIR/ghostty/install.sh"
-fi
+# if [ ! -e /usr/local/bin/ghostty ]; then
+#   bash "$CUSTOM_DIR/ghostty/build.sh" && bash "$CUSTOM_DIR/ghostty/install.sh"
+# fi
 ## -- swaylock-effects 1.7.0.0
 if [ ! -e /usr/local/bin/swaylock ]; then
   bash "$CUSTOM_DIR/swaylock-effects/build.sh" && bash "$CUSTOM_DIR/swaylock-effects/install.sh"
@@ -125,6 +126,10 @@ fi
 ## -- Yazi 26.1.22
 if [ ! -e /usr/local/bin/yazi ]; then
   bash "$CUSTOM_DIR/yazi/build.sh" && bash "$CUSTOM_DIR/yazi/install.sh"
+fi
+## -- lswt
+if [ ! -e /usr/local/bin/lswt ]; then
+  bash "$CUSTOM_DIR/lswt/build.sh" && bash "$CUSTOM_DIR/lswt/install.sh"
 fi
 
 # Flatpak #
@@ -148,6 +153,10 @@ bash "$CONFIG_DIR/zsh/install.sh"
 bash "$CONFIG_DIR/tmux/install.sh"
 ## -- Neovim
 bash "$CONFIG_DIR/nvim/install.sh"
+## -- Pip
+bash "$CONFIG_DIR/pip/install.sh"
+## -- Condarc
+bash "$CONFIG_DIR/conda/install.sh"
 ## ------------------------------------------------
 ## -- Xdg Destop WLR Config
 bash "$CONFIG_DIR/xdg-desktop-portal-wlr/install.sh"
@@ -185,10 +194,15 @@ bash "$CONFIG_DIR/mpv/install.sh"
 bash "$CONFIG_DIR/pics/install.sh"
 ## -- Rofi
 bash "$CONFIG_DIR/rofi/install.sh"
-## -- Wechat (Flatpak Settings)
-bash "$CONFIG_DIR/wechat/install.sh"
 ## -- Wezterm
 bash "$CONFIG_DIR/wezterm/install.sh"
+## ------------------------------------------------
+## -- Wechat (Flatpak Settings)
+bash "$CONFIG_DIR/wechat/install.sh"
+## -- Firefox (Flatpak Settings)
+bash "$CONFIG_DIR/firefox/install.sh"
+## -- WPS 365 (Flatpak Settings)
+bash "$CONFIG_DIR/wps365/install.sh"
 
 # Scripts #
 echo "==== Scripts Installing ===="
@@ -230,16 +244,17 @@ bash "$SCRIPTS_DIR/wayfire-autostart/install.sh"
 bash "$SCRIPTS_DIR/wlroot-clipboard/install.sh"
 ## -- [mangowc-autostart] : Mangowc autostart script
 bash "$SCRIPTS_DIR/mangowc-autostart/install.sh"
+## -- [idle-lock-guard] : make idle only run when you lock screen (Wayland/X11)
+bash "$SCRIPTS_DIR/idle-lock-guard/install.sh"
 
-# Systemd #
-echo "==== Systemd Scripts Installing ===="
-## -- [idle-lock-guard.service] : make idle only run when you lock screen (Wayland/X11)
-bash "$SYSTEMD_DIR/idle-lock-guard/install.sh"
+# Openrc #
+echo "==== OpenRC Scripts Installing ===="
 ## -- [mihomo.service] : run mihomo 
 if [ ! -e "$HOME/clash" ]; then
   echo "You need to create $HOME/clash for using mihomo service"
+else
+  bash "$OPENRC_DIR/mihomo/install.sh"
 fi
-bash "$SYSTEMD_DIR/mihomo/install.sh"
 
 # Host Specify Things #
 echo "==== Host Specity Things Installing ===="
@@ -263,10 +278,6 @@ fi
 ## -- Virtual Machine
 # bash "$SERVICES_DIR/virt-machine/install.sh"
 
-
 ## Ending
-systemctl --user daemon-reload
-sudo systemctl daemon-reload
-
 sudo ldconfig
 echo "==== ALL DONE ! ===="

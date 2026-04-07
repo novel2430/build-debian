@@ -15,6 +15,7 @@ fi
 
 (
   cd "$target_dir"
+  git checkout 577474d
   rustup default stable
   git submodule update --init --recursive
   ./get-deps
