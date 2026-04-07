@@ -277,6 +277,8 @@ if [ -f "$HOST_FLATPAK_PACKAGE_FILE" ]; then
 fi
 ## -- Virtual Machine
 bash "$SERVICES_DIR/virt-machine/install.sh"
+## -- Wifi
+bash "$SERVICES_DIR/wifi/install.sh"
 
 ## Ending
 sudo ldconfig

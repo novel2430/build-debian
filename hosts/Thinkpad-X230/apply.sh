@@ -131,6 +131,12 @@ fi
 if [ ! -e /usr/local/bin/lswt ]; then
   bash "$CUSTOM_DIR/lswt/build.sh" && bash "$CUSTOM_DIR/lswt/install.sh"
 fi
+## -- auto-cpufreq
+if [ ! -e /usr/local/bin/auto-cpufreq ]; then
+  bash "$CUSTOM_DIR/auto-cpufreq/build.sh" && bash "$CUSTOM_DIR/auto-cpufreq/install.sh"
+  sudo rc-update add auto-cpufreq default
+  sudo rc-service auto-cpufreq start
+fi
 
 # Flatpak #
 echo "==== Flatpak Package Installing ===="
