@@ -11,6 +11,4 @@ sudo cp --verbose "$SCRIPT_DIR/NetworkManager.conf" /etc/NetworkManager/NetworkM
 sudo rc-service networking stop
 sudo rc-update del networking
 
-sudo rc-service network-manager stop
-sudo rc-service network-manager start
 sudo rc-update add network-manager default
