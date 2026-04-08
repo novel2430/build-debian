@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openbox_menu xmlns="https://openbox.org/" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://openbox.org/">
+  <menu id="root-menu" label="Menu">
+    <menu
+      id="often-menu"
+      label="Often"
+    >
+      <item label="Terminal">
+        <action name="Execute">
+          <execute>wezterm</execute>
+        </action>
+      </item>
+      <item label="Web Browser">
+        <action name="Execute">
+          <execute>org.mozilla.firefox</execute>
+        </action>
+      </item>
+      <item label="File">
+        <action name="Execute">
+          <execute>nemo</execute>
+        </action>
+      </item>
+      <item label="Spotify">
+        <action name="Execute">
+          <execute>com.spotify.Client</execute>
+        </action>
+      </item>
+      <item label="Wechat">
+        <action name="Execute">
+          <execute>com.tencent.WeChat</execute>
+        </action>
+      </item>
+      <item label="Emacs">
+        <action name="Execute">
+          <execute>emacs</execute>
+        </action>
+      </item>
+      <item label="WPS 365">
+        <action name="Execute">
+          <execute>cn.wps.wps_365</execute>
+        </action>
+      </item>
+    </menu>
+    <menu
+      id="screenshot-menu"
+      label="Screenshot"
+    >
+      <item label="Full Screenshot">
+        <action name="Execute">
+          <execute>grim-slurp-screenshot full</execute>
+        </action>
+      </item>
+      <item label="Select Screenshot">
+        <action name="Execute">
+          <execute>grim-slurp-screenshot select</execute>
+        </action>
+      </item>
+      <item label="Full then Edit Screenshot">
+        <action name="Execute">
+          <execute>grim-slurp-screenshot full-edit</execute>
+        </action>
+      </item>
+      <item label="Selct then Edit Screenshot">
+        <action name="Execute">
+          <execute>grim-slurp-screenshot select-edit</execute>
+        </action>
+      </item>
+    </menu>
+    <menu
+      id="tools-menu"
+      label="Tools"
+    >
+      <item label="Pipewire Volume Control">
+        <action name="Execute">
+          <execute>com.saivert.pwvucontrol</execute>
+        </action>
+      </item>
+      <item label="Network Editer">
+        <action name="Execute">
+          <execute>nm-connection-editor</execute>
+        </action>
+      </item>
+      <item label="Fcitx5 Configure">
+        <action name="Execute">
+          <execute>fcitx5-configtool</execute>
+        </action>
+      </item>
+    </menu>
+    <menu
+      id="games-menu"
+      label="Games"
+    >
+      <item label="Lutris">
+        <action name="Execute">
+          <execute>net.lutris.Lutris</execute>
+        </action>
+      </item>
+      <item label="Steam">
+        <action name="Execute">
+          <execute>com.valvesoftware.Steam</execute>
+        </action>
+      </item>
+      <item label="HMCL">
+        <action name="Execute">
+          <execute>hmcl</execute>
+        </action>
+      </item>
+      <item label="PPSSPP">
+        <action name="Execute">
+          <execute>org.ppsspp.PPSSPP</execute>
+        </action>
+      </item>
+      <item label="Ryujinx">
+        <action name="Execute">
+          <execute>io.github.ryubing.Ryujinx</execute>
+        </action>
+      </item>
+      <item label="Openttd">
+        <action name="Execute">
+          <execute>openttd</execute>
+        </action>
+      </item>
+    </menu>
+    <menu
+      id="media-menu"
+      label="Media"
+    >
+      <item label="VLC">
+        <action name="Execute">
+          <execute>vlc</execute>
+        </action>
+      </item>
+      <item label="Celluloid">
+        <action name="Execute">
+          <execute>io.github.celluloid_player.Celluloid</execute>
+        </action>
+      </item>
+      <item label="Spotify">
+        <action name="Execute">
+          <execute>com.spotify.Client</execute>
+        </action>
+      </item>
+    </menu>
+    <menu
+      id="other-menu"
+      label="Others"
+    >
+      <item label="OBS Studio">
+        <action name="Execute">
+          <execute>com.obsproject.Studio</execute>
+        </action>
+      </item>
+      <item label="Shotcut">
+        <action name="Execute">
+          <execute>org.shotcut.Shotcut</execute>
+        </action>
+      </item>
+      <item label="Motrix">
+        <action name="Execute">
+          <execute>net.agalwood.Motrix</execute>
+        </action>
+      </item>
+      <item label="Dingtalk">
+        <action name="Execute">
+          <execute>dingtalk-bin</execute>
+        </action>
+      </item>
+      <item label="Baidu Netdisk">
+        <action name="Execute">
+          <execute>baidunetdisk-bin</execute>
+        </action>
+      </item>
+      <item label="Tencent Wemeet">
+        <action name="Execute">
+          <execute>com.tencent.wemeet</execute>
+        </action>
+      </item>
+    </menu>
+    <menu
+      id="power-menu"
+      label="Power"
+    >
+      <item label="Lock">
+        <action name="Execute">
+          <execute>my-swaylock</execute>
+        </action>
+      </item>
+      <item label="Reboot">
+        <action name="Execute">
+          <execute>loginctl reboot</execute>
+        </action>
+      </item>
+      <item label="Back to TTY">
+        <action name="Exit">
+          <prompt>no</prompt>
+        </action>
+      </item>
+      <item label="Log out">
+        <action name="Execute">
+          <execute>pkill -KILL -u "$USER"</execute>
+        </action>
+      </item>
+      <item label="Shutdown Now">
+        <action name="Execute">
+          <execute>loginctl poweroff</execute>
+        </action>
+      </item>
+    </menu>
+    <item label="Reconfigure">
+      <action name="Reconfigure"/>
+    </item>
+  </menu>
+</openbox_menu>

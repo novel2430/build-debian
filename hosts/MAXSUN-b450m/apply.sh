@@ -119,6 +119,10 @@ fi
 if [ ! -e /usr/local/bin/wayfire ]; then
   bash "$CUSTOM_DIR/wayfire/build.sh" && bash "$CUSTOM_DIR/wayfire/install.sh"
 fi
+## -- lswt
+if [ ! -e /usr/local/bin/labwc ]; then
+  bash "$CUSTOM_DIR/labwc/build.sh" && bash "$CUSTOM_DIR/labwc/install.sh"
+fi
 ## -- emacs 29.4
 if [ ! -e /usr/local/bin/emacs ]; then
   bash "$CUSTOM_DIR/emacs29/build.sh" && bash "$CUSTOM_DIR/emacs29/install.sh"
@@ -178,6 +182,8 @@ bash "$CONFIG_DIR/mangowc/install.sh"
 bash "$CONFIG_DIR/openbox/install.sh"
 ## -- Wayfire (Wayfire config, waybar)
 bash "$CONFIG_DIR/wayfire/install.sh"
+## -- labwc
+bash "$CONFIG_DIR/labwc/install.sh"
 ## -- xinitrc & Xresources
 if [[ -e "$CUR_DIR/.xinitrc" && ! -e "$HOME/.xinitrc" ]]; then
   ln -s "$CUR_DIR/.xinitrc" "$HOME/.xinitrc"

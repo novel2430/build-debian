@@ -1,0 +1,398 @@
+<?xml version="1.0"?>
+<labwc_config>
+  <core>
+    <decoration>server</decoration>
+    <gap>0</gap>
+    <adaptiveSync>no</adaptiveSync>
+    <allowTearing>no</allowTearing>
+    <autoEnableOutputs>yes</autoEnableOutputs>
+    <reuseOutputMode>no</reuseOutputMode>
+    <xwaylandPersistence>no</xwaylandPersistence>
+  </core>
+
+  <placement>
+    <policy>cascade</policy>
+  </placement>
+
+  <theme>
+    <name>mytheme</name>
+    <icon>Papirus</icon>
+    <fallbackAppIcon>labwc</fallbackAppIcon>
+    <titlebar>
+      <layout>icon:max,close</layout>
+      <showTitle>yes</showTitle>
+    </titlebar>
+    <cornerRadius>0</cornerRadius>
+    <keepBorder>yes</keepBorder>
+    <dropShadows>no</dropShadows>
+    <font place="ActiveWindow">
+      <name>Hack Nerd Font</name>
+      <size>12</size>
+      <slant>normal</slant>
+      <weight>normal</weight>
+    </font>
+    <font place="InactiveWindow">
+      <name>Hack Nerd Font</name>
+      <size>12</size>
+      <slant>normal</slant>
+      <weight>normal</weight>
+    </font>
+    <font place="MenuHeader">
+      <name>Hack Nerd Font</name>
+      <size>10</size>
+      <slant>normal</slant>
+      <weight>normal</weight>
+    </font>
+    <font place="MenuItem">
+      <name>Hack Nerd Font</name>
+      <size>10</size>
+      <slant>normal</slant>
+      <weight>normal</weight>
+    </font>
+    <font place="OnScreenDisplay">
+      <name>Hack Nerd Font</name>
+      <size>10</size>
+      <slant>normal</slant>
+      <weight>normal</weight>
+    </font>
+  </theme>
+
+  <windowSwitcher show="no" preview="yes" outlines="yes" allWorkspaces="no">
+    <fields>
+      <field content="icon" width="5%" />
+      <field content="desktop_entry_name" width="30%" />
+      <field content="title" width="65%" />
+    </fields>
+  </windowSwitcher>
+
+  <!-- edge strength is in pixels -->
+  <resistance>
+    <screenEdgeStrength>20</screenEdgeStrength>
+    <windowEdgeStrength>20</windowEdgeStrength>
+    <!-- resistance for maximized/tiled windows -->
+    <unSnapThreshold>20</unSnapThreshold>
+    <!-- resistance for vertically/horizontally maximized windows -->
+    <unMaximizeThreshold>150</unMaximizeThreshold>
+  </resistance>
+
+  <resize>
+    <popupShow>Never</popupShow>
+    <drawContents>yes</drawContents>
+    <minimumArea>8</minimumArea>
+  </resize>
+
+  <focus>
+    <followMouse>no</followMouse>
+    <followMouseRequiresMovement>yes</followMouseRequiresMovement>
+    <raiseOnFocus>no</raiseOnFocus>
+  </focus>
+
+  <snapping>
+    <range>10</range>
+    <overlay enabled="yes">
+      <delay inner="500" outer="500" />
+    </overlay>
+    <topMaximize>yes</topMaximize>
+    <notifyClient>always</notifyClient>
+  </snapping>
+
+  <desktops>
+    <popupTime>0</popupTime>
+    <names>
+      <name>1</name>
+      <name>2</name>
+      <name>3</name>
+      <name>4</name>
+      <name>5</name>
+      <name>6</name>
+      <name>7</name>
+      <name>8</name>
+      <name>9</name>
+    </names>
+  </desktops>
+
+  <keyboard>
+    <layoutScope>global</layoutScope>
+    <repeatRate>50</repeatRate>
+    <repeatDelay>300</repeatDelay>
+    <keybind key="A-Tab">
+      <action name="NextWindow" />
+    </keybind>
+    <keybind key="A-S-Tab">
+      <action name="PreviousWindow" />
+    </keybind>
+    <keybind key="W-j">
+      <action name="NextWindow" />
+    </keybind>
+    <keybind key="W-k">
+      <action name="PreviousWindow" />
+    </keybind>
+    <!-- Application -->
+    <keybind key="W-Return">
+      <action name="Execute" command="wezterm" />
+    </keybind>
+    <keybind key="W-d">
+      <action name="Execute" command="rofi -show drun" />
+    </keybind>
+    <keybind key="W-r">
+      <action name="Execute" command="rofi -show run" />
+    </keybind>
+    <keybind key="W-S-f">
+      <action name="Execute" command="org.mozilla.firefox" />
+    </keybind>
+    <keybind key="W-c">
+      <action name="Execute" command="wlroot-clipboard"/>
+    </keybind>
+    <keybind key="W-S-l">
+      <action name="Execute" command="my-swaylock"/>
+    </keybind>
+    <keybind key="W-S-p">
+      <action name="Execute" command="rofi-power-menu"/>
+    </keybind>
+    <!-- Maybe Sticky? -->
+    <!-- <keybind key="W-S-s"> -->
+    <!--   <action name="ToggleOmnipresent" /> -->
+    <!-- </keybind> -->
+    <keybind key="W-f">
+      <action name="ToggleFullscreen" />
+    </keybind>
+    <keybind key="W-q">
+      <action name="Close" />
+    </keybind>
+    <keybind key="W-S-e">
+      <action name="Exit" />
+    </keybind>
+    <keybind key="W-S-r">
+      <action name="Reconfigure" />
+    </keybind>
+    <keybind key="W-m">
+      <action name="ToggleMaximize" />
+    </keybind>
+    <keybind key="W-Left">
+      <action name="SnapToEdge" direction="left" />
+    </keybind>
+    <keybind key="W-Right">
+      <action name="SnapToEdge" direction="right" />
+    </keybind>
+    <keybind key="W-Up">
+      <action name="SnapToEdge" direction="up" />
+    </keybind>
+    <keybind key="W-Down">
+      <action name="SnapToEdge" direction="down" />
+    </keybind>
+    <keybind key="XF86_AudioLowerVolume">
+      <action name="Execute" command="my-volume down" />
+    </keybind>
+    <keybind key="XF86_AudioRaiseVolume">
+      <action name="Execute" command="my-volume up" />
+    </keybind>
+    <keybind key="XF86_AudioMute">
+      <action name="Execute" command="my-volume mute" />
+    </keybind>
+    <keybind key="XF86_AudioPlay">
+      <action name="Execute" command="playerctl play-pause" />
+    </keybind>
+    <keybind key="XF86_AudioNext">
+      <action name="Execute" command="playerctl next" />
+    </keybind>
+    <keybind key="XF86_AudioPrev">
+      <action name="Execute" command="playerctl previous" />
+    </keybind>
+    <keybind key="XF86_MonBrightnessUp">
+      <action name="Execute" command="brightnessctl set +10%" />
+    </keybind>
+    <keybind key="XF86_MonBrightnessDown">
+      <action name="Execute" command="brightnessctl set 10%-" />
+    </keybind>
+    <keybind key="Print">
+      <action name="Execute" command="grim-slurp-screenshot full" />
+    </keybind>
+    <keybind key="W-Print">
+      <action name="Execute" command="grim-slurp-screenshot" />
+    </keybind>
+    <keybind key="W-S-s">
+      <action name="Execute" command="grim-slurp-screenshot" />
+    </keybind>
+  <!-- Workspace -->
+    <keybind key="W-C-Left">
+      <action name="GoToDesktop" to="left" wrap="yes" />
+    </keybind>
+    <keybind key="W-C-Right">
+      <action name="GoToDesktop" to="right" wrap="yes" />
+    </keybind>
+    <keybind key="W-C-K">
+      <action name="GoToDesktop" to="left" wrap="yes" />
+    </keybind>
+    <keybind key="W-C-J">
+      <action name="GoToDesktop" to="right" wrap="yes" />
+    </keybind>
+    <keybind key="W-1">
+      <action name="GoToDesktop" to="1" wrap="yes" />
+    </keybind>
+    <keybind key="W-2">
+      <action name="GoToDesktop" to="2" wrap="yes" />
+    </keybind>
+    <keybind key="W-3">
+      <action name="GoToDesktop" to="3" wrap="yes" />
+    </keybind>
+    <keybind key="W-4">
+      <action name="GoToDesktop" to="4" wrap="yes" />
+    </keybind>
+    <keybind key="W-5">
+      <action name="GoToDesktop" to="5" wrap="yes" />
+    </keybind>
+    <keybind key="W-6">
+      <action name="GoToDesktop" to="6" wrap="yes" />
+    </keybind>
+    <keybind key="W-7">
+      <action name="GoToDesktop" to="7" wrap="yes" />
+    </keybind>
+    <keybind key="W-8">
+      <action name="GoToDesktop" to="8" wrap="yes" />
+    </keybind>
+    <keybind key="W-9">
+      <action name="GoToDesktop" to="9" wrap="yes" />
+    </keybind>
+    <keybind key="W-S-1">
+      <action name="SendToDesktop" follow="no" to="1" wrap="yes" />
+    </keybind>
+    <keybind key="W-S-2">
+      <action name="SendToDesktop" follow="no" to="2" wrap="yes" />
+    </keybind>
+    <keybind key="W-S-3">
+      <action name="SendToDesktop" follow="no" to="3" wrap="yes" />
+    </keybind>
+    <keybind key="W-S-4">
+      <action name="SendToDesktop" follow="no" to="4" wrap="yes" />
+    </keybind>
+    <keybind key="W-S-5">
+      <action name="SendToDesktop" follow="no" to="5" wrap="yes" />
+    </keybind>
+    <keybind key="W-S-6">
+      <action name="SendToDesktop" follow="no" to="6" wrap="yes" />
+    </keybind>
+    <keybind key="W-S-7">
+      <action name="SendToDesktop" follow="no" to="7" wrap="yes" />
+    </keybind>
+    <keybind key="W-S-8">
+      <action name="SendToDesktop" follow="no" to="8" wrap="yes" />
+    </keybind>
+    <keybind key="W-S-9">
+      <action name="SendToDesktop" follow="no" to="9" wrap="yes" />
+    </keybind>
+  </keyboard>
+
+  <mouse>
+
+    <!-- time is in ms -->
+    <doubleClickTime>500</doubleClickTime>
+
+    <context name="TitleBar">
+      <mousebind button="Left" action="Press">
+        <action name="Focus" />
+        <action name="Raise" />
+      </mousebind>
+      <mousebind button="Right" action="Click">
+        <action name="Focus" />
+        <action name="Raise" />
+      </mousebind>
+    </context>
+
+    <context name="Title">
+      <mousebind button="Left" action="Drag">
+        <action name="Move" />
+      </mousebind>
+      <mousebind button="Left" action="DoubleClick">
+        <action name="ToggleMaximize" />
+      </mousebind>
+    </context>
+
+    <context name="Maximize">
+      <mousebind button="Left" action="Click">
+        <action name="ToggleMaximize" />
+      </mousebind>
+    </context>
+
+    <context name="Iconify">
+      <mousebind button="Left" action="Click">
+        <action name="Iconify" />
+      </mousebind>
+    </context>
+
+    <context name="Close">
+      <mousebind button="Left" action="Click">
+        <action name="Close" />
+      </mousebind>
+    </context>
+
+    <context name="Client">
+      <mousebind button="Left" action="Press">
+        <action name="Focus" />
+      </mousebind>
+      <mousebind button="W-Right" action="Drag">
+        <action name="Resize" />
+      </mousebind>
+      <mousebind button="W-Left" action="Drag">
+        <action name="Move" />
+      </mousebind>
+    </context>
+
+    <context name="Root">
+      <mousebind button="Left" action="Press">
+        <action name="ShowMenu" menu="root-menu" />
+      </mousebind>
+      <mousebind button="Right" action="Press">
+        <action name="ShowMenu" menu="root-menu" />
+      </mousebind>
+      <mousebind button="Middle" action="Press">
+        <action name="ShowMenu" menu="root-menu" />
+      </mousebind>
+    </context>
+  </mouse>
+
+  <touch deviceName="" mapToOutput="" mouseEmulation="no"/>
+
+  <tablet mapToOutput="" rotate="0" mouseEmulation="no">
+    <!-- Active area dimensions are in mm -->
+    <area top="0.0" left="0.0" width="0.0" height="0.0" />
+    <map button="Tip" to="Left" />
+    <map button="Stylus" to="Right" />
+    <map button="Stylus2" to="Middle" />
+  </tablet>
+
+  <tabletTool motion="absolute" relativeMotionSensitivity="1.0" />
+
+  <libinput>
+    <device category="default">
+      <naturalScroll></naturalScroll>
+      <leftHanded></leftHanded>
+      <pointerSpeed></pointerSpeed>
+      <accelProfile></accelProfile>
+      <tap>yes</tap>
+      <tapButtonMap></tapButtonMap>
+      <tapAndDrag></tapAndDrag>
+      <dragLock></dragLock>
+      <middleEmulation></middleEmulation>
+      <disableWhileTyping></disableWhileTyping>
+      <clickMethod></clickMethod>
+      <scrollMethod></scrollMethod>
+      <sendEventsMode></sendEventsMode>
+      <calibrationMatrix></calibrationMatrix>
+      <scrollFactor>1.0</scrollFactor>
+    </device>
+  </libinput>
+
+  <menu>
+    <ignoreButtonReleasePeriod>250</ignoreButtonReleasePeriod>
+    <showIcons>yes</showIcons>
+  </menu>
+
+  <magnifier>
+    <width>400</width>
+    <height>400</height>
+    <initScale>2.0</initScale>
+    <increment>0.2</increment>
+    <useFilter>true</useFilter>
+  </magnifier>
+
+</labwc_config>

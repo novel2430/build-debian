@@ -14,3 +14,4 @@ timeshift
 # window manager
 
 # others
+steam-devices
