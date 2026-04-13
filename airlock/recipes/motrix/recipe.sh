@@ -24,19 +24,5 @@ stage_prepare() {
 }
 
 track_install() {
-  local deb="$track_source_file"
-
-  [ -f "$deb" ] || al_die "Downloaded .deb not found: $deb"
-
-  track_package_name="$(dpkg-deb -f "$deb" Package)" || return 1
-  track_package_version="$(dpkg-deb -f "$deb" Version)" || return 1
-
-  track_query_cmd="dpkg -s $(printf '%q' "$track_package_name")"
-  track_remove_cmd="dpkg -r $(printf '%q' "$track_package_name")"
-  track_install_cmd="apt install -y $(printf '%q' "$deb")"
-
-  export track_package_name track_package_version
-  export track_query_cmd track_remove_cmd track_install_cmd
-
-  al_run_with_optional_sudo apt install -y "$deb" || return 1
+  al_tracked_install_deb_with_apt "$track_source_file"
 }

@@ -25,24 +25,14 @@ stage_prepare() {
 
 track_install() {
   local deb="$track_source_file"
-
-
-  [ -f "$deb" ] || al_die "Downloaded .deb not found: $deb"
-
-  track_package_name="$(dpkg-deb -f "$deb" Package)" || return 1
-  track_package_version="$(dpkg-deb -f "$deb" Version)" || return 1
-
-  local cutom_bin="/usr/local/bin/baidunetdisk"
+  local custom_bin="/usr/local/bin/baidunetdisk"
   local desktop_dir="/usr/share/applications/baidunetdisk.desktop"
 
-  track_query_cmd="dpkg -s $(printf '%q' "$track_package_name")"
-  track_remove_cmd="dpkg -r $(printf '%q' "$track_package_name"); rm -rf $cutom_bin"
-  track_install_cmd="apt install -y $(printf '%q' "$deb")"
+  al_tracked_install_deb_with_apt "$deb" || return 1
 
-  export track_package_name track_package_version
-  export track_query_cmd track_remove_cmd track_install_cmd
-
-  al_run_with_optional_sudo apt install -y "$deb" || return 1
+  # Keep the custom wrapper cleanup behavior on remove.
+  track_remove_cmd="$track_remove_cmd; rm -rf $(printf '%q' "$custom_bin")"
+  export track_remove_cmd
 
   # Building Bin
   touch "/tmp/$pkg_name" 
@@ -51,8 +41,8 @@ track_install() {
 cd /opt/baidunetdisk
 GDK_BACKEND=x11 HOME="${HOME:-/tmp}/.local/share/baidu" ./baidunetdisk "$@"
 EOF
-  sudo cp "/tmp/$pkg_name" "$cutom_bin"
-  sudo chmod +x "$cutom_bin"
+  sudo cp "/tmp/$pkg_name" "$custom_bin"
+  sudo chmod +x "$custom_bin"
 
   # Wrinting Desktop File
   touch "/tmp/$pkg_name.desktop"

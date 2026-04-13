@@ -33,7 +33,5 @@ stage_build() {
 stage_stage() {
   DESTDIR="$STAGE_DIR" meson install -C "$BUILDDIR"
 
-  al_make_wrapper \
-    "$STAGE_DIR$PREFIX/bin/annotator" \
-    "\"$PREFIX/bin/com.github.phase1geo.annotator\""
+  al_stage_install_cmd_wrapper "annotator" "bin/com.github.phase1geo.annotator"
 }

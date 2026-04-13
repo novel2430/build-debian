@@ -21,6 +21,28 @@ al_resolve_recipe_path() {
   al_die "Recipe not found: $target"
 }
 
+# Clear known recipe lifecycle hooks before loading the next recipe file.
+#
+# Recipes are sourced into the current shell on purpose so stages can share
+# variables. This cleanup only removes stage/track function names that may be
+# left over from a previously loaded recipe in the same process.
+al_clear_recipe_lifecycle_functions() {
+  local fn
+
+  for fn in \
+    stage_acquire \
+    stage_prepare \
+    stage_patch \
+    stage_configure \
+    stage_build \
+    stage_stage \
+    track_install \
+    track_remove
+  do
+    unset -f "$fn" 2>/dev/null || true
+  done
+}
+
 al_load_recipe() {
   local recipe_path="$1"
 
@@ -34,6 +56,9 @@ al_load_recipe() {
 
   RECIPE_DIR="$(cd "$(dirname "$recipe_path")" && pwd)"
   export RECIPE_DIR
+
+  # Prevent stale lifecycle hooks from a previously sourced recipe.
+  al_clear_recipe_lifecycle_functions
 
   # shellcheck source=/dev/null
   . "$recipe_path"

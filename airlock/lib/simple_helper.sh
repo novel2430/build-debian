@@ -21,6 +21,43 @@
 #     al_fetch_url
 #     al_mkdir
 
+# -----------------------------------------------------------------------------
+# al_stage_path
+#
+# Resolve a destination path under the current stage tree.
+#
+# Parameters:
+#   $1 - Destination path relative to PREFIX
+#
+# Behavior:
+# - Rejects empty paths and absolute paths
+# - Rejects parent traversal components (`..`) to keep staging bounded
+# - Prints the resolved path:
+#     $STAGE_DIR$PREFIX/<dest_relpath>
+#
+# Notes:
+# - Recipes should pass stable, explicit destination paths.
+# - This helper centralizes validation shared by stage install helpers.
+# -----------------------------------------------------------------------------
+al_stage_path() {
+  local dest_relpath="$1"
+
+  [ -n "$dest_relpath" ] || al_die "al_stage_path: missing destination path"
+
+  case "$dest_relpath" in
+    /*)
+      al_die "al_stage_path: destination must be relative to PREFIX: $dest_relpath"
+      ;;
+  esac
+
+  case "/$dest_relpath/" in
+    */../*|*/..)
+      al_die "al_stage_path: destination cannot contain parent traversal: $dest_relpath"
+      ;;
+  esac
+
+  printf '%s\n' "$STAGE_DIR$PREFIX/$dest_relpath"
+}
 
 # -----------------------------------------------------------------------------
 # al_fetch_cached_url
@@ -176,16 +213,9 @@ al_stage_install_dir() {
   local dest
 
   [ -n "$src" ] || al_die "al_stage_install_dir: missing source directory"
-  [ -n "$dest_relpath" ] || al_die "al_stage_install_dir: missing destination path"
   [ -d "$src" ] || al_die "al_stage_install_dir: source is not a directory: $src"
 
-  case "$dest_relpath" in
-    /*)
-      al_die "al_stage_install_dir: destination must be relative to PREFIX: $dest_relpath"
-      ;;
-  esac
-
-  dest="$STAGE_DIR$PREFIX/$dest_relpath"
+  dest="$(al_stage_path "$dest_relpath")" || return 1
   al_mkdir "$dest" || return 1
 
   # Copy directory recursively, preserve attributes
@@ -230,17 +260,9 @@ al_stage_install_file() {
   local dest
 
   [ -n "$src" ] || al_die "al_stage_install_file: missing source path"
-  [ -n "$dest_relpath" ] || al_die "al_stage_install_file: missing destination path"
-
   [ -e "$src" ] || al_die "al_stage_install_file: source does not exist: $src"
 
-  case "$dest_relpath" in
-    /*)
-      al_die "al_stage_install_file: destination must be relative to PREFIX: $dest_relpath"
-      ;;
-  esac
-
-  dest="$STAGE_DIR$PREFIX/$dest_relpath"
+  dest="$(al_stage_path "$dest_relpath")" || return 1
   al_mkdir "$(dirname "$dest")" || return 1
 
   install -Dm"$mode" "$src" "$dest" || return 1
@@ -291,7 +313,7 @@ al_stage_install_icon() {
     [ -n "$ext" ] || al_die "al_stage_install_icon: failed to infer extension from: $src"
   fi
 
-  dest="$STAGE_DIR$PREFIX/share/icons/hicolor/$size_dir/apps/$icon_name.$ext"
+  dest="$(al_stage_path "share/icons/hicolor/$size_dir/apps/$icon_name.$ext")" || return 1
   al_mkdir "$(dirname "$dest")" || return 1
 
   install -Dm644 "$src" "$dest" || return 1
@@ -332,7 +354,7 @@ al_stage_write_desktop_entry() {
 
   [ -n "$name" ] || al_die "al_stage_write_desktop_entry: missing desktop entry name"
 
-  dest="$STAGE_DIR$PREFIX/share/applications/$name.desktop"
+  dest="$(al_stage_path "share/applications/$name.desktop")" || return 1
   al_mkdir "$(dirname "$dest")" || return 1
 
   cat > "$dest" || return 1
@@ -363,17 +385,93 @@ al_stage_write_desktop_entry() {
 al_stage_install_wrapper() {
   local dest="$1"
   local mode="${2:-755}"
-  local full="$STAGE_DIR$PREFIX/$dest"
+  local full
 
   [ -n "$dest" ] || al_die "al_stage_install_wrapper: missing destination path"
+  full="$(al_stage_path "$dest")" || return 1
 
   al_mkdir "$(dirname "$full")" || return 1
 
   # Write wrapper script content from stdin
   cat > "$full" || return 1
 
-  # Set executable permissions
-  chmod +x "$full" || return 1
+  # Apply the caller-provided mode for explicit permission control.
+  chmod "$mode" "$full" || return 1
 
   al_log_info "Installed wrapper: $full"
+}
+
+# -----------------------------------------------------------------------------
+# al_stage_install_cmd_wrapper
+#
+# Install a command wrapper that executes a staged payload under PREFIX.
+#
+# Parameters:
+#   $1 - Command name under PREFIX/bin (e.g., "wezterm")
+#   $2 - Target path relative to PREFIX (e.g., "opt/foo/Foo.AppImage")
+#
+# Behavior:
+# - Creates wrapper at $STAGE_DIR$PREFIX/bin/<command_name>
+# - The wrapper executes "$PREFIX/<target_relpath>" "$@"
+#
+# Notes:
+# - This helper is intentionally small and only covers the common
+#   "expose staged payload as command" pattern.
+# -----------------------------------------------------------------------------
+al_stage_install_cmd_wrapper() {
+  local command_name="$1"
+  local target_relpath="$2"
+
+  [ -n "$command_name" ] || al_die "al_stage_install_cmd_wrapper: missing command name"
+  [ -n "$target_relpath" ] || al_die "al_stage_install_cmd_wrapper: missing target path"
+
+  case "$target_relpath" in
+    /*)
+      al_die "al_stage_install_cmd_wrapper: target path must be relative to PREFIX: $target_relpath"
+      ;;
+  esac
+
+  al_stage_install_wrapper "bin/$command_name" <<EOF
+#!/usr/bin/env bash
+exec "$PREFIX/$target_relpath" "\$@"
+EOF
+}
+
+# -----------------------------------------------------------------------------
+# al_tracked_install_deb_with_apt
+#
+# Perform the common tracked .deb install flow for deb-apt recipes.
+#
+# Parameters:
+#   $1 - Path to the downloaded .deb file
+#
+# Behavior:
+# - Reads package metadata from the .deb
+# - Populates and exports tracked metadata fields
+# - Installs the package through apt with optional sudo
+#
+# Notes:
+# - Use this helper when tracked recipes only need the default apt flow.
+# - Recipes with extra post-install steps can call this helper first and then
+#   perform their additional actions.
+# -----------------------------------------------------------------------------
+al_tracked_install_deb_with_apt() {
+  local deb="$1"
+
+  [ -n "$deb" ] || al_die "al_tracked_install_deb_with_apt: missing deb path"
+  [ -f "$deb" ] || al_die "Downloaded .deb not found: $deb"
+  al_require_cmd dpkg-deb
+  al_require_cmd apt
+
+  track_package_name="$(dpkg-deb -f "$deb" Package)" || return 1
+  track_package_version="$(dpkg-deb -f "$deb" Version)" || return 1
+
+  track_query_cmd="dpkg -s $(printf '%q' "$track_package_name")"
+  track_remove_cmd="dpkg -r $(printf '%q' "$track_package_name")"
+  track_install_cmd="apt install -y $(printf '%q' "$deb")"
+
+  export track_package_name track_package_version
+  export track_query_cmd track_remove_cmd track_install_cmd
+
+  al_run_with_optional_sudo apt install -y "$deb" || return 1
 }

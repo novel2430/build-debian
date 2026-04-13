@@ -27,9 +27,7 @@ stage_stage() {
   local optdir="opt/$pkg_name"
   al_stage_install_file "$SRCDIR/$pkg_name.AppImage" "$optdir/$pkg_name.AppImage"
 
-  al_make_wrapper \
-    "$STAGE_DIR$PREFIX/bin/vita3k" \
-    "\"$PREFIX/$optdir/$pkg_name.AppImage\""
+  al_stage_install_cmd_wrapper "vita3k" "$optdir/$pkg_name.AppImage"
 
   al_stage_install_icon "$SRCDIR/$pkg_name.png" "128x128" "vita3k" "png"
 
