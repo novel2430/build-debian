@@ -17,12 +17,15 @@ gsettings set org.gnome.desktop.interface icon-theme 'Papirus'
 (
   unset WAYLAND_DISPLAY
   env XDG_CURRENT_DESKTOP=openbox \
-    dbus-update-activation-environment --systemd DISPLAY XAUTHORITY XDG_CURRENT_DESKTOP
+    dbus-update-activation-environment --systemd DISPLAY XAUTHORITY XDG_CURRENT_DESKTOP DBUS_SESSION_BUS_ADDRESS
 )
-systemctl --user stop xdg-desktop-portal xdg-desktop-portal-gtk xdg-desktop-portal-wlr
-systemctl --user restart pipewire pipewire-pulse wireplumber
-systemctl --user restart xdg-desktop-portal-gtk
-systemctl --user restart xdg-desktop-portal
+killall pipewire; /usr/bin/pipewire &
+killall wireplumber; /usr/bin/wireplumber &
+killall pipewire-pulse; /usr/bin/pipewire-pulse &
+pgrep -x xdg-document-portal >/dev/null || /usr/libexec/xdg-document-portal &
+pgrep -x xdg-desktop-portal >/dev/null || /usr/libexec/xdg-desktop-portal &
+pgrep -x xdg-desktop-portal-gtk >/dev/null || /usr/libexec/xdg-desktop-portal-gtk &
+pgrep -x xdg-desktop-portal-gtk >/dev/null || /usr/libexec/xdg-desktop-portal-wlr &
 # Bar <Polybar>
 polybar-openbox-launch &
 # Sxhkd
@@ -40,4 +43,4 @@ nm-applet &
 # For Wemeet
 flatpak override --user --unset-env=LD_PRELOAD com.tencent.wemeet &
 
-systemctl --user restart idle-lock-guard.service
+kill -TERM $(pgrep -f idle-lock-guard) 2>/dev/null; idle-lock-guard > $HOME/.log/idle-lock-guard/idle-lock-guard.log 2>&1 &

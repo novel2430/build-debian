@@ -10,6 +10,7 @@ timeshift
 # desktop cli
 
 # desktop gui
+audacity
 
 # window manager
 

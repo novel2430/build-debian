@@ -1,10 +1,1 @@
-org.gnome.clocks
-net.lutris.Lutris
-com.valvesoftware.Steam
-org.ppsspp.PPSSPP
-org.audacityteam.Audacity
-org.shotcut.Shotcut
-org.gnome.World.Iotas
-net.agalwood.Motrix
-io.github.ryubing.Ryujinx
-com.vysp3r.ProtonPlus
+

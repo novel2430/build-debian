@@ -25,7 +25,7 @@ take_select() {
 
 do_edit() {
   # 若需要阻塞直到编辑完成，保持前台；否则可在末尾加 &。
-  cat "${file_name}" | be.alexandervanhee.gradia &
+  cat "${file_name}" | com.github.phase1geo.annotator -i &
 }
 
   pick="${1:-}"

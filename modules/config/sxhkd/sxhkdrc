@@ -1,6 +1,6 @@
 # Web Browser
 super + shift + f
-  org.mozilla.firefox
+  firefox
 
 # Lock
 super + shift + l

@@ -138,7 +138,7 @@
       <action name="Execute" command="rofi -show run" />
     </keybind>
     <keybind key="W-S-f">
-      <action name="Execute" command="org.mozilla.firefox" />
+      <action name="Execute" command="firefox" />
     </keybind>
     <keybind key="W-c">
       <action name="Execute" command="wlroot-clipboard"/>

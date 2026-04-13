@@ -18,6 +18,7 @@ fi
   git checkout 0.15.0
   rm -rf build
   meson setup build --prefix=/usr/local \
+    -Dtests=disabled \
     --buildtype=release \
     -Dexperimental=true \
     -Dniri=true \

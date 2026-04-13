@@ -19,10 +19,14 @@ gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 gsettings set org.gnome.desktop.interface icon-theme 'Papirus'
 # xdg-portal
 export XDG_CURRENT_DESKTOP=wlroots
-dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP DISPLAY XAUTHORITY
+dbus-update-activation-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP DISPLAY XAUTHORITY DBUS_SESSION_BUS_ADDRESS
 killall pipewire; /usr/bin/pipewire &
 killall wireplumber; /usr/bin/wireplumber &
 killall pipewire-pulse; /usr/bin/pipewire-pulse &
+pgrep -x xdg-document-portal >/dev/null || /usr/libexec/xdg-document-portal &
+pgrep -x xdg-desktop-portal >/dev/null || /usr/libexec/xdg-desktop-portal &
+pgrep -x xdg-desktop-portal-gtk >/dev/null || /usr/libexec/xdg-desktop-portal-gtk &
+pgrep -x xdg-desktop-portal-gtk >/dev/null || /usr/libexec/xdg-desktop-portal-wlr &
 # Swayidle
 # my-swayidle &
 # IME

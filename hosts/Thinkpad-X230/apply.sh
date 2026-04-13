@@ -45,6 +45,14 @@ fi
 if [ ! -e "$HOME/.local/bin/openttd" ]; then
   bash "$CUSTOM_DIR/openttd/install.sh"
 fi
+## -- Codex
+if [ ! -e "$HOME/.nvm/versions/node/v25.9.0/bin/codex" ]; then
+  bash "$CUSTOM_DIR/codex/install.sh"
+fi
+## -- Image roll
+if [ ! -e "/usr/bin/image-roll" ]; then
+  bash "$CUSTOM_DIR/image-roll/install.sh"
+fi
 
 # Custom - Build and Install #
 echo "==== Custom Package (Build) Installing ===="

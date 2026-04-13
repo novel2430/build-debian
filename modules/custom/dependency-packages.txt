@@ -19,13 +19,20 @@ patchelf
 flatpak-builder
 blueprint-compiler
 cmake-extras
+mesa-common-dev
 
 # =========================
 # X11 / Wayland / WM
 libx11-dev
+libxext-dev
+libxrender-dev
+libxau-dev
+libxdmcp-dev
 libxaw7-dev
 libxpm-dev
 libxrandr-dev
+libpciaccess-dev
+libxfixes-dev
 libxi-dev
 xcb-proto
 libxcb1-dev
@@ -63,6 +70,8 @@ libdisplay-info-dev
 libliftoff-dev
 liblcms2-dev
 libxkbregistry-dev
+libgl1-mesa-dev
+libglx-mesa0
 
 # =========================
 # Image / Font / GUI / Audio
@@ -86,6 +95,8 @@ libadwaita-1-dev
 libgtk-4-dev
 libgtk-layer-shell-dev
 libgtk4-layer-shell-dev
+libpipewire-0.3-dev
+libwireplumber-0.5-dev
 
 # =========================
 # System
@@ -135,3 +146,16 @@ libspdlog-dev
 libiniparser-dev
 libfftw3-dev
 libxml2-utils
+libudev-dev
+xkb-data
+libunwind-dev
+python-gi-dev
+libgtksourceview-5-dev
+libportal-dev
+python3-pil
+valac
+libgee-0.8-dev
+libgranite-7-dev
+libarchive-dev
+libjson-glib-dev
+libgweather-4-dev

@@ -3,7 +3,7 @@
 set -euo pipefail
 
 repo_url="https://github.com/sxyazi/yazi.git"
-target_dir="$HOME/src/yazi"
+target_dir="/tmp/yazi"
 
 # Clone
 if [[ -d "$target_dir" ]]; then

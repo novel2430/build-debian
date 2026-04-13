@@ -6,7 +6,7 @@ HMCL_OPT_DIR="$HOME/.local/opt/hmcl"
 HMCL_VERSION="3.12.2"
 HMCL_JAR_DIR="$HMCL_OPT_DIR/HMCL-$HMCL_VERSION.jar"
 HMCL_ICON_DIR="$LOCAL_ICON_DIR/hmcl.png"
-HMCL_DESKTOP_DIR="$LOCAL_DESKTOP_DIR/HMCL.desktop"
+HMCL_DESKTOP_DIR="$LOCAL_DESKTOP_DIR/org.jackhuang.hmcl.Launcher.desktop"
 HMCL_BIN_DIR="$HOME/.local/bin/hmcl"
 JAVAFX_DIR="$HOME/.local/opt/hmcl/hmcl-javafx"
 JAVAFX_VERSION="21.0.10"
@@ -50,11 +50,27 @@ fi
 
 cat > "$HMCL_DESKTOP_DIR" << EOF
 [Desktop Entry]
+Version=1.0
 Type=Application
-Name=HMCL
+Name=org.jackhuang.hmcl.Launcher
 Exec=hmcl
 Icon=hmcl
+StartupWMClass=org.jackhuang.hmcl.Launcher
+GenericName=HMCL
 Comment=Hello Minecraft! Launcher
+Categories=Game;
+EOF
+
+cat > "$LOCAL_DESKTOP_DIR/minecraft.desktop" << EOF
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=minecraft
+Exec=hmcl
+Icon=minecraft
+StartupWMClass=minecraft
+GenericName=minecraft
+Comment=minecraft
 Categories=Game;
 EOF
 
@@ -70,3 +86,5 @@ exec java \
   "\$@"
 EOF
 chmod +x "$HMCL_BIN_DIR"
+
+gtk-update-icon-cache -f -t "$HOME/.local/share/icons/hicolor"

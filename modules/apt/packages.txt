@@ -73,6 +73,13 @@ polybar
 flatpak
 mpv
 vlc
+firefox-esr
+obs-studio
+celluloid
+zathura
+file-roller
+shotcut
+gnome-clocks
 
 # window manager
 xinit

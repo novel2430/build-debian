@@ -2,11 +2,9 @@
 
 set -euo pipefail
 
-target_dir="$HOME/src/mangowc"
-
-if [[ -e "$target_dir" ]]; then
-  (
-    cd "$target_dir"
-    sudo ninja -C build/ uninstall
-  )
+install_file_txt="$HOME/.local/share/pkg-manifests/mangowc"
+if [[ -e "$install_file_txt/install-files.txt" ]]; then
+  while IFS= read -r f; do
+    sudo rm -rf --verbose "$f"
+  done < "$install_file_txt/install-files.txt"
 fi

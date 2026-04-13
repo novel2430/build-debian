@@ -24,7 +24,7 @@ take_select() {
 }
 
 do_edit() {
-  cat "${file_name}" | be.alexandervanhee.gradia &
+  cat "${file_name}" | com.github.phase1geo.annotator -i &
 }
 
 pick="${1:-}"

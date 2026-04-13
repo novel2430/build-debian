@@ -69,11 +69,12 @@
     	"on-click-middle": "close",
 	    "tooltip": true,
       "app_ids-mapping": {
-        "org.jackhuang.hmcl.Launcher": "HMCL",
+        "Minecraft* 1.21.4": "minecraft",
         "wemeetapp": "wemeet",
         "wpsoffice": "wps",
         "emacs-29-4": "emacs",
         "Emacs-29.4": "emacs"
+
       },
 	    "max-length": 15
      },

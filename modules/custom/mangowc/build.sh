@@ -3,7 +3,7 @@
 set -euo pipefail
 
 repo_url="https://github.com/mangowm/mango.git"
-target_dir="$HOME/src/mangowc"
+target_dir="/tmp/mangowc"
 
 # Clone
 if [[ -d "$target_dir" ]]; then

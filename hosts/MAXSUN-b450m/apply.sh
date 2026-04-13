@@ -45,6 +45,30 @@ fi
 if [ ! -e "$HOME/.local/bin/openttd" ]; then
   bash "$CUSTOM_DIR/openttd/install.sh"
 fi
+## -- Codex
+if [ ! -e "$HOME/.nvm/versions/node/v25.9.0/bin/codex" ]; then
+  bash "$CUSTOM_DIR/codex/install.sh"
+fi
+## -- Image roll
+if [ ! -e "/usr/bin/image-roll" ]; then
+  bash "$CUSTOM_DIR/image-roll/install.sh"
+fi
+## -- Motrix
+if [ ! -e "/usr/bin/motrix" ]; then
+  bash "$CUSTOM_DIR/motrix/install.sh"
+fi
+## -- Ryujinx
+if [ ! -e "/usr/local/bin/ryujinx" ]; then
+  bash "$CUSTOM_DIR/ryujinx/install.sh"
+fi
+## -- Spotify
+if [ ! -e "/usr/bin/spotify" ]; then
+  bash "$CUSTOM_DIR/spotify/install.sh"
+fi
+## -- PPSSPP
+if [ ! -e "/usr/local/bin/ppsspp" ]; then
+  bash "$CUSTOM_DIR/ppsspp/install.sh"
+fi
 
 # Custom - Build and Install #
 echo "==== Custom Package (Build) Installing ===="
@@ -119,7 +143,11 @@ fi
 if [ ! -e /usr/local/bin/wayfire ]; then
   bash "$CUSTOM_DIR/wayfire/build.sh" && bash "$CUSTOM_DIR/wayfire/install.sh"
 fi
-## -- lswt
+## -- DWM
+if [ ! -e /usr/local/bin/dwm ]; then
+  bash "$CUSTOM_DIR/dwm/build.sh" && bash "$CUSTOM_DIR/dwm/install.sh"
+fi
+## -- labwc
 if [ ! -e /usr/local/bin/labwc ]; then
   bash "$CUSTOM_DIR/labwc/build.sh" && bash "$CUSTOM_DIR/labwc/install.sh"
 fi
@@ -134,6 +162,14 @@ fi
 ## -- lswt
 if [ ! -e /usr/local/bin/lswt ]; then
   bash "$CUSTOM_DIR/lswt/build.sh" && bash "$CUSTOM_DIR/lswt/install.sh"
+fi
+## -- Annotator
+if [ ! -e /usr/local/bin/annotator ]; then
+  bash "$CUSTOM_DIR/annotator/build.sh" && bash "$CUSTOM_DIR/annotator/install.sh"
+fi
+## -- Pwvucontrol
+if [ ! -e /usr/local/bin/pwvucontrol ]; then
+  bash "$CUSTOM_DIR/pwvucontrol/build.sh" && bash "$CUSTOM_DIR/pwvucontrol/install.sh"
 fi
 
 # Flatpak #
@@ -184,6 +220,8 @@ bash "$CONFIG_DIR/openbox/install.sh"
 bash "$CONFIG_DIR/wayfire/install.sh"
 ## -- labwc
 bash "$CONFIG_DIR/labwc/install.sh"
+## -- DWM
+bash "$CONFIG_DIR/dwm/install.sh"
 ## -- xinitrc & Xresources
 if [[ -e "$CUR_DIR/.xinitrc" && ! -e "$HOME/.xinitrc" ]]; then
   ln -s "$CUR_DIR/.xinitrc" "$HOME/.xinitrc"
@@ -216,6 +254,8 @@ echo "==== Scripts Installing ===="
 bash "$SCRIPTS_DIR/awesomewm-autostart/install.sh"
 ## -- [dwl-autostart] : DWL autostart script
 bash "$SCRIPTS_DIR/dwl-autostart/install.sh"
+## -- [dwm-bar-text] : bar text for DWM
+bash "$SCRIPTS_DIR/dwm-bar-text/install.sh"
 ## -- [greenclip-rofi] : show clipboard in X11
 bash "$SCRIPTS_DIR/greenclip-rofi/install.sh"
 ## -- [grim-slurp-screenshot] : screenshot in Wayland
@@ -276,11 +316,11 @@ if [ -f "$HOST_APT_PACKAGE_FILE" ]; then
   grep -vE '^\s*(#|$)' "$HOST_APT_PACKAGE_FILE" | xargs -r sudo apt install -y
 fi
 ## -- Flatpak Packages
-HOST_FLATPAK_PACKAGE_FILE="$CUR_DIR/flatpak-packages.txt"
-if [ -f "$HOST_FLATPAK_PACKAGE_FILE" ]; then
-  echo "==== Flatpak Package Installing ===="
-  grep -vE '^\s*(#|$)' "$HOST_FLATPAK_PACKAGE_FILE" | xargs -r flatpak install --user -y
-fi
+# HOST_FLATPAK_PACKAGE_FILE="$CUR_DIR/flatpak-packages.txt"
+# if [ -f "$HOST_FLATPAK_PACKAGE_FILE" ]; then
+#   echo "==== Flatpak Package Installing ===="
+#   grep -vE '^\s*(#|$)' "$HOST_FLATPAK_PACKAGE_FILE" | xargs -r flatpak install --user -y
+# fi
 ## -- Virtual Machine
 bash "$SERVICES_DIR/virt-machine/install.sh"
 ## -- Wifi

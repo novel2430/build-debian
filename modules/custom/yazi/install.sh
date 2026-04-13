@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-target_dir="$HOME/src/yazi/target/release"
+target_dir="/tmp/yazi/target/release"
 
 if [[ -d "$target_dir" ]]; then
   sudo install -m 755 $target_dir/yazi /usr/local/bin

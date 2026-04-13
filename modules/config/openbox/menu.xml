@@ -12,7 +12,7 @@
       </item>
       <item label="Web Browser">
         <action name="Execute">
-          <execute>app.zen_browser.zen</execute>
+          <execute>firefox</execute>
         </action>
       </item>
       <item label="File">
@@ -22,7 +22,7 @@
       </item>
       <item label="Spotify">
         <action name="Execute">
-          <execute>com.spotify.Client</execute>
+          <execute>spotify</execute>
         </action>
       </item>
       <item label="Wechat">
@@ -62,7 +62,7 @@
     >
       <item label="Pipewire Volume Control">
         <action name="Execute">
-          <execute>com.saivert.pwvucontrol</execute>
+          <execute>pwvucontrol</execute>
         </action>
       </item>
       <item label="Network Editer">
@@ -92,12 +92,12 @@
       </item>
       <item label="PPSSPP">
         <action name="Execute">
-          <execute>org.ppsspp.PPSSPP</execute>
+          <execute>ppsspp</execute>
         </action>
       </item>
       <item label="Openttd">
         <action name="Execute">
-          <execute>org.openttd.OpenTTD</execute>
+          <execute>openttd</execute>
         </action>
       </item>
     </menu>
@@ -112,7 +112,7 @@
       </item>
       <item label="Spotify">
         <action name="Execute">
-          <execute>com.spotify.Client</execute>
+          <execute>spotify</execute>
         </action>
       </item>
     </menu>
@@ -122,12 +122,12 @@
     >
       <item label="OBS Studio">
         <action name="Execute">
-          <execute>com.obsproject.Studio</execute>
+          <execute>obs</execute>
         </action>
       </item>
       <item label="Shotcut">
         <action name="Execute">
-          <execute>org.shotcut.Shotcut</execute>
+          <execute>shotcut</execute>
         </action>
       </item>
       <item label="Dingtalk">
@@ -158,11 +158,6 @@
       <item label="Back to TTY">
         <action name="Exit">
           <prompt>no</prompt>
-        </action>
-      </item>
-      <item label="Log out">
-        <action name="Execute">
-          <execute>loginctl terminate-user novel2430</execute>
         </action>
       </item>
       <item label="Shutdown Now">

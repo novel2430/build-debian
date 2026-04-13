@@ -16,4 +16,4 @@ export GLFW_IM_MODULE=ibus
 # wlr-randr monitor settings
 export WLR_RANDR_CLI="wlr-randr --output DP-1 --mode 1920x1080@60 --transform 90 --pos 0,0 && wlr-randr --output HDMI-A-1 --mode 1920x1080@60 --transform normal --pos 1080,0"
 
-alias conda-active='eval "$(/home/novel2430/.miniconda3/bin/conda shell.zsh hook)"'
+alias conda-active='eval "$(/home/novel2430/.local/opt/miniconda3/bin/conda shell.zsh hook)"'

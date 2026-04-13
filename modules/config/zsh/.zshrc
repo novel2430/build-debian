@@ -79,7 +79,11 @@ alias -- ls='eza --icons auto'
 alias -- neofetch=fastfetch
 alias -- visudo='sudo EDITOR=nvim visudo'
 alias -- cat='batcat -p'
+alias -- ll='eza --icons auto -l'
+alias -- la='eza --icons auto -la'
+alias -- lah='eza --icons auto -lah'
+alias -- l='eza --icons auto'
 
-export NVM_DIR="$HOME/.nvm"
+export NVM_DIR="$HOME/.local/opt/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

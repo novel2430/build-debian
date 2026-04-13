@@ -12,7 +12,7 @@
       </item>
       <item label="Web Browser">
         <action name="Execute">
-          <execute>org.mozilla.firefox</execute>
+          <execute>firefox</execute>
         </action>
       </item>
       <item label="File">
@@ -22,7 +22,7 @@
       </item>
       <item label="Spotify">
         <action name="Execute">
-          <execute>com.spotify.Client</execute>
+          <execute>spotify</execute>
         </action>
       </item>
       <item label="Wechat">
@@ -72,7 +72,7 @@
     >
       <item label="Pipewire Volume Control">
         <action name="Execute">
-          <execute>com.saivert.pwvucontrol</execute>
+          <execute>pwvucontrol</execute>
         </action>
       </item>
       <item label="Network Editer">
@@ -107,12 +107,12 @@
       </item>
       <item label="PPSSPP">
         <action name="Execute">
-          <execute>org.ppsspp.PPSSPP</execute>
+          <execute>ppsspp</execute>
         </action>
       </item>
       <item label="Ryujinx">
         <action name="Execute">
-          <execute>io.github.ryubing.Ryujinx</execute>
+          <execute>ryujinx</execute>
         </action>
       </item>
       <item label="Openttd">
@@ -132,12 +132,12 @@
       </item>
       <item label="Celluloid">
         <action name="Execute">
-          <execute>io.github.celluloid_player.Celluloid</execute>
+          <execute>celluloid</execute>
         </action>
       </item>
       <item label="Spotify">
         <action name="Execute">
-          <execute>com.spotify.Client</execute>
+          <execute>spotify</execute>
         </action>
       </item>
     </menu>
@@ -147,17 +147,17 @@
     >
       <item label="OBS Studio">
         <action name="Execute">
-          <execute>com.obsproject.Studio</execute>
+          <execute>obs</execute>
         </action>
       </item>
       <item label="Shotcut">
         <action name="Execute">
-          <execute>org.shotcut.Shotcut</execute>
+          <execute>shotcut</execute>
         </action>
       </item>
       <item label="Motrix">
         <action name="Execute">
-          <execute>net.agalwood.Motrix</execute>
+          <execute>motrix</execute>
         </action>
       </item>
       <item label="Dingtalk">
