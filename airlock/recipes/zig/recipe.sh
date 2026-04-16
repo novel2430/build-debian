@@ -14,7 +14,7 @@ stage_acquire() {
 }
 
 stage_prepare() {
-  al_extract_archive "$WORKDIR/$pkg_name/$pkg_version.tar.xz" "$WORKDIR/$pkg_name"
+  al_extract_archive_for_recipe "$WORKDIR/$pkg_name/$pkg_version.tar.xz" "$WORKDIR/$pkg_name"
   SRCDIR="$WORKDIR/$pkg_name/zig-x86_64-linux-$pkg_version"
   BUILDDIR="$SRCDIR"
   export SRCDIR BUILDDIR

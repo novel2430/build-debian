@@ -21,11 +21,11 @@ al_resolve_recipe_path() {
   al_die "Recipe not found: $target"
 }
 
-# Clear known recipe lifecycle hooks before loading the next recipe file.
+# Clear known recipe lifecycle functions before loading the next recipe file.
 #
 # Recipes are sourced into the current shell on purpose so stages can share
-# variables. This cleanup only removes stage/track function names that may be
-# left over from a previously loaded recipe in the same process.
+# variables. This cleanup removes only known recipe runtime functions so stale
+# stage/track/hook implementations cannot leak across recipe loads.
 al_clear_recipe_lifecycle_functions() {
   local fn
 
@@ -37,10 +37,39 @@ al_clear_recipe_lifecycle_functions() {
     stage_build \
     stage_stage \
     track_install \
-    track_remove
+    track_remove \
+    hook_post_commit \
+    hook_post_install \
+    hook_pre_remove \
+    hook_post_remove
   do
     unset -f "$fn" 2>/dev/null || true
   done
+}
+
+# Run an optional recipe hook by function name.
+#
+# Hook functions are recipe-defined and intentionally optional. When present,
+# they are executed in the current shell so they can reuse recipe variables.
+al_run_optional_recipe_hook() {
+  local hook_name="$1"
+  local rc=0
+
+  if ! al_is_function_defined "$hook_name"; then
+    return 0
+  fi
+
+  al_log_info "Running recipe hook: $hook_name"
+  "$hook_name"
+  rc=$?
+
+  if [ "$rc" -ne 0 ]; then
+    al_log_error "Recipe hook failed: $hook_name (exit=$rc)"
+    return "$rc"
+  fi
+
+  al_log_info "Recipe hook completed: $hook_name"
+  return 0
 }
 
 al_load_recipe() {
@@ -149,6 +178,13 @@ al_install_recipe_managed() {
     al_log_info "STAGE_DIR preserved at: $STAGE_DIR"
     return 1
   }
+
+  al_run_optional_recipe_hook hook_post_commit || {
+    al_log_error "Post-commit hook failed for package: $pkg_name"
+    al_log_info "WORKDIR preserved at: $WORKDIR"
+    al_log_info "STAGE_DIR preserved at: $STAGE_DIR"
+    return 1
+  }
 }
 
 al_install_recipe_tracked() {
@@ -168,6 +204,13 @@ al_install_recipe_tracked() {
 
   al_record_install || {
     al_log_error "Record failed for tracked package: $pkg_name"
+    al_log_info "WORKDIR preserved at: $WORKDIR"
+    al_log_info "STAGE_DIR preserved at: $STAGE_DIR"
+    return 1
+  }
+
+  al_run_optional_recipe_hook hook_post_install || {
+    al_log_error "Post-install hook failed for tracked package: $pkg_name"
     al_log_info "WORKDIR preserved at: $WORKDIR"
     al_log_info "STAGE_DIR preserved at: $STAGE_DIR"
     return 1

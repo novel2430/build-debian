@@ -9,9 +9,7 @@ track_backend="deb-apt"
 DEB_URL="https://github.com/MetaCubeX/mihomo/releases/download/v$pkg_version/mihomo-linux-amd64-v1-v$pkg_version.deb"
 
 stage_acquire() {
-  mkdir -p "$WORKDIR/$pkg_name" || return 1
-
-  al_fetch_url \
+  al_fetch_url_uncached \
     "$DEB_URL" \
     "$WORKDIR/$pkg_name/$pkg_version.deb"
 }

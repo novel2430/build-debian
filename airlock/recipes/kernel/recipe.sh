@@ -2,19 +2,15 @@
 #
 # This recipe demonstrates the minimal v0 metadata and per-stage overrides.
 
-pkg_name="kernel-zen"
-pkg_version="6.19.12"
+pkg_name="kernel"
+pkg_version="7.0"
 pkg_mode="managed"
 pkg_type="source"
 
 stage_acquire() {
   al_fetch_cached_url \
-    "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$pkg_version.tar.xz" \
+    "https://cdn.kernel.org/pub/linux/kernel/v7.x/linux-$pkg_version.tar.xz" \
     "$WORKDIR/$pkg_name/$pkg_version.tar.xz"
-
-  al_fetch_cached_url \
-    "https://github.com/zen-kernel/zen-kernel/releases/download/v$pkg_version-zen1/linux-v$pkg_version-zen1.patch.zst" \
-    "$WORKDIR/$pkg_name/zen.patch.zst"
 }
 
 stage_prepare() {
@@ -24,21 +20,13 @@ stage_prepare() {
 
   SRCDIR="$WORKDIR/$pkg_name/linux-$pkg_version"
   BUILDDIR="$SRCDIR/build"
-  PATCH_DIR="$SRCDIR/linux-v$pkg_version-zen1.patch.zst"
 
-  unzstd "$WORKDIR/$pkg_name/zen.patch.zst" -o "$PATCH_DIR"
-
-  export SRCDIR BUILDDIR PATCH_DIR
+  export SRCDIR BUILDDIR
 }
 
 stage_configure() {
   (
     cd "$SRCDIR"
-    if patch --dry-run -p1 < "$PATCH_DIR" >/dev/null 2>&1; then
-      patch -p1 < "$PATCH_DIR"
-    else
-      exit 1
-    fi
     make clean
     cp /boot/config-$(uname -r) .config || exit 1
     make olddefconfig || exit 1

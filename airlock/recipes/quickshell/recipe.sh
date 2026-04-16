@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
-pkg_name="motrix"
-pkg_version="1.8.19"
+pkg_name="quickshell"
+pkg_version="0.2.1.1"
 pkg_mode="tracked"
 pkg_type="artifact"
 track_backend="deb-apt"
 
-DEB_URL="https://github.com/agalwood/Motrix/releases/download/v1.8.19/Motrix_1.8.19_amd64.deb"
+DEB_URL="https://download.opensuse.org/repositories/home:/AvengeMedia:/danklinux/Debian_13/amd64/quickshell_$pkg_version+pin713.26531fc4.db12_amd64.deb"
 
 stage_acquire() {
   al_fetch_url_uncached \
@@ -22,5 +22,7 @@ stage_prepare() {
 }
 
 track_install() {
-  al_tracked_install_deb_with_apt "$track_source_file"
+  local deb="$track_source_file"
+
+  al_tracked_install_deb_with_apt "$deb" || return 1
 }

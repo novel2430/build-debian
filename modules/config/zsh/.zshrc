@@ -83,6 +83,8 @@ alias -- ll='eza --icons auto -l'
 alias -- la='eza --icons auto -la'
 alias -- lah='eza --icons auto -lah'
 alias -- l='eza --icons auto'
+alias -- rm='echo "Use trash ~ Use trash ~ or use <rrm>"; false'
+alias -- rrm='/usr/bin/rm'
 
 export NVM_DIR="$HOME/.local/opt/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

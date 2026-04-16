@@ -37,3 +37,4 @@ kill -TERM $(pgrep -f idle-lock-guard) 2>/dev/null; idle-lock-guard > $HOME/.log
 if [ ! -z "${WLR_RANDR_CLI}" ]; then
   eval "$WLR_RANDR_CLI"
 fi
+quickshell &

@@ -11,6 +11,11 @@ libglx-mesa0
 rsync
 texi2html
 dkms
+time
+gawk
+gnome-keyring
+libpam-gnome-keyring
+libsecret-tools seahorse
 
 # utils
 socat
@@ -50,6 +55,7 @@ papirus-icon-theme
 fonts-noto-color-emoji
 wlopm
 swayidle
+handbrake
 
 # desktop cli
 playerctl
@@ -76,7 +82,7 @@ vlc
 firefox-esr
 obs-studio
 celluloid
-zathura
+evince
 file-roller
 shotcut
 gnome-clocks

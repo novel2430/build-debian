@@ -4,8 +4,8 @@ pkg_mode="managed"
 pkg_type="source"
 
 stage_acquire() {
-  al_require_cmd cargo
-  al_require_cmd rustup
+  al_require_recipe_cmd cargo
+  al_require_recipe_cmd rustup
 
   al_git_checkout_repo_with_submodules \
     "https://github.com/wezterm/wezterm.git" \

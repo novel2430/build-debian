@@ -6,4 +6,4 @@
 
 # China
 flathub com.tencent.WeChat
-cn.wps.wps_365
+flathub cn.wps.wps_365

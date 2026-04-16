@@ -14,7 +14,7 @@ stage_acquire() {
 }
 
 stage_prepare() {
-  al_extract_archive "$WORKDIR/$pkg_version.tar.gz" "$WORKDIR" || exit 1
+  al_extract_archive_for_recipe "$WORKDIR/$pkg_version.tar.gz" "$WORKDIR" || exit 1
   SRCDIR="$WORKDIR/$pkg_name-$pkg_version"
   BUILDDIR="$SRCDIR/build"
   export SRCDIR BUILDDIR

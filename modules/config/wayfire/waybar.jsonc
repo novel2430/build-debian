@@ -19,7 +19,6 @@
     "modules-center": [
         // "river/window"
         //"hyprland/window"
-        // "wlr/taskbar"
         "clock"
     ],
     "modules-right": [

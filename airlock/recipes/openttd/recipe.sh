@@ -14,7 +14,7 @@ stage_acquire() {
 }
 
 stage_prepare() {
-  al_extract_archive \
+  al_extract_archive_for_recipe \
     "$WORKDIR/$pkg_name/$pkg_version.tar.xz" \
     "$WORKDIR/$pkg_name"
   

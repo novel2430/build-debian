@@ -159,3 +159,7 @@ libgranite-7-dev
 libarchive-dev
 libjson-glib-dev
 libgweather-4-dev
+librust-alsa-dev
+librust-gstreamer-sys-dev
+librsvg2-bin
+intltool-debian

@@ -9,9 +9,7 @@ track_backend="deb-apt"
 DEB_URL="http://wppkg.baidupcs.com/issue/netdisk/Linuxguanjia/$pkg_version/baidunetdisk_${pkg_version}_amd64.deb"
 
 stage_acquire() {
-  mkdir -p "$WORKDIR/$pkg_name" || return 1
-
-  al_fetch_url \
+  al_fetch_url_uncached \
     "$DEB_URL" \
     "$WORKDIR/$pkg_name/$pkg_version.deb"
 }
@@ -25,28 +23,22 @@ stage_prepare() {
 
 track_install() {
   local deb="$track_source_file"
+
+  al_tracked_install_deb_with_apt "$deb" || return 1
+}
+
+hook_post_install() {
   local custom_bin="/usr/local/bin/baidunetdisk"
   local desktop_dir="/usr/share/applications/baidunetdisk.desktop"
 
-  al_tracked_install_deb_with_apt "$deb" || return 1
-
-  # Keep the custom wrapper cleanup behavior on remove.
-  track_remove_cmd="$track_remove_cmd; rm -rf $(printf '%q' "$custom_bin")"
-  export track_remove_cmd
-
-  # Building Bin
-  touch "/tmp/$pkg_name" 
-  cat > "/tmp/$pkg_name" <<'EOF'
+  # Install integration files after backend installation succeeds.
+  al_install_text_file_with_optional_sudo "$custom_bin" 755 <<'EOF'
 #!/usr/bin/env bash
 cd /opt/baidunetdisk
 GDK_BACKEND=x11 HOME="${HOME:-/tmp}/.local/share/baidu" ./baidunetdisk "$@"
 EOF
-  sudo cp "/tmp/$pkg_name" "$custom_bin"
-  sudo chmod +x "$custom_bin"
 
-  # Wrinting Desktop File
-  touch "/tmp/$pkg_name.desktop"
-  cat > "/tmp/$pkg_name.desktop" <<'EOF'
+  al_install_text_file_with_optional_sudo "$desktop_dir" 644 <<'EOF'
 [Desktop Entry]
 Name=Baidu Netdisk
 Name[zh_CN]=百度网盘
@@ -62,5 +54,11 @@ Comment[zh_TW]=百度网盘
 MimeType=x-scheme-handler/baiduyunguanjia;
 Categories=Network;
 EOF
-  sudo cp "/tmp/$pkg_name.desktop" "$desktop_dir"
+}
+
+hook_post_remove() {
+  # Remove files created by hook_post_install that are outside package manager
+  # ownership.
+  al_remove_file_with_optional_sudo /usr/local/bin/baidunetdisk
+  al_remove_file_with_optional_sudo /usr/share/applications/baidunetdisk.desktop
 }

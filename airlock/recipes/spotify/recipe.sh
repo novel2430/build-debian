@@ -9,9 +9,7 @@ track_backend="deb-apt"
 DEB_URL="http://repository.spotify.com/pool/non-free/s/spotify-client/spotify-client_1.2.86.502.g8cd7fb22_amd64.deb"
 
 stage_acquire() {
-  mkdir -p "$WORKDIR/$pkg_name" || return 1
-
-  al_fetch_url \
+  al_fetch_url_uncached \
     "$DEB_URL" \
     "$WORKDIR/$pkg_name/$pkg_version.deb"
 }
@@ -25,4 +23,28 @@ stage_prepare() {
 
 track_install() {
   al_tracked_install_deb_with_apt "$track_source_file"
+}
+
+hook_post_install() {
+  local desktop_dir="/usr/local/share/applications/Spotify.desktop"
+
+  al_install_text_file_with_optional_sudo "$desktop_dir" 644 <<'EOF'
+[Desktop Entry]
+Type=Application
+Name=Spotify
+GenericName=Music Player
+Icon=spotify-client
+TryExec=spotify
+Exec=spotify %U
+Terminal=false
+MimeType=x-scheme-handler/spotify;
+Categories=Audio;Music;Player;AudioVideo;
+StartupWMClass=spotify
+EOF
+}
+
+hook_post_remove() {
+  # Remove files created by hook_post_install that are outside package manager
+  # ownership.
+  al_remove_file_with_optional_sudo /usr/local/share/applications/Spotify.desktop
 }

@@ -19,7 +19,11 @@
 #     al_die
 #     al_require_cmd
 #     al_fetch_url
+#     al_extract_archive
 #     al_mkdir
+#     al_can_create_path_without_sudo
+#     al_can_delete_path_without_sudo
+#     al_run_with_optional_sudo
 
 # -----------------------------------------------------------------------------
 # al_stage_path
@@ -90,10 +94,77 @@ al_fetch_cached_url() {
     return 0
   fi
 
-  al_mkdir "$(dirname "$output")" || return 1
+  al_fetch_url_uncached "$url" "$output"
+}
 
+# -----------------------------------------------------------------------------
+# al_fetch_url_uncached
+#
+# Download a file to a target path without cache short-circuiting.
+#
+# Parameters:
+#   $1 - Source URL
+#   $2 - Output file path
+#
+# Behavior:
+# - Always downloads and overwrites the output file
+# - Ensures the parent directory exists
+#
+# Notes:
+# - This is the recipe-facing counterpart to low-level al_fetch_url.
+# -----------------------------------------------------------------------------
+al_fetch_url_uncached() {
+  local url="$1"
+  local output="$2"
+
+  [ -n "$url" ] || al_die "al_fetch_url_uncached: missing url"
+  [ -n "$output" ] || al_die "al_fetch_url_uncached: missing output path"
+
+  al_mkdir "$(dirname "$output")" || return 1
   al_log_info "Downloading: $url"
   al_fetch_url "$url" "$output"
+}
+
+# -----------------------------------------------------------------------------
+# al_extract_archive_for_recipe
+#
+# Recipe-facing archive extraction helper.
+#
+# Parameters:
+#   $1 - Archive file path
+#   $2 - Destination directory
+#
+# Behavior:
+# - Ensures destination directory exists
+# - Delegates format handling to low-level al_extract_archive
+# -----------------------------------------------------------------------------
+al_extract_archive_for_recipe() {
+  local archive="$1"
+  local dest="$2"
+
+  [ -n "$archive" ] || al_die "al_extract_archive_for_recipe: missing archive path"
+  [ -n "$dest" ] || al_die "al_extract_archive_for_recipe: missing destination path"
+
+  al_mkdir "$dest" || return 1
+  al_extract_archive "$archive" "$dest"
+}
+
+# -----------------------------------------------------------------------------
+# al_require_recipe_cmd
+#
+# Recipe-facing command requirement helper.
+#
+# Parameters:
+#   $1 - Command name
+#
+# Notes:
+# - This keeps recipe code on the recipe-helper layer while reusing the
+#   framework's low-level command check implementation.
+# -----------------------------------------------------------------------------
+al_require_recipe_cmd() {
+  local cmd="$1"
+  [ -n "$cmd" ] || al_die "al_require_recipe_cmd: missing command name"
+  al_require_cmd "$cmd"
 }
 
 
@@ -435,6 +506,113 @@ al_stage_install_cmd_wrapper() {
 #!/usr/bin/env bash
 exec "$PREFIX/$target_relpath" "\$@"
 EOF
+}
+
+# -----------------------------------------------------------------------------
+# al_make_wrapper
+#
+# Backward-compatible wrapper helper for recipes that still provide an absolute
+# wrapper path and target command string directly.
+#
+# Parameters:
+#   $1 - Absolute destination path of the wrapper script
+#   $2 - Command string to execute
+#
+# Notes:
+# - New recipes should prefer stage helpers such as:
+#   al_stage_install_wrapper / al_stage_install_cmd_wrapper.
+# -----------------------------------------------------------------------------
+al_make_wrapper() {
+  local wrapper_path="$1"
+  local target_cmd="$2"
+
+  [ -n "$wrapper_path" ] || al_die "al_make_wrapper: missing wrapper path"
+  [ -n "$target_cmd" ] || al_die "al_make_wrapper: missing target command"
+
+  al_mkdir "$(dirname "$wrapper_path")" || return 1
+  cat > "$wrapper_path" <<EOF2
+#!/usr/bin/env bash
+exec $target_cmd "\$@"
+EOF2
+  chmod 755 "$wrapper_path" || return 1
+}
+
+# -----------------------------------------------------------------------------
+# al_install_text_file_with_optional_sudo
+#
+# Install text content from stdin to an absolute path, using sudo only when the
+# destination is not writable by the current user.
+#
+# Parameters:
+#   $1 - Absolute destination file path
+#   $2 - Optional mode (default: 644)
+#
+# Behavior:
+# - Writes stdin to a temporary file first
+# - Installs the temporary file to the destination with install -Dm<mode>
+# - Uses sudo only if needed based on destination writability
+#
+# Notes:
+# - Suitable for tracked hook integration files such as wrapper scripts and
+#   desktop entries.
+# -----------------------------------------------------------------------------
+al_install_text_file_with_optional_sudo() {
+  local dest="$1"
+  local mode="${2:-644}"
+  local tmp_root tmp_file rc=0
+
+  [ -n "$dest" ] || al_die "al_install_text_file_with_optional_sudo: missing destination path"
+  case "$dest" in
+    /*) ;;
+    *) al_die "al_install_text_file_with_optional_sudo: destination must be absolute: $dest" ;;
+  esac
+
+  tmp_root="${AIRLOCK_TMPDIR:-/tmp}"
+  al_mkdir "$tmp_root" || return 1
+  tmp_file="$(mktemp "$tmp_root/airlock-text.XXXXXX")" || return 1
+
+  cat > "$tmp_file" || {
+    rc=$?
+    rm -f "$tmp_file"
+    return "$rc"
+  }
+
+  if al_can_create_path_without_sudo "$dest"; then
+    install -Dm"$mode" "$tmp_file" "$dest" || rc=$?
+  else
+    al_run_with_optional_sudo install -Dm"$mode" "$tmp_file" "$dest" || rc=$?
+  fi
+
+  rm -f "$tmp_file"
+  return "$rc"
+}
+
+# -----------------------------------------------------------------------------
+# al_remove_file_with_optional_sudo
+#
+# Remove a file or symlink path using sudo only when needed.
+#
+# Parameters:
+#   $1 - Absolute path to remove
+# -----------------------------------------------------------------------------
+al_remove_file_with_optional_sudo() {
+  local path="$1"
+
+  [ -n "$path" ] || al_die "al_remove_file_with_optional_sudo: missing path"
+  case "$path" in
+    /*) ;;
+    *) al_die "al_remove_file_with_optional_sudo: path must be absolute: $path" ;;
+  esac
+
+  if [ ! -e "$path" ] && [ ! -L "$path" ]; then
+    return 0
+  fi
+
+  if al_can_delete_path_without_sudo "$path"; then
+    rm -f -- "$path" || return 1
+  else
+    al_run_with_optional_sudo rm -f -- "$path" || return 1
+  fi
 }
 
 # -----------------------------------------------------------------------------

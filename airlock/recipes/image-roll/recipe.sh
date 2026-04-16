@@ -9,9 +9,7 @@ track_backend="deb-apt"
 DEB_URL="https://github.com/weclaw1/image-roll/releases/download/2.1.0/image-roll_2.1.0_amd64.deb"
 
 stage_acquire() {
-  mkdir -p "$WORKDIR/$pkg_name" || return 1
-
-  al_fetch_url \
+  al_fetch_url_uncached \
     "$DEB_URL" \
     "$WORKDIR/$pkg_name/$pkg_version.deb"
 }

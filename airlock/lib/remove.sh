@@ -33,6 +33,12 @@ AIRLOCK_PROTECTED_DIRS_DEFAULT=(
   /var
 )
 
+# Managed-remove pruning uses in-memory sets to avoid repeated grep/scan work
+# for each directory in large file lists.
+declare -A AIRLOCK_REMOVE_PROTECTED_DIR_SET=()
+declare -A AIRLOCK_REMOVE_CREATED_DIR_SET=()
+declare -A AIRLOCK_REMOVE_BLOCKED_DIR_SET=()
+
 al_print_protected_dirs() {
   local dir
 
@@ -55,24 +61,39 @@ al_print_protected_dirs() {
   fi
 }
 
+al_prepare_protected_dir_set() {
+  local dir
+
+  AIRLOCK_REMOVE_PROTECTED_DIR_SET=()
+
+  while IFS= read -r dir; do
+    [ -n "$dir" ] || continue
+    AIRLOCK_REMOVE_PROTECTED_DIR_SET["$dir"]=1
+  done < <(al_print_protected_dirs)
+}
+
+al_prepare_created_dir_set() {
+  local created_dirs_txt="$1"
+  local dir
+
+  AIRLOCK_REMOVE_CREATED_DIR_SET=()
+
+  [ -f "$created_dirs_txt" ] || return 0
+
+  while IFS= read -r dir; do
+    [ -n "$dir" ] || continue
+    AIRLOCK_REMOVE_CREATED_DIR_SET["$dir"]=1
+  done < "$created_dirs_txt"
+}
+
 al_is_protected_dir() {
   local dir="$1"
-  local protected
-
-  while IFS= read -r protected; do
-    [ -n "$protected" ] || continue
-    [ "$dir" = "$protected" ] && return 0
-  done < <(al_print_protected_dirs)
-
-  return 1
+  [ -n "${AIRLOCK_REMOVE_PROTECTED_DIR_SET[$dir]+_}" ]
 }
 
 al_created_dir_belongs_to_pkg() {
-  local created_dirs_txt="$1"
-  local dir="$2"
-
-  [ -f "$created_dirs_txt" ] || return 1
-  grep -Fx -- "$dir" "$created_dirs_txt" >/dev/null 2>&1
+  local dir="$1"
+  [ -n "${AIRLOCK_REMOVE_CREATED_DIR_SET[$dir]+_}" ]
 }
 
 al_remove_file_auto() {
@@ -106,38 +127,69 @@ al_rmdir_auto() {
 al_collect_direct_parent_dirs() {
   local files_txt="$1"
 
+  # Emit unique direct parent directories sorted deepest-first.
+  # This keeps pruning order equivalent to previous behavior while reducing
+  # process overhead and repeated chain traversals.
   awk '
-    function dirname(path,    n, parts, out, i) {
-      n = split(path, parts, "/")
-      if (n <= 1) return "/"
-      out = ""
-      for (i = 1; i < n; i++) {
-        if (parts[i] != "") out = out "/" parts[i]
-      }
-      return (out == "" ? "/" : out)
-    }
-
-    {
+    NF {
       path = $0
-      if (path == "") next
-      print dirname(path)
+      parent = path
+
+      sub(/\/[^\/]*$/, "", parent)
+      if (parent == "") parent = "/"
+
+      if (!(parent in seen)) {
+        seen[parent] = 1
+        depth = gsub(/\//, "/", parent)
+        print depth "\t" parent
+      }
     }
-  ' "$files_txt" | awk '!seen[$0]++' | al_sort_paths_deepest_first
+  ' "$files_txt" | sort -rn -k1,1 | cut -f2-
+}
+
+al_parent_dir() {
+  local dir="$1"
+
+  if [ "$dir" = "/" ]; then
+    printf '/\n'
+    return 0
+  fi
+
+  dir="${dir%/*}"
+  if [ -z "$dir" ]; then
+    dir="/"
+  fi
+
+  printf '%s\n' "$dir"
 }
 
 al_prune_dir_chain() {
   local start_dir="$1"
-  local created_dirs_txt="$2"
   local dir="$start_dir"
 
   while [ -n "$dir" ] && [ "$dir" != "/" ]; do
+    # If a directory is known protected or not owned by this package, every
+    # future prune chain must also stop at that point.
+    if [ -n "${AIRLOCK_REMOVE_BLOCKED_DIR_SET[$dir]+_}" ]; then
+      break
+    fi
+
     [ -d "$dir" ] || break
+
+    if al_is_protected_dir "$dir"; then
+      AIRLOCK_REMOVE_BLOCKED_DIR_SET["$dir"]=1
+      break
+    fi
+
+    if ! al_created_dir_belongs_to_pkg "$dir"; then
+      AIRLOCK_REMOVE_BLOCKED_DIR_SET["$dir"]=1
+      break
+    fi
+
     al_dir_is_empty "$dir" || break
-    al_is_protected_dir "$dir" && break
-    al_created_dir_belongs_to_pkg "$created_dirs_txt" "$dir" || break
 
     al_rmdir_auto "$dir" || break
-    dir="$(dirname "$dir")"
+    dir="$(al_parent_dir "$dir")"
   done
 }
 
@@ -153,6 +205,31 @@ al_load_pkg_meta() {
   unset track_install_cmd track_remove_cmd track_query_cmd
   # shellcheck disable=SC1090
   . "$meta"
+}
+
+al_try_load_recorded_recipe_for_hooks() {
+  local pkgdir="$1"
+  local recipe_path=""
+
+  # Hooks are defined in recipe files. During remove we load the recorded
+  # recipe when available so pre/post-remove hooks can run.
+  if [ -n "${recipe_dir:-}" ] && [ -f "${recipe_dir}/recipe.sh" ]; then
+    recipe_path="${recipe_dir}/recipe.sh"
+  else
+    recipe_path="$pkgdir/recipe.sh"
+  fi
+
+  if [ ! -f "$recipe_path" ]; then
+    al_log_debug "Recipe file not found for remove hooks; skipping hook load"
+    return 1
+  fi
+
+  al_load_recipe "$recipe_path" || {
+    al_log_warn "Failed to load recipe hooks from: $recipe_path"
+    return 1
+  }
+
+  return 0
 }
 
 al_remove_pkg_record_dir() {
@@ -199,9 +276,13 @@ al_remove_managed_pkg() {
   done < "$files"
 
   if [ -f "$created_dirs" ]; then
+    AIRLOCK_REMOVE_BLOCKED_DIR_SET=()
+    al_prepare_protected_dir_set
+    al_prepare_created_dir_set "$created_dirs"
+
     while IFS= read -r dir; do
       [ -n "$dir" ] || continue
-      al_prune_dir_chain "$dir" "$created_dirs" || return 1
+      al_prune_dir_chain "$dir" || return 1
     done < <(al_collect_direct_parent_dirs "$files")
   else
     al_log_warn "created_dirs.txt not found; skipping directory prune"
@@ -231,6 +312,21 @@ al_remove_tracked_pkg() {
 al_remove_pkg() {
   local name="${1:-}"
   local pkgdir
+  local recorded_pkg_name
+  local recorded_pkg_version
+  local recorded_pkg_mode
+  local recorded_pkg_type
+  local recorded_prefix
+  local recorded_installed_at
+  local recorded_recipe_dir
+  local recorded_track_backend
+  local recorded_track_package_name
+  local recorded_track_package_version
+  local recorded_track_source_url
+  local recorded_track_source_file
+  local recorded_track_install_cmd
+  local recorded_track_remove_cmd
+  local recorded_track_query_cmd
 
   [ -n "$name" ] || al_die "Missing package name"
 
@@ -239,18 +335,58 @@ al_remove_pkg() {
 
   al_load_pkg_meta "$pkgdir"
 
+  # Keep recorded metadata authoritative for remove decisions, even if we load
+  # the recipe file only to pick up optional remove hooks.
+  recorded_pkg_name="${pkg_name:-}"
+  recorded_pkg_version="${pkg_version:-}"
+  recorded_pkg_mode="${pkg_mode:-}"
+  recorded_pkg_type="${pkg_type:-}"
+  recorded_prefix="${prefix:-}"
+  recorded_installed_at="${installed_at:-}"
+  recorded_recipe_dir="${recipe_dir:-}"
+  recorded_track_backend="${track_backend:-}"
+  recorded_track_package_name="${track_package_name:-}"
+  recorded_track_package_version="${track_package_version:-}"
+  recorded_track_source_url="${track_source_url:-}"
+  recorded_track_source_file="${track_source_file:-}"
+  recorded_track_install_cmd="${track_install_cmd:-}"
+  recorded_track_remove_cmd="${track_remove_cmd:-}"
+  recorded_track_query_cmd="${track_query_cmd:-}"
+
+  al_try_load_recorded_recipe_for_hooks "$pkgdir" || true
+
+  pkg_name="$recorded_pkg_name"
+  pkg_version="$recorded_pkg_version"
+  pkg_mode="$recorded_pkg_mode"
+  pkg_type="$recorded_pkg_type"
+  prefix="$recorded_prefix"
+  installed_at="$recorded_installed_at"
+  recipe_dir="$recorded_recipe_dir"
+  track_backend="$recorded_track_backend"
+  track_package_name="$recorded_track_package_name"
+  track_package_version="$recorded_track_package_version"
+  track_source_url="$recorded_track_source_url"
+  track_source_file="$recorded_track_source_file"
+  track_install_cmd="$recorded_track_install_cmd"
+  track_remove_cmd="$recorded_track_remove_cmd"
+  track_query_cmd="$recorded_track_query_cmd"
+
   al_log_info "Removing package: $name"
   al_log_info "Mode: ${pkg_mode:-managed}, Type: ${pkg_type:-unknown}"
 
+  al_run_optional_recipe_hook hook_pre_remove || return 1
+
   case "${pkg_mode:-managed}" in
     managed)
-      al_remove_managed_pkg "$pkgdir"
+      al_remove_managed_pkg "$pkgdir" || return 1
       ;;
     tracked)
-      al_remove_tracked_pkg "$pkgdir"
+      al_remove_tracked_pkg "$pkgdir" || return 1
       ;;
     *)
       al_die "Unsupported recorded pkg_mode: ${pkg_mode:-unknown}"
       ;;
   esac
+
+  al_run_optional_recipe_hook hook_post_remove || return 1
 }

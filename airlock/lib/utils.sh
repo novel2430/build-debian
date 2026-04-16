@@ -12,7 +12,6 @@
 # - creating directories safely
 # - downloading files from URLs
 # - extracting common archive formats
-# - generating small wrapper scripts
 #
 # Design notes:
 # - These helpers are expected to be sourced by other framework modules.
@@ -235,94 +234,6 @@ al_extract_archive() {
       al_die "Unsupported archive format: $archive"
       ;;
   esac
-}
-
-
-# -----------------------------------------------------------------------------
-# al_make_wrapper
-#
-# Create a small executable wrapper script that forwards arguments to a target
-# command.
-#
-# Parameters:
-#   $1 - Path of the wrapper script to create.
-#   $2 - Command string that the wrapper should execute.
-#
-# Behavior:
-# - Creates the parent directory of the wrapper if needed.
-# - Writes a Bash script that runs:
-#     exec <target_cmd> "$@"
-# - Marks the generated wrapper as executable.
-#
-# Notes:
-# - This is useful for artifact-based installs where the actual payload may live
-#   deep inside a managed directory, but the framework wants to expose a simple
-#   command in `$PREFIX/bin`.
-# - `target_cmd` is inserted directly into the wrapper body. Callers should
-#   ensure that it is already properly quoted/escaped for shell usage if it
-#   contains spaces or special characters.
-#
-# Example:
-#   al_make_wrapper \
-#     "$STAGE_DIR$PREFIX/bin/foo" \
-#     "\"$PREFIX/apps/foo/Foo.AppImage\""
-#
-#   al_make_wrapper \
-#     "$STAGE_DIR$PREFIX/bin/bar" \
-#     "java -jar \"$PREFIX/lib/bar/bar.jar\""
-# -----------------------------------------------------------------------------
-al_make_wrapper() {
-  local wrapper_path="$1"
-  local target_cmd="$2"
-
-  mkdir -p "$(dirname "$wrapper_path")"
-  cat > "$wrapper_path" <<EOF2
-#!/usr/bin/env bash
-exec $target_cmd "\$@"
-EOF2
-  chmod 755 "$wrapper_path"
-}
-
-al_nearest_existing_parent() {
-  local path="$1"
-
-  while [ "$path" != "/" ] && [ ! -e "$path" ] && [ ! -L "$path" ]; do
-    path="$(dirname "$path")"
-  done
-
-  printf '%s\n' "${path:-/}"
-}
-
-al_can_create_path_without_sudo() {
-  local target="$1"
-  local parent
-
-  parent="$(al_nearest_existing_parent "$(dirname "$target")")"
-  [ -w "$parent" ]
-}
-
-al_can_delete_path_without_sudo() {
-  local target="$1"
-  local parent
-
-  parent="$(al_nearest_existing_parent "$(dirname "$target")")"
-  [ -w "$parent" ]
-}
-
-al_dir_is_empty() {
-  local dir="$1"
-
-  [ -d "$dir" ] || return 1
-  ! find "$dir" -mindepth 1 -maxdepth 1 -print -quit | grep -q .
-}
-
-al_sort_paths_deepest_first() {
-  awk '
-    NF {
-      depth = gsub(/\//, "/", $0)
-      print depth, $0
-    }
-  ' | sort -rn | cut -d' ' -f2-
 }
 
 
