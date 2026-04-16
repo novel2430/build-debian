@@ -9,6 +9,15 @@ FLATPAK_DIR="$MODULES_DIR/flatpak"
 SCRIPTS_DIR="$MODULES_DIR/scripts"
 OPENRC_DIR="$MODULES_DIR/openrc"
 SERVICES_DIR="$MODULES_DIR/services"
+AIRLOCK_BIN_DIR="$CUR_DIR/../../airlock/bin/airlock"
+
+airlock_install() {
+  if $AIRLOCK_BIN_DIR info "$1" > /dev/null 2>&1; then
+    echo "[$1] Already Installed"
+  else
+    $AIRLOCK_BIN_DIR install "$1"
+  fi
+}
 
 # APT #
 echo "==== APT Installing ===="
@@ -24,153 +33,86 @@ fi
 # Custom - Install #
 echo "==== Custom Package Installing ===="
 ## -- Latex Chinese Fonts (Simsun, Kaiti ...)
-bash "$CUSTOM_DIR/latex-chinese-fonts/install.sh"
+airlock_install 'latex-chinese-fonts'
 ## -- Hack Nerd Fonts
-bash "$CUSTOM_DIR/hack-nerd-fonts/install.sh"
+airlock_install 'HackNerdFont'
 ## -- Mihomo (Clash Stuff)
-bash "$CUSTOM_DIR/mihomo/install.sh"
+airlock_install 'mihomo'
 ## -- Nodejs (npm)
-bash "$CUSTOM_DIR/nodejs/install.sh"
+airlock_install 'nvm'
 ## -- DingTalk
-bash "$CUSTOM_DIR/dingtalk/install.sh"
+airlock_install 'dingtalk'
 ## -- Baidu Netdisk
-bash "$CUSTOM_DIR/baidunetdisk/install.sh"
+airlock_install 'baidunetdisk'
+## -- Wemeet
+airlock_install 'wemeet'
 ## -- Greenclip (X11 clipboard Daemon)
-bash "$CUSTOM_DIR/greenclip/install.sh"
+airlock_install 'greenclip'
 ## -- HMCL
-if [ ! -e "$HOME/.local/bin/hmcl" ]; then
-  bash "$CUSTOM_DIR/hmcl/install.sh"
-fi
+airlock_install 'hmcl'
 ## -- OpenTTD
-if [ ! -e "$HOME/.local/bin/openttd" ]; then
-  bash "$CUSTOM_DIR/openttd/install.sh"
-fi
-## -- Codex
-if [ ! -e "$HOME/.nvm/versions/node/v25.9.0/bin/codex" ]; then
-  bash "$CUSTOM_DIR/codex/install.sh"
-fi
+airlock_install 'openttd'
 ## -- Image roll
-if [ ! -e "/usr/bin/image-roll" ]; then
-  bash "$CUSTOM_DIR/image-roll/install.sh"
-fi
+airlock_install 'image-roll'
 ## -- Motrix
-if [ ! -e "/usr/bin/motrix" ]; then
-  bash "$CUSTOM_DIR/motrix/install.sh"
-fi
+airlock_install 'motrix'
 ## -- Ryujinx
-if [ ! -e "/usr/local/bin/ryujinx" ]; then
-  bash "$CUSTOM_DIR/ryujinx/install.sh"
-fi
+airlock_install 'ryujinx'
 ## -- Spotify
-if [ ! -e "/usr/bin/spotify" ]; then
-  bash "$CUSTOM_DIR/spotify/install.sh"
-fi
+## airlock_install 'spotify'
 ## -- PPSSPP
-if [ ! -e "/usr/local/bin/ppsspp" ]; then
-  bash "$CUSTOM_DIR/ppsspp/install.sh"
-fi
+airlock_install 'PPSSPP'
+# ## -- Codex
+# if [ ! -e "$HOME/.nvm/versions/node/v25.9.0/bin/codex" ]; then
+#   bash "$CUSTOM_DIR/codex/install.sh"
+# fi
 
 # Custom - Build and Install #
 echo "==== Custom Package (Build) Installing ===="
 ## ------------------------------------------------
 ## -- Wlroots 0.19.2 (DWL, Wayfire depend on this)
-if pkg-config --exists wlroots-0.19; then
-  version=$(pkg-config --modversion wlroots-0.19)
-  echo "wlroots-0.19 already installed，version: $version"
-else
-  bash "$CUSTOM_DIR/wlroots-0.19/build.sh" && bash "$CUSTOM_DIR/wlroots-0.19/install.sh"
-  sudo ldconfig
-fi
+airlock_install 'wlroots'
 ## -- tree-sitter 0.25.10 (Emacs 29.4 tree-sitter depend on this)
-if pkg-config --exists tree-sitter; then
-  version=$(pkg-config --modversion tree-sitter)
-  echo "tree-sitter already installed，version: $version"
-else
-  bash "$CUSTOM_DIR/tree-sitter/build.sh" && bash "$CUSTOM_DIR/tree-sitter/install.sh"
-  sudo ldconfig
-fi
+airlock_install 'tree-sitter'
 ## -- scenefx 0.4.1 (Mangowc depend on this)
-if pkg-config --exists scenefx-0.4; then
-  version=$(pkg-config --modversion scenefx-0.4)
-  echo "Scenefx already installed，version: $version"
-else
-  bash "$CUSTOM_DIR/scenefx/build.sh" && bash "$CUSTOM_DIR/scenefx/install.sh"
-  sudo ldconfig
-fi
+airlock_install 'scenefx'
 ## -- Zig 0.15.2 (Ghostty depend on this)
-if [ ! -e /usr/local/bin/zig ]; then
-  bash "$CUSTOM_DIR/zig/install.sh"
-  sudo ldconfig
-fi
+airlock_install 'zig'
 ## ------------------------------------------------
 ## -- neovim 0.12.1
-if [ ! -e /usr/local/bin/nvim ]; then
-  bash "$CUSTOM_DIR/neovim/build.sh" && bash "$CUSTOM_DIR/neovim/install.sh"
-fi
+airlock_install 'neovim'
 ## -- dwl 0.8
-if [ ! -e /usr/local/bin/dwl ]; then
-  bash "$CUSTOM_DIR/dwl/build.sh" && bash "$CUSTOM_DIR/dwl/install.sh"
-fi
+airlock_install 'my-dwl'
 ## -- mangowc 0.12.7
-if [ ! -e /usr/local/bin/mango ]; then
-  bash "$CUSTOM_DIR/mangowc/build.sh" && bash "$CUSTOM_DIR/mangowc/install.sh"
-fi
+airlock_install 'mango'
 ## -- rofi 2.0.0
-if [ ! -e /usr/local/bin/rofi ]; then
-  bash "$CUSTOM_DIR/rofi/build.sh" && bash "$CUSTOM_DIR/rofi/install.sh"
-fi
+airlock_install 'rofi'
 ## -- waybar 0.15.0
-if [ ! -e /usr/local/bin/waybar ]; then
-  bash "$CUSTOM_DIR/waybar/build.sh" && bash "$CUSTOM_DIR/waybar/install.sh"
-fi
+airlock_install 'waybar'
 ## -- wezterm 577474d
-if [ ! -e /usr/local/bin/wezterm ]; then
-  bash "$CUSTOM_DIR/wezterm/build.sh" && bash "$CUSTOM_DIR/wezterm/install.sh"
-fi
+airlock_install 'waybar'
 ## -- ghostty 1.3.1
-if [ ! -e /usr/local/bin/ghostty ]; then
-  bash "$CUSTOM_DIR/ghostty/build.sh" && bash "$CUSTOM_DIR/ghostty/install.sh"
-fi
+airlock_install 'ghostty'
 ## -- swaylock-effects 1.7.0.0
-if [ ! -e /usr/local/bin/swaylock ]; then
-  bash "$CUSTOM_DIR/swaylock-effects/build.sh" && bash "$CUSTOM_DIR/swaylock-effects/install.sh"
-fi
+airlock_install 'swaylock-effects'
 ## -- i3lock-color 2.13.c.5
-if [ ! -e /usr/local/bin/i3lock ]; then
-  bash "$CUSTOM_DIR/i3lock-color/build.sh" && bash "$CUSTOM_DIR/i3lock-color/install.sh"
-fi
+airlock_install 'i3lock-color'
 ## -- wayfire 0.10.1-746bc7e9
-if [ ! -e /usr/local/bin/wayfire ]; then
-  bash "$CUSTOM_DIR/wayfire/build.sh" && bash "$CUSTOM_DIR/wayfire/install.sh"
-fi
+airlock_install 'wayfire'
 ## -- DWM
-if [ ! -e /usr/local/bin/dwm ]; then
-  bash "$CUSTOM_DIR/dwm/build.sh" && bash "$CUSTOM_DIR/dwm/install.sh"
-fi
+airlock_install 'my-dwm'
 ## -- labwc
-if [ ! -e /usr/local/bin/labwc ]; then
-  bash "$CUSTOM_DIR/labwc/build.sh" && bash "$CUSTOM_DIR/labwc/install.sh"
-fi
+airlock_install 'labwc'
 ## -- emacs 29.4
-if [ ! -e /usr/local/bin/emacs ]; then
-  bash "$CUSTOM_DIR/emacs29/build.sh" && bash "$CUSTOM_DIR/emacs29/install.sh"
-fi
+airlock_install 'emacs'
 ## -- Yazi 26.1.22
-if [ ! -e /usr/local/bin/yazi ]; then
-  bash "$CUSTOM_DIR/yazi/build.sh" && bash "$CUSTOM_DIR/yazi/install.sh"
-fi
+airlock_install 'yazi'
 ## -- lswt
-if [ ! -e /usr/local/bin/lswt ]; then
-  bash "$CUSTOM_DIR/lswt/build.sh" && bash "$CUSTOM_DIR/lswt/install.sh"
-fi
+airlock_install 'lswt'
 ## -- Annotator
-if [ ! -e /usr/local/bin/annotator ]; then
-  bash "$CUSTOM_DIR/annotator/build.sh" && bash "$CUSTOM_DIR/annotator/install.sh"
-fi
+airlock_install 'annotator'
 ## -- Pwvucontrol
-if [ ! -e /usr/local/bin/pwvucontrol ]; then
-  bash "$CUSTOM_DIR/pwvucontrol/build.sh" && bash "$CUSTOM_DIR/pwvucontrol/install.sh"
-fi
+airlock_install 'pwvucontrol'
 
 # Flatpak #
 echo "==== Flatpak Package Installing ===="
