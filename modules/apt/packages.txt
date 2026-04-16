@@ -15,7 +15,8 @@ time
 gawk
 gnome-keyring
 libpam-gnome-keyring
-libsecret-tools seahorse
+libsecret-tools
+seahorse
 
 # utils
 socat
@@ -33,6 +34,7 @@ imagemagick
 resvg
 chafa
 bat
+trash-cli
 
 # dev build
 openjdk-21-jdk

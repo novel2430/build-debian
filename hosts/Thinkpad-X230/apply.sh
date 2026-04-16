@@ -9,6 +9,15 @@ FLATPAK_DIR="$MODULES_DIR/flatpak"
 SCRIPTS_DIR="$MODULES_DIR/scripts"
 OPENRC_DIR="$MODULES_DIR/openrc"
 SERVICES_DIR="$MODULES_DIR/services"
+AIRLOCK_BIN_DIR="$CUR_DIR/../../airlock/bin/airlock"
+
+airlock_install() {
+  if $AIRLOCK_BIN_DIR info "$1" > /dev/null 2>&1; then
+    echo "[$1] Already Installed"
+  else
+    $AIRLOCK_BIN_DIR install "$1"
+  fi
+}
 
 # APT #
 echo "==== APT Installing ===="
@@ -22,129 +31,127 @@ if [ -f "$CUSTOM_BUILD_APT_PACKAGE_FILE" ]; then
 fi
 
 # Custom - Install #
-echo "==== Custom Package Installing ===="
-## -- Latex Chinese Fonts (Simsun, Kaiti ...)
-bash "$CUSTOM_DIR/latex-chinese-fonts/install.sh"
-## -- Hack Nerd Fonts
-bash "$CUSTOM_DIR/hack-nerd-fonts/install.sh"
-## -- Mihomo (Clash Stuff)
-bash "$CUSTOM_DIR/mihomo/install.sh"
-## -- Nodejs (npm)
-bash "$CUSTOM_DIR/nodejs/install.sh"
-## -- DingTalk
-bash "$CUSTOM_DIR/dingtalk/install.sh"
-## -- Baidu Netdisk
-bash "$CUSTOM_DIR/baidunetdisk/install.sh"
-## -- Greenclip (X11 clipboard Daemon)
-bash "$CUSTOM_DIR/greenclip/install.sh"
-## -- HMCL
-if [ ! -e "$HOME/.local/bin/hmcl" ]; then
-  bash "$CUSTOM_DIR/hmcl/install.sh"
-fi
-## -- OpenTTD
-if [ ! -e "$HOME/.local/bin/openttd" ]; then
-  bash "$CUSTOM_DIR/openttd/install.sh"
-fi
-## -- Codex
-if [ ! -e "$HOME/.nvm/versions/node/v25.9.0/bin/codex" ]; then
-  bash "$CUSTOM_DIR/codex/install.sh"
-fi
-## -- Image roll
-if [ ! -e "/usr/bin/image-roll" ]; then
-  bash "$CUSTOM_DIR/image-roll/install.sh"
-fi
-
-# Custom - Build and Install #
-echo "==== Custom Package (Build) Installing ===="
+echo "==== Airlock Package Installing ===="
+#### Custom - Basic Dependency ####
 ## ------------------------------------------------
 ## -- Wlroots 0.19.2 (DWL, Wayfire depend on this)
-if pkg-config --exists wlroots-0.19; then
-  version=$(pkg-config --modversion wlroots-0.19)
-  echo "wlroots-0.19 already installed，version: $version"
-else
-  bash "$CUSTOM_DIR/wlroots-0.19/build.sh" && bash "$CUSTOM_DIR/wlroots-0.19/install.sh"
-  sudo ldconfig
-fi
+airlock_install 'wlroots'
 ## -- tree-sitter 0.25.10 (Emacs 29.4 tree-sitter depend on this)
-if pkg-config --exists tree-sitter; then
-  version=$(pkg-config --modversion tree-sitter)
-  echo "tree-sitter already installed，version: $version"
-else
-  bash "$CUSTOM_DIR/tree-sitter/build.sh" && bash "$CUSTOM_DIR/tree-sitter/install.sh"
-  sudo ldconfig
-fi
+airlock_install 'tree-sitter'
 ## -- scenefx 0.4.1 (Mangowc depend on this)
-if pkg-config --exists scenefx-0.4; then
-  version=$(pkg-config --modversion scenefx-0.4)
-  echo "Scenefx already installed，version: $version"
-else
-  bash "$CUSTOM_DIR/scenefx/build.sh" && bash "$CUSTOM_DIR/scenefx/install.sh"
-  sudo ldconfig
-fi
+airlock_install 'scenefx'
 ## -- Zig 0.15.2 (Ghostty depend on this)
-if [ ! -e /usr/local/bin/zig ]; then
-  bash "$CUSTOM_DIR/zig/install.sh"
-  sudo ldconfig
-fi
+airlock_install 'zig'
 ## ------------------------------------------------
+#### Custom - Fonts ####
+## ------------------------------------------------
+## -- Latex Chinese Fonts (Simsun, Kaiti ...)
+airlock_install 'latex-chinese-fonts'
+## -- Hack Nerd Fonts
+airlock_install 'HackNerdFont'
+## ------------------------------------------------
+#### Custom - Must have tool ####
+## ------------------------------------------------
+## -- tree-sitter-cli 
+airlock_install 'tree-sitter-cli'
+## -- Mihomo (Clash Stuff)
+airlock_install 'mihomo'
+## -- Nodejs (npm)
+airlock_install 'nvm'
 ## -- neovim 0.12.1
-if [ ! -e /usr/local/bin/nvim ]; then
-  bash "$CUSTOM_DIR/neovim/build.sh" && bash "$CUSTOM_DIR/neovim/install.sh"
-fi
-## -- dwl 0.8
-if [ ! -e /usr/local/bin/dwl ]; then
-  bash "$CUSTOM_DIR/dwl/build.sh" && bash "$CUSTOM_DIR/dwl/install.sh"
-fi
-## -- mangowc 0.12.7
-if [ ! -e /usr/local/bin/mango ]; then
-  bash "$CUSTOM_DIR/mangowc/build.sh" && bash "$CUSTOM_DIR/mangowc/install.sh"
-fi
-## -- rofi 2.0.0
-if [ ! -e /usr/local/bin/rofi ]; then
-  bash "$CUSTOM_DIR/rofi/build.sh" && bash "$CUSTOM_DIR/rofi/install.sh"
-fi
-## -- waybar 0.15.0
-if [ ! -e /usr/local/bin/waybar ]; then
-  bash "$CUSTOM_DIR/waybar/build.sh" && bash "$CUSTOM_DIR/waybar/install.sh"
-fi
+airlock_install 'neovim'
+## -- zju-connect
+airlock_install 'zju-connect'
+## -- miniconda3
+airlock_install 'miniconda3'
+## ------------------------------------------------
+#### Custom - Terminal ####
+## ------------------------------------------------
 ## -- wezterm 577474d
-if [ ! -e /usr/local/bin/wezterm ]; then
-  bash "$CUSTOM_DIR/wezterm/build.sh" && bash "$CUSTOM_DIR/wezterm/install.sh"
-fi
+airlock_install 'wezterm'
 ## -- ghostty 1.3.1
-# if [ ! -e /usr/local/bin/ghostty ]; then
-#   bash "$CUSTOM_DIR/ghostty/build.sh" && bash "$CUSTOM_DIR/ghostty/install.sh"
-# fi
-## -- swaylock-effects 1.7.0.0
-if [ ! -e /usr/local/bin/swaylock ]; then
-  bash "$CUSTOM_DIR/swaylock-effects/build.sh" && bash "$CUSTOM_DIR/swaylock-effects/install.sh"
-fi
-## -- i3lock-color 2.13.c.5
-if [ ! -e /usr/local/bin/i3lock ]; then
-  bash "$CUSTOM_DIR/i3lock-color/build.sh" && bash "$CUSTOM_DIR/i3lock-color/install.sh"
-fi
+#airlock_install 'ghostty'
+## ------------------------------------------------
+#### Custom - Window Manager ####
+## ------------------------------------------------
+## -- dwl 0.8
+airlock_install 'my-dwl'
+## -- mangowc 0.12.7
+#airlock_install 'mango'
 ## -- wayfire 0.10.1-746bc7e9
-if [ ! -e /usr/local/bin/wayfire ]; then
-  bash "$CUSTOM_DIR/wayfire/build.sh" && bash "$CUSTOM_DIR/wayfire/install.sh"
-fi
-## -- emacs 29.4
-if [ ! -e /usr/local/bin/emacs ]; then
-  bash "$CUSTOM_DIR/emacs29/build.sh" && bash "$CUSTOM_DIR/emacs29/install.sh"
-fi
-## -- Yazi 26.1.22
-if [ ! -e /usr/local/bin/yazi ]; then
-  bash "$CUSTOM_DIR/yazi/build.sh" && bash "$CUSTOM_DIR/yazi/install.sh"
-fi
+airlock_install 'wayfire'
+## -- DWM
+airlock_install 'my-dwm'
+## -- labwc
+#airlock_install 'labwc'
+## ------------------------------------------------
+#### Custom - Tools for Window Manager ####
+## ------------------------------------------------
+## -- Greenclip (X11 clipboard Daemon)
+airlock_install 'greenclip'
+## -- rofi 2.0.0
+airlock_install 'rofi'
+## -- waybar 0.15.0
+airlock_install 'waybar'
+## -- swaylock-effects 1.7.0.0
+airlock_install 'swaylock-effects'
+## -- i3lock-color 2.13.c.5
+airlock_install 'i3lock-color'
 ## -- lswt
-if [ ! -e /usr/local/bin/lswt ]; then
-  bash "$CUSTOM_DIR/lswt/build.sh" && bash "$CUSTOM_DIR/lswt/install.sh"
-fi
-## -- auto-cpufreq
-if [ ! -e /usr/local/bin/auto-cpufreq ]; then
-  bash "$CUSTOM_DIR/auto-cpufreq/build.sh" && bash "$CUSTOM_DIR/auto-cpufreq/install.sh"
-  sudo rc-update add auto-cpufreq default
-  sudo rc-service auto-cpufreq start
-fi
+airlock_install 'lswt'
+## -- quickshell 
+#airlock_install 'quickshell'
+## ------------------------------------------------
+#### Custom - TUI Application ####
+## ------------------------------------------------
+## -- Yazi 26.1.22
+airlock_install 'yazi'
+## ------------------------------------------------
+#### Custom - GUI Application ####
+## ------------------------------------------------
+## -- DingTalk
+airlock_install 'dingtalk'
+## -- Baidu Netdisk
+airlock_install 'baidunetdisk'
+## -- Wemeet
+airlock_install 'wemeet'
+## -- Image roll
+airlock_install 'image-roll'
+## -- Motrix
+#airlock_install 'motrix'
+## -- Spotify
+#airlock_install 'spotify'
+## -- emacs 29.4
+airlock_install 'emacs'
+## -- Annotator
+airlock_install 'annotator'
+## -- Pwvucontrol
+airlock_install 'pwvucontrol'
+## -- Riff
+airlock_install 'riff'
+## ------------------------------------------------
+#### Custom - Gaming Application ####
+## ------------------------------------------------
+## -- HMCL
+airlock_install 'hmcl'
+## -- OpenTTD
+airlock_install 'openttd'
+## -- Ryujinx
+#airlock_install 'ryujinx'
+## -- PPSSPP
+#airlock_install 'PPSSPP'
+## -- steam
+#airlock_install 'steam'
+## -- protonplus
+#airlock_install 'protonplus'
+## -- lutris
+#airlock_install 'lutris'
+## -- azahar 
+#airlock_install 'azahar'
+# ## -- Codex
+# if [ ! -e "$HOME/.nvm/versions/node/v25.9.0/bin/codex" ]; then
+#   bash "$CUSTOM_DIR/codex/install.sh"
+# fi
 
 # Flatpak #
 echo "==== Flatpak Package Installing ===="
@@ -192,6 +199,10 @@ bash "$CONFIG_DIR/mangowc/install.sh"
 bash "$CONFIG_DIR/openbox/install.sh"
 ## -- Wayfire (Wayfire config, waybar)
 bash "$CONFIG_DIR/wayfire/install.sh"
+## -- labwc
+bash "$CONFIG_DIR/labwc/install.sh"
+## -- DWM
+bash "$CONFIG_DIR/dwm/install.sh"
 ## -- xinitrc & Xresources
 if [[ -e "$CUR_DIR/.xinitrc" && ! -e "$HOME/.xinitrc" ]]; then
   ln -s "$CUR_DIR/.xinitrc" "$HOME/.xinitrc"
@@ -213,8 +224,6 @@ bash "$CONFIG_DIR/wezterm/install.sh"
 ## ------------------------------------------------
 ## -- Wechat (Flatpak Settings)
 bash "$CONFIG_DIR/wechat/install.sh"
-## -- Firefox (Flatpak Settings)
-bash "$CONFIG_DIR/firefox/install.sh"
 ## -- WPS 365 (Flatpak Settings)
 bash "$CONFIG_DIR/wps365/install.sh"
 
@@ -224,6 +233,8 @@ echo "==== Scripts Installing ===="
 bash "$SCRIPTS_DIR/awesomewm-autostart/install.sh"
 ## -- [dwl-autostart] : DWL autostart script
 bash "$SCRIPTS_DIR/dwl-autostart/install.sh"
+## -- [dwm-bar-text] : bar text for DWM
+bash "$SCRIPTS_DIR/dwm-bar-text/install.sh"
 ## -- [greenclip-rofi] : show clipboard in X11
 bash "$SCRIPTS_DIR/greenclip-rofi/install.sh"
 ## -- [grim-slurp-screenshot] : screenshot in Wayland
@@ -273,10 +284,10 @@ fi
 # Host Specify Things #
 echo "==== Host Specity Things Installing ===="
 ## -- Timeshift Backup
-# if [ -e "$CUR_DIR/timeshift/install.sh" ]; then
-#   echo "==== Timeshift Config Installing ===="
-#   bash "$CUR_DIR/timeshift/install.sh"
-# fi
+if [ -e "$CUR_DIR/timeshift/install.sh" ]; then
+  echo "==== Timeshift Config Installing ===="
+  bash "$CUR_DIR/timeshift/install.sh"
+fi
 ## -- Apt Packages
 HOST_APT_PACKAGE_FILE="$CUR_DIR/apt-packages.txt"
 if [ -f "$HOST_APT_PACKAGE_FILE" ]; then
@@ -284,16 +295,20 @@ if [ -f "$HOST_APT_PACKAGE_FILE" ]; then
   grep -vE '^\s*(#|$)' "$HOST_APT_PACKAGE_FILE" | xargs -r sudo apt install -y
 fi
 ## -- Flatpak Packages
-HOST_FLATPAK_PACKAGE_FILE="$CUR_DIR/flatpak-packages.txt"
-if [ -f "$HOST_FLATPAK_PACKAGE_FILE" ]; then
-  echo "==== Flatpak Package Installing ===="
-  grep -vE '^\s*(#|$)' "$HOST_FLATPAK_PACKAGE_FILE" | xargs -r flatpak install --user -y
-fi
+# HOST_FLATPAK_PACKAGE_FILE="$CUR_DIR/flatpak-packages.txt"
+# if [ -f "$HOST_FLATPAK_PACKAGE_FILE" ]; then
+#   echo "==== Flatpak Package Installing ===="
+#   grep -vE '^\s*(#|$)' "$HOST_FLATPAK_PACKAGE_FILE" | xargs -r flatpak install --user -y
+# fi
 ## -- Virtual Machine
-# bash "$SERVICES_DIR/virt-machine/install.sh"
+bash "$SERVICES_DIR/virt-machine/install.sh"
 ## -- Wifi
 bash "$SERVICES_DIR/wifi/install.sh"
 
 ## Ending
 sudo ldconfig
+sudo glib-compile-schemas /usr/local/share/glib-2.0/schemas
+sudo update-icon-caches /usr/local/share/icons
+
+sudo dbus-uuidgen --ensure=/etc/machine-id
 echo "==== ALL DONE ! ===="

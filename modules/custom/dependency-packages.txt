@@ -161,5 +161,6 @@ libjson-glib-dev
 libgweather-4-dev
 librust-alsa-dev
 librust-gstreamer-sys-dev
+librust-gstreamer-audio-dev
 librsvg2-bin
 intltool-debian
