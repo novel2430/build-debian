@@ -31,44 +31,8 @@ if [ -f "$CUSTOM_BUILD_APT_PACKAGE_FILE" ]; then
 fi
 
 # Custom - Install #
-echo "==== Custom Package Installing ===="
-## -- Latex Chinese Fonts (Simsun, Kaiti ...)
-airlock_install 'latex-chinese-fonts'
-## -- Hack Nerd Fonts
-airlock_install 'HackNerdFont'
-## -- Mihomo (Clash Stuff)
-airlock_install 'mihomo'
-## -- Nodejs (npm)
-airlock_install 'nvm'
-## -- DingTalk
-airlock_install 'dingtalk'
-## -- Baidu Netdisk
-airlock_install 'baidunetdisk'
-## -- Wemeet
-airlock_install 'wemeet'
-## -- Greenclip (X11 clipboard Daemon)
-airlock_install 'greenclip'
-## -- HMCL
-airlock_install 'hmcl'
-## -- OpenTTD
-airlock_install 'openttd'
-## -- Image roll
-airlock_install 'image-roll'
-## -- Motrix
-airlock_install 'motrix'
-## -- Ryujinx
-airlock_install 'ryujinx'
-## -- Spotify
-## airlock_install 'spotify'
-## -- PPSSPP
-airlock_install 'PPSSPP'
-# ## -- Codex
-# if [ ! -e "$HOME/.nvm/versions/node/v25.9.0/bin/codex" ]; then
-#   bash "$CUSTOM_DIR/codex/install.sh"
-# fi
-
-# Custom - Build and Install #
-echo "==== Custom Package (Build) Installing ===="
+echo "==== Airlock Package Installing ===="
+#### Custom - Basic Dependency ####
 ## ------------------------------------------------
 ## -- Wlroots 0.19.2 (DWL, Wayfire depend on this)
 airlock_install 'wlroots'
@@ -79,40 +43,115 @@ airlock_install 'scenefx'
 ## -- Zig 0.15.2 (Ghostty depend on this)
 airlock_install 'zig'
 ## ------------------------------------------------
+#### Custom - Fonts ####
+## ------------------------------------------------
+## -- Latex Chinese Fonts (Simsun, Kaiti ...)
+airlock_install 'latex-chinese-fonts'
+## -- Hack Nerd Fonts
+airlock_install 'HackNerdFont'
+## ------------------------------------------------
+#### Custom - Must have tool ####
+## ------------------------------------------------
+## -- tree-sitter-cli 
+airlock_install 'tree-sitter-cli'
+## -- Mihomo (Clash Stuff)
+airlock_install 'mihomo'
+## -- Nodejs (npm)
+airlock_install 'nvm'
 ## -- neovim 0.12.1
 airlock_install 'neovim'
+## -- zju-connect
+airlock_install 'zju-connect'
+## -- miniconda3
+airlock_install 'miniconda3'
+## ------------------------------------------------
+#### Custom - Terminal ####
+## ------------------------------------------------
+## -- wezterm 577474d
+airlock_install 'wezterm'
+## -- ghostty 1.3.1
+airlock_install 'ghostty'
+## ------------------------------------------------
+#### Custom - Window Manager ####
+## ------------------------------------------------
 ## -- dwl 0.8
 airlock_install 'my-dwl'
 ## -- mangowc 0.12.7
 airlock_install 'mango'
-## -- rofi 2.0.0
-airlock_install 'rofi'
-## -- waybar 0.15.0
-airlock_install 'waybar'
-## -- wezterm 577474d
-airlock_install 'waybar'
-## -- ghostty 1.3.1
-airlock_install 'ghostty'
-## -- swaylock-effects 1.7.0.0
-airlock_install 'swaylock-effects'
-## -- i3lock-color 2.13.c.5
-airlock_install 'i3lock-color'
 ## -- wayfire 0.10.1-746bc7e9
 airlock_install 'wayfire'
 ## -- DWM
 airlock_install 'my-dwm'
 ## -- labwc
 airlock_install 'labwc'
-## -- emacs 29.4
-airlock_install 'emacs'
-## -- Yazi 26.1.22
-airlock_install 'yazi'
+## ------------------------------------------------
+#### Custom - Tools for Window Manager ####
+## ------------------------------------------------
+## -- Greenclip (X11 clipboard Daemon)
+airlock_install 'greenclip'
+## -- rofi 2.0.0
+airlock_install 'rofi'
+## -- waybar 0.15.0
+airlock_install 'waybar'
+## -- swaylock-effects 1.7.0.0
+airlock_install 'swaylock-effects'
+## -- i3lock-color 2.13.c.5
+airlock_install 'i3lock-color'
 ## -- lswt
 airlock_install 'lswt'
+## -- quickshell 
+airlock_install 'quickshell'
+## ------------------------------------------------
+#### Custom - TUI Application ####
+## ------------------------------------------------
+## -- Yazi 26.1.22
+airlock_install 'yazi'
+## ------------------------------------------------
+#### Custom - GUI Application ####
+## ------------------------------------------------
+## -- DingTalk
+airlock_install 'dingtalk'
+## -- Baidu Netdisk
+airlock_install 'baidunetdisk'
+## -- Wemeet
+airlock_install 'wemeet'
+## -- Image roll
+airlock_install 'image-roll'
+## -- Motrix
+airlock_install 'motrix'
+## -- Spotify
+airlock_install 'spotify'
+## -- emacs 29.4
+airlock_install 'emacs'
 ## -- Annotator
 airlock_install 'annotator'
 ## -- Pwvucontrol
 airlock_install 'pwvucontrol'
+## -- Riff
+airlock_install 'riff'
+## ------------------------------------------------
+#### Custom - Gaming Application ####
+## ------------------------------------------------
+## -- HMCL
+airlock_install 'hmcl'
+## -- OpenTTD
+airlock_install 'openttd'
+## -- Ryujinx
+airlock_install 'ryujinx'
+## -- PPSSPP
+airlock_install 'PPSSPP'
+## -- steam
+airlock_install 'steam'
+## -- protonplus
+airlock_install 'protonplus'
+## -- lutris
+airlock_install 'lutris'
+## -- azahar 
+airlock_install 'azahar'
+# ## -- Codex
+# if [ ! -e "$HOME/.nvm/versions/node/v25.9.0/bin/codex" ]; then
+#   bash "$CUSTOM_DIR/codex/install.sh"
+# fi
 
 # Flatpak #
 echo "==== Flatpak Package Installing ===="
@@ -185,8 +224,6 @@ bash "$CONFIG_DIR/wezterm/install.sh"
 ## ------------------------------------------------
 ## -- Wechat (Flatpak Settings)
 bash "$CONFIG_DIR/wechat/install.sh"
-## -- Firefox (Flatpak Settings)
-bash "$CONFIG_DIR/firefox/install.sh"
 ## -- WPS 365 (Flatpak Settings)
 bash "$CONFIG_DIR/wps365/install.sh"
 
