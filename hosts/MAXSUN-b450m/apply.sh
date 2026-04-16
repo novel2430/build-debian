@@ -307,4 +307,8 @@ bash "$SERVICES_DIR/wifi/install.sh"
 
 ## Ending
 sudo ldconfig
+sudo glib-compile-schemas /usr/local/share/glib-2.0/schemas
+sudo update-icon-caches /usr/local/share/icons
+
+sudo dbus-uuidgen --ensure=/etc/machine-id
 echo "==== ALL DONE ! ===="
