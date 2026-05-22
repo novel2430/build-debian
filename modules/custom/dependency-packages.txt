@@ -23,6 +23,9 @@ mesa-common-dev
 
 # =========================
 # X11 / Wayland / WM
+libxshmfence-dev
+libxcb-xv0-dev
+libxcb-glx0-dev
 libx11-dev
 libxext-dev
 libxrender-dev

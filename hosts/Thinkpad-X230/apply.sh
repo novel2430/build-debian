@@ -64,6 +64,8 @@ airlock_install 'neovim'
 airlock_install 'zju-connect'
 ## -- miniconda3
 airlock_install 'miniconda3'
+## -- fastfetch
+airlock_install 'fastfetch'
 ## ------------------------------------------------
 #### Custom - Terminal ####
 ## ------------------------------------------------
@@ -120,7 +122,7 @@ airlock_install 'image-roll'
 ## -- Motrix
 #airlock_install 'motrix'
 ## -- Spotify
-#airlock_install 'spotify'
+airlock_install 'spotify'
 ## -- emacs 29.4
 airlock_install 'emacs'
 ## -- Annotator
@@ -128,7 +130,7 @@ airlock_install 'annotator'
 ## -- Pwvucontrol
 airlock_install 'pwvucontrol'
 ## -- Riff
-airlock_install 'riff'
+#airlock_install 'riff'
 ## ------------------------------------------------
 #### Custom - Gaming Application ####
 ## ------------------------------------------------
