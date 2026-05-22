@@ -2,13 +2,13 @@
 #
 # This recipe demonstrates the minimal v0 metadata and per-stage overrides.
 
-pkg_name="kernel-cachyos-bore-stable"
-pkg_version="6.19"
+pkg_name="kernel-cachyos-bore-lts"
+pkg_version="6.18"
 pkg_mode="managed"
 pkg_type="source"
 
-MINOR_VER=12
-VER=2
+MINOR_VER=22
+VER=1
 SRCNAME="cachyos-${pkg_version}.${MINOR_VER}-${VER}"
 
 stage_acquire() {

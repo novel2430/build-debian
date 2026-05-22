@@ -58,6 +58,7 @@ fonts-noto-color-emoji
 wlopm
 swayidle
 handbrake
+inkscape
 
 # desktop cli
 playerctl
@@ -95,6 +96,6 @@ openbox
 awesome
 
 # others
-fastfetch
+# fastfetch
 tree
 eza

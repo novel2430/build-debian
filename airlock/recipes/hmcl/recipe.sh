@@ -3,7 +3,7 @@
 # This recipe demonstrates the minimal v0 metadata and per-stage overrides.
 
 pkg_name="hmcl"
-pkg_version="3.12.4"
+pkg_version="3.13.2"
 pkg_mode="managed"
 pkg_type="artifact"
 

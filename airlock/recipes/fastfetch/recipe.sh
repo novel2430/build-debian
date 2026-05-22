@@ -2,34 +2,42 @@
 #
 # This recipe demonstrates the minimal v0 metadata and per-stage overrides.
 
-pkg_name="my-dwm"
-pkg_version="8801764"
+pkg_name="fastfetch"
+pkg_version="2.62.1"
 pkg_mode="managed"
 pkg_type="source"
 
 stage_acquire() {
   al_git_checkout_repo \
-    "https://github.com/novel2430/dwm-6.8.git" \
+    "https://github.com/fastfetch-cli/fastfetch.git" \
     "$WORKDIR/$pkg_name" \
     "$pkg_version"
 }
 
 stage_prepare() {
   SRCDIR="$WORKDIR/$pkg_name"
-  BUILDDIR="$SRCDIR"
+  BUILDDIR="$SRCDIR/build"
   export SRCDIR BUILDDIR
+}
+
+stage_configure() {
+  (
+    cd "$SRCDIR"
+    cmake -S . -B build \
+      -DCMAKE_INSTALL_PREFIX=$PREFIX
+  )
 }
 
 stage_build() {
   (
     cd "$SRCDIR"
-    make
+    cmake --build build
   )
 }
 
 stage_stage() {
   (
     cd "$SRCDIR"
-    make DESTDIR="$STAGE_DIR" PREFIX="$PREFIX" install
+    DESTDIR="$STAGE_DIR" cmake --install build
   )
 }

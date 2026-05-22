@@ -6,8 +6,8 @@ xrdb ~/.Xresources
 #  --mode 1920x1080 --primary
 
 
-xrandr --output HDMI-1 --mode 1920x1080 --primary
-xrandr --output DP-1 --rotate left --left-of HDMI-1 --mode 1920x1080 --verbose
+xrandr --output DP-1 --mode 1920x1080 --primary
+xrandr --output DP-3 --rotate left --left-of DP-1 --mode 1920x1080 --verbose
 
 
 # exec dbus-run-session openbox-session

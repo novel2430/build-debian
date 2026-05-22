@@ -4,3 +4,9 @@ Host github.com
   User git
   IdentityFile ~/.ssh/github
   ProxyCommand socat - PROXY:127.0.0.1:%h:%p,proxyport=7890
+
+Host codeberg.org
+  HostName codeberg.org
+  User git
+  IdentityFile ~/.ssh/codeberg
+  ProxyCommand socat - PROXY:127.0.0.1:%h:%p,proxyport=7890

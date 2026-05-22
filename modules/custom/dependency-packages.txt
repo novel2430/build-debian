@@ -164,3 +164,4 @@ librust-gstreamer-sys-dev
 librust-gstreamer-audio-dev
 librsvg2-bin
 intltool-debian
+libmpv-dev

@@ -35,7 +35,7 @@ stage_build() {
   (
     cd "$SRCDIR" || exit 1
 
-    cargo clean || exit 1
+    # cargo clean || exit 1
     cargo build --release -j4 || exit 1
   ) || return 1
 }
@@ -52,16 +52,16 @@ stage_stage() {
   al_stage_install_icon \
     "$SRCDIR/assets/icon/wezterm-icon.svg" \
     "scalable" \
-    "wezterm" \
+    "org.wezfurlong.wezterm" \
     "svg" || return 1
 
   al_stage_install_icon \
     "$SRCDIR/assets/icon/terminal.png" \
     "128x128" \
-    "wezterm" \
+    "org.wezfurlong.wezterm" \
     "png" || return 1
 
-  al_stage_write_desktop_entry "wezterm" <<'EOF'
+  al_stage_write_desktop_entry "org.wezfurlong.wezterm" <<'EOF'
 [Desktop Entry]
 Version=1.0
 Name=WezTerm

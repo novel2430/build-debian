@@ -2,14 +2,14 @@
 #
 # This recipe demonstrates the minimal v0 metadata and per-stage overrides.
 
-pkg_name="my-dwm"
-pkg_version="8801764"
+pkg_name="tabbed"
+pkg_version="b9b2032"
 pkg_mode="managed"
 pkg_type="source"
 
 stage_acquire() {
   al_git_checkout_repo \
-    "https://github.com/novel2430/dwm-6.8.git" \
+    "https://github.com/novel2430/tabbed-0.9.git" \
     "$WORKDIR/$pkg_name" \
     "$pkg_version"
 }

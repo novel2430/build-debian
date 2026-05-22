@@ -2,14 +2,14 @@
 #
 # This recipe demonstrates the minimal v0 metadata and per-stage overrides.
 
-pkg_name="mango"
-pkg_version="0.12.9"
+pkg_name="gamescope"
+pkg_version="3.16.23"
 pkg_mode="managed"
 pkg_type="source"
 
 stage_acquire() {
   al_git_checkout_repo \
-    "https://github.com/mangowm/mango.git" \
+    "https://github.com/ValveSoftware/gamescope.git" \
     "$WORKDIR/$pkg_name" \
     "$pkg_version"
 }
@@ -21,7 +21,11 @@ stage_prepare() {
 }
 
 stage_configure() {
-  meson setup "$BUILDDIR" "$SRCDIR" --prefix="$PREFIX"
+  (
+    cd "$SRCDIR"
+    git submodule update --init
+  )
+  meson setup "$BUILDDIR" "$SRCDIR" -Dpipewire=enabled -Ddrm_backend=enabled -Drt_cap=enabled --prefix="$PREFIX"
 }
 
 stage_build() {

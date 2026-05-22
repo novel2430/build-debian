@@ -49,6 +49,8 @@ airlock_install 'zig'
 airlock_install 'latex-chinese-fonts'
 ## -- Hack Nerd Fonts
 airlock_install 'HackNerdFont'
+## -- Nerd Font Symbols - for ghostty
+airlock install 'NerdFontSymbols'
 ## ------------------------------------------------
 #### Custom - Must have tool ####
 ## ------------------------------------------------
@@ -64,6 +66,8 @@ airlock_install 'neovim'
 airlock_install 'zju-connect'
 ## -- miniconda3
 airlock_install 'miniconda3'
+## -- fastfetch
+airlock_install 'fastfetch'
 ## ------------------------------------------------
 #### Custom - Terminal ####
 ## ------------------------------------------------
@@ -129,9 +133,17 @@ airlock_install 'annotator'
 airlock_install 'pwvucontrol'
 ## -- Riff
 airlock_install 'riff'
+## -- Helium 
+airlock_install 'helium'
 ## ------------------------------------------------
 #### Custom - Gaming Application ####
 ## ------------------------------------------------
+## -- Gamescope
+airlock_install 'gamescope'
+## -- mangohud
+airlock_install 'mangohud'
+## -- mangojuice
+airlock_install 'mangojuice'
 ## -- HMCL
 airlock_install 'hmcl'
 ## -- OpenTTD
@@ -141,7 +153,7 @@ airlock_install 'ryujinx'
 ## -- PPSSPP
 airlock_install 'PPSSPP'
 ## -- steam
-airlock_install 'steam'
+# airlock_install 'steam'
 ## -- protonplus
 airlock_install 'protonplus'
 ## -- lutris
@@ -295,11 +307,11 @@ if [ -f "$HOST_APT_PACKAGE_FILE" ]; then
   grep -vE '^\s*(#|$)' "$HOST_APT_PACKAGE_FILE" | xargs -r sudo apt install -y
 fi
 ## -- Flatpak Packages
-# HOST_FLATPAK_PACKAGE_FILE="$CUR_DIR/flatpak-packages.txt"
-# if [ -f "$HOST_FLATPAK_PACKAGE_FILE" ]; then
-#   echo "==== Flatpak Package Installing ===="
-#   grep -vE '^\s*(#|$)' "$HOST_FLATPAK_PACKAGE_FILE" | xargs -r flatpak install --user -y
-# fi
+HOST_FLATPAK_PACKAGE_FILE="$CUR_DIR/flatpak-packages.txt"
+if [ -f "$HOST_FLATPAK_PACKAGE_FILE" ]; then
+  echo "==== Flatpak Package Installing ===="
+  grep -vE '^\s*(#|$)' "$HOST_FLATPAK_PACKAGE_FILE" | xargs -r flatpak install --user -y
+fi
 ## -- Virtual Machine
 bash "$SERVICES_DIR/virt-machine/install.sh"
 ## -- Wifi

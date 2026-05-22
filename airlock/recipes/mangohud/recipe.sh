@@ -2,34 +2,32 @@
 #
 # This recipe demonstrates the minimal v0 metadata and per-stage overrides.
 
-pkg_name="my-dwm"
-pkg_version="8801764"
+pkg_name="mangohud"
+pkg_version="0.8.2"
 pkg_mode="managed"
 pkg_type="source"
 
 stage_acquire() {
   al_git_checkout_repo \
-    "https://github.com/novel2430/dwm-6.8.git" \
+    "https://github.com/flightlessmango/MangoHud.git" \
     "$WORKDIR/$pkg_name" \
-    "$pkg_version"
+    "v$pkg_version"
 }
 
 stage_prepare() {
   SRCDIR="$WORKDIR/$pkg_name"
-  BUILDDIR="$SRCDIR"
+  BUILDDIR="$SRCDIR/build"
   export SRCDIR BUILDDIR
 }
 
+stage_configure() {
+  meson setup "$BUILDDIR" "$SRCDIR" -Dwith_xnvctrl=disabled --prefix="$PREFIX"
+}
+
 stage_build() {
-  (
-    cd "$SRCDIR"
-    make
-  )
+  meson compile -C "$BUILDDIR"
 }
 
 stage_stage() {
-  (
-    cd "$SRCDIR"
-    make DESTDIR="$STAGE_DIR" PREFIX="$PREFIX" install
-  )
+  DESTDIR="$STAGE_DIR" meson install -C "$BUILDDIR"
 }
