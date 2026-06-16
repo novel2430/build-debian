@@ -1,5 +1,5 @@
 pkg_name="wezterm"
-pkg_version="577474d"
+pkg_version="891bed3"
 pkg_mode="managed"
 pkg_type="source"
 
@@ -36,7 +36,7 @@ stage_build() {
     cd "$SRCDIR" || exit 1
 
     # cargo clean || exit 1
-    cargo build --release -j4 || exit 1
+    cargo build --release -j6 || exit 1
   ) || return 1
 }
 

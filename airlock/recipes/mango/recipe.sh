@@ -3,7 +3,7 @@
 # This recipe demonstrates the minimal v0 metadata and per-stage overrides.
 
 pkg_name="mango"
-pkg_version="0.12.9"
+pkg_version="0.14.0"
 pkg_mode="managed"
 pkg_type="source"
 

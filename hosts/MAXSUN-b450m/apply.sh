@@ -42,6 +42,8 @@ airlock_install 'tree-sitter'
 airlock_install 'scenefx'
 ## -- Zig 0.15.2 (Ghostty depend on this)
 airlock_install 'zig'
+## -- Rustup
+airlock_install 'rustup'
 ## ------------------------------------------------
 #### Custom - Fonts ####
 ## ------------------------------------------------

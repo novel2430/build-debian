@@ -1,5 +1,5 @@
 pkg_name="yazi"
-pkg_version="26.1.22"
+pkg_version="26.5.6"
 pkg_mode="managed"
 pkg_type="source"
 

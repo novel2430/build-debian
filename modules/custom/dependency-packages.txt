@@ -110,7 +110,6 @@ ca-certificates
 libpam0g-dev
 libcrypt-dev
 scdoc
-rustup
 python3
 python3-pip
 flex
@@ -168,3 +167,4 @@ librust-gstreamer-audio-dev
 librsvg2-bin
 intltool-debian
 libmpv-dev
+libcjson-dev

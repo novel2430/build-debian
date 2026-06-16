@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
-pkg_name="mihomo"
-pkg_version="1.19.25"
+pkg_name="Clash-V-Ninja"
+pkg_version="595d8f7"
 pkg_mode="tracked"
 pkg_type="artifact"
 track_backend="deb-apt"
 
-DEB_URL="https://github.com/MetaCubeX/mihomo/releases/download/v$pkg_version/mihomo-linux-amd64-v1-v$pkg_version.deb"
+DEB_URL="https://github.com/kachetong1314/ninja/releases/download/ninja/Clash-V-Ninja-X64.deb"
 
 stage_acquire() {
   al_fetch_url_uncached \

@@ -86,8 +86,10 @@ alias -- l='eza --icons auto'
 alias -- rm='echo "Use trash ~ Use trash ~ or use <rrm>"; false'
 alias -- rrm='/usr/bin/rm'
 alias -- nix='nix --extra-experimental-features "nix-command flakes"'
-alias -- history='history 1'
 alias -- yz='yazi'
+alias -- reboot='loginctl reboot'
+alias -- poweroff='loginctl poweroff'
+alias -- shutdown='loginctl poweroff'
 
 export NVM_DIR="$HOME/.local/opt/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

@@ -3,7 +3,7 @@
 # This recipe demonstrates the minimal v0 metadata and per-stage overrides.
 
 pkg_name="my-dwm"
-pkg_version="8801764"
+pkg_version="bef180f"
 pkg_mode="managed"
 pkg_type="source"
 

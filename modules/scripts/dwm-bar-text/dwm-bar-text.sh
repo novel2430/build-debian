@@ -143,9 +143,10 @@ while :; do
   ram="$(get_ram_usage)"
   temp="$(get_cpu_temp)"
   bat="$(get_battery_info)"
-  now="$(date '+%Y-%m-%d %a %H:%M')"
+  # now="$(date '+%Y-%m-%d %a %H:%M')"
 
-  status="$ram $cpu [$now]"
+  # status="$ram $cpu [$now]"
+  status="$ram $cpu"
 
   [ -n "$temp" ] && status="$temp $status"
   [ -n "$bat" ] && status="$bat $status"

@@ -40,7 +40,8 @@ nm-applet &
 # For Wemeet
 flatpak override --user --unset-env=LD_PRELOAD com.tencent.wemeet &
 
-kill -TERM $(pgrep -f idle-lock-guard) 2>/dev/null; idle-lock-guard > $HOME/.log/idle-lock-guard/idle-lock-guard.log 2>&1 &
+# kill -TERM $(pgrep -f idle-lock-guard) 2>/dev/null; idle-lock-guard > $HOME/.log/idle-lock-guard/idle-lock-guard.log 2>&1 &
+kill -TERM $(pgrep -f idle-lock-guard) 2>/dev/null; 
 
 killall sxhkd; sxhkd &
 
