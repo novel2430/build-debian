@@ -36,6 +36,8 @@ application/wps-office.wps=wps-office-wps.desktop
 application/wps-office.wpss=wps-office-wps.desktop
 application/wps-office.wpso=wps-office-wps.desktop
 application/wps-office.wpt=wps-office-wps.desktop
+clash-ninja=clash-ninja-handler.desktop
+x-scheme-handler/clash-ninja=clash-ninja.desktop
 
 [Added Associations]
 image/png=com.github.weclaw1.ImageRoll.desktop

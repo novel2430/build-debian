@@ -1,5 +1,5 @@
 pkg_name="wezterm"
-pkg_version="891bed3"
+pkg_version="40daec8"
 pkg_mode="managed"
 pkg_type="source"
 

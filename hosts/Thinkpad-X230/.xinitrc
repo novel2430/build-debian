@@ -2,4 +2,4 @@ xrdb ~/.Xresources
 
 # exec openbox-session
 # exec awesome
-dbus-run-session dwm
+dbus-launch --exit-with-session dwm
