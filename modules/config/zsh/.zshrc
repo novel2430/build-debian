@@ -90,6 +90,7 @@ alias -- yz='yazi'
 alias -- reboot='loginctl reboot'
 alias -- poweroff='loginctl poweroff'
 alias -- shutdown='loginctl poweroff'
+alias -- history='history 1'
 
 export NVM_DIR="$HOME/.local/opt/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
