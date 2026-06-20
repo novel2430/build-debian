@@ -3,7 +3,7 @@
 # This recipe demonstrates the minimal v0 metadata and per-stage overrides.
 
 pkg_name="labwc"
-pkg_version="0.9.7"
+pkg_version="0.9.8"
 pkg_mode="managed"
 pkg_type="source"
 

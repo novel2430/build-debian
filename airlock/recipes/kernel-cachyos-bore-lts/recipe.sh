@@ -7,7 +7,7 @@ pkg_version="6.18"
 pkg_mode="managed"
 pkg_type="source"
 
-MINOR_VER=22
+MINOR_VER=35
 VER=1
 SRCNAME="cachyos-${pkg_version}.${MINOR_VER}-${VER}"
 
@@ -17,7 +17,7 @@ stage_acquire() {
     "$WORKDIR/$pkg_name/$pkg_version.tar.gz"
 
   al_fetch_cached_url \
-    "https://raw.githubusercontent.com/cachyos/kernel-patches/master/${pkg_version}/sched/0001-bore-cachy.patch" \
+    "https://raw.githubusercontent.com/cachyos/kernel-patches/master/${pkg_version}/sched-dev/0001-bore-cachy.patch" \
     "$WORKDIR/$pkg_name/0001-bore-cachy.patch"
 }
 
@@ -41,8 +41,7 @@ stage_configure() {
     else
       exit 1
     fi
-    make clean
-    cp /boot/config-$(uname -r) .config || exit 1
+    cp /boot/config-6.12.*+deb13-amd64 .config || exit 1
     ./scripts/config -e SCHED_BORE || exit 1
     ./scripts/config -d HZ_300 -e HZ_1000 --set-val HZ 1000 || exit 1
     ./scripts/config -d HZ_PERIODIC -d NO_HZ_FULL -e NO_HZ_IDLE -e NO_HZ -e NO_HZ_COMMON || exit 1
@@ -63,7 +62,7 @@ stage_build() {
     cd "$SRCDIR"
     echo "-cachyos-bore" > localversion
     make -s kernelrelease
-    make -j10
+    make -j8
   )
 }
 

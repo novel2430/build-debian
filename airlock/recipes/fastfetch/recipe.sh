@@ -3,7 +3,7 @@
 # This recipe demonstrates the minimal v0 metadata and per-stage overrides.
 
 pkg_name="fastfetch"
-pkg_version="2.62.1"
+pkg_version="2.64.1"
 pkg_mode="managed"
 pkg_type="source"
 

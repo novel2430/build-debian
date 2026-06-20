@@ -3,7 +3,7 @@
 # This recipe demonstrates the minimal v0 metadata and per-stage overrides.
 
 pkg_name="waybar"
-pkg_version="0.15.0"
+pkg_version="0594574"
 pkg_mode="managed"
 pkg_type="source"
 
