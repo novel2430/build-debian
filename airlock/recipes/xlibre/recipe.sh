@@ -3,7 +3,7 @@
 # This recipe demonstrates the minimal v0 metadata and per-stage overrides.
 
 pkg_name="xlibre"
-pkg_version="25.1.6"
+pkg_version="25.2.0"
 pkg_mode="managed"
 pkg_type="source"
 

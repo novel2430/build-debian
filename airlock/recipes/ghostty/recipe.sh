@@ -3,7 +3,7 @@
 # This recipe demonstrates the minimal v0 metadata and per-stage overrides.
 
 pkg_name="ghostty"
-pkg_version="1.3.1"
+pkg_version="124c9d5"
 pkg_mode="managed"
 pkg_type="source"
 
@@ -11,7 +11,7 @@ stage_acquire() {
   al_git_checkout_repo \
     "https://github.com/ghostty-org/ghostty.git" \
     "$WORKDIR/$pkg_name" \
-    "v$pkg_version"
+    "$pkg_version"
 }
 
 stage_prepare() {
@@ -39,7 +39,6 @@ Version=1.0
 Name=Ghostty
 Type=Application
 Comment=A terminal emulator
-TryExec=/usr/local/bin/ghostty
 Exec=/usr/local/bin/ghostty --gtk-single-instance=true
 Icon=com.mitchellh.ghostty
 Categories=System;TerminalEmulator;
@@ -47,18 +46,5 @@ Keywords=terminal;tty;pty;
 StartupNotify=true
 StartupWMClass=com.mitchellh.ghostty
 Terminal=false
-Actions=new-window;
-X-GNOME-UsesNotifications=true
-X-TerminalArgExec=-e
-X-TerminalArgTitle=--title=
-X-TerminalArgAppId=--class=
-X-TerminalArgDir=--working-directory=
-X-TerminalArgHold=--wait-after-command
-DBusActivatable=true
-X-KDE-Shortcuts=Ctrl+Alt+T
-
-[Desktop Action new-window]
-Name=New Window
-Exec=/usr/local/bin/ghostty --gtk-single-instance=true
 EOF
 }

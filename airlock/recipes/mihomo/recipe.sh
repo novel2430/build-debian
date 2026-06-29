@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 pkg_name="mihomo"
-pkg_version="1.19.25"
+pkg_version="1.19.27"
 pkg_mode="tracked"
 pkg_type="artifact"
 track_backend="deb-apt"

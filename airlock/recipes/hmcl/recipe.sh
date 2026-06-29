@@ -3,12 +3,12 @@
 # This recipe demonstrates the minimal v0 metadata and per-stage overrides.
 
 pkg_name="hmcl"
-pkg_version="3.13.2"
+pkg_version="3.14.1"
 pkg_mode="managed"
 pkg_type="artifact"
 
 stage_acquire() {
-  local JAVAFX_VERSION="21.0.10"
+  local JAVAFX_VERSION="21.0.8"
   local hmcl_jar_url="https://github.com/HMCL-dev/HMCL/releases/download/v${pkg_version}/HMCL-${pkg_version}.jar"
   local javafx_base_url="https://repo1.maven.org/maven2/org/openjfx/javafx-base/${JAVAFX_VERSION}/javafx-base-${JAVAFX_VERSION}-linux.jar"
   local javafx_graphics_url="https://repo1.maven.org/maven2/org/openjfx/javafx-graphics/${JAVAFX_VERSION}/javafx-graphics-${JAVAFX_VERSION}-linux.jar"

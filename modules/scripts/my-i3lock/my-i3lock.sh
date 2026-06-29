@@ -1,3 +1,10 @@
+#!/usr/bin/env bash
+
+revert_dpms() {
+    # 解鎖或鎖屏失敗後：停止任何自動 DPMS 計時
+    xset +dpms dpms 0 0 0
+}
+
 indicator_radius=90
 indicator_thickness=7
 b_color="#3e5f44ff"
@@ -6,7 +13,11 @@ text_f_color="#eceff4ff"
 wrong_color="#bf616aff"
 lock_img="$HOME/.local/share/pics/wallpaper"
 
-i3lock \
+
+trap revert_dpms HUP INT TERM
+xset +dpms dpms 0 0 300
+
+i3lock --nofork \
         --ignore-empty-password \
         -i ${lock_img} --fill\
         --clock \
@@ -30,3 +41,5 @@ i3lock \
         --date-color $text_f_color \
         --greeter-color $text_f_color \
         --separator-color 00000000
+
+revert_dpms

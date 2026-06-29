@@ -46,7 +46,7 @@ fcitx5 --replace -d &
 # Idle DPMS (sec)
 xset s off
 xset s noblank
-xset -dpms
+xset +dpms dpms 0 0 0
 # Keyboard speed rate
 xset r rate 300 50
 # nm-applet

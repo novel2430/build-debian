@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 pkg_name="spotify"
-pkg_version="1.2.86.502"
+pkg_version="1.2.90.451"
 pkg_mode="tracked"
 pkg_type="artifact"
 track_backend="deb-apt"
 
-DEB_URL="http://repository.spotify.com/pool/non-free/s/spotify-client/spotify-client_1.2.86.502.g8cd7fb22_amd64.deb"
+DEB_URL="https://repository.spotify.com/pool/non-free/s/spotify-client/spotify-client_1.2.90.451.gb094aab0_amd64.deb"
 
 stage_acquire() {
   al_fetch_url_uncached \

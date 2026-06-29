@@ -12,5 +12,5 @@ xrandr --output DP-3 --rotate left --left-of DP-1 --mode 1920x1080 --verbose
 
 # exec dbus-run-session openbox-session
 # exec dbus-run-session awesome
-# exec dbus-run-session dwm
-exec dbus-run-session /home/novel2430/src/dwm/dwm
+exec dbus-launch --exit-with-session dwm
+# exec dbus-run-session /home/novel2430/src/dwm/dwm

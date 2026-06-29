@@ -7,7 +7,7 @@ stage_acquire() {
   al_git_checkout_repo \
     "https://github.com/sxyazi/yazi.git" \
     "$WORKDIR/$pkg_name" \
-    "v$pkg_version"
+    v"$pkg_version"
 }
 
 stage_prepare() {
