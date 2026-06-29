@@ -3,7 +3,7 @@
 # This recipe demonstrates the minimal v0 metadata and per-stage overrides.
 
 pkg_name="protonplus"
-pkg_version="0.5.17"
+pkg_version="0.5.20"
 pkg_mode="managed"
 pkg_type="source"
 

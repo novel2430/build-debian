@@ -89,6 +89,7 @@ evince
 file-roller
 shotcut
 gnome-clocks
+dino-im
 
 # window manager
 xinit

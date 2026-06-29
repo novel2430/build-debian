@@ -7,7 +7,7 @@ pkg_version="6.18"
 pkg_mode="managed"
 pkg_type="source"
 
-MINOR_VER=35
+MINOR_VER=37
 VER=1
 SRCNAME="cachyos-${pkg_version}.${MINOR_VER}-${VER}"
 

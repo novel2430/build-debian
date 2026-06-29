@@ -1,5 +1,5 @@
 pkg_name="yazi"
-pkg_version="f1e93d7"
+pkg_version="26.5.6"
 pkg_mode="managed"
 pkg_type="source"
 
@@ -7,7 +7,7 @@ stage_acquire() {
   al_git_checkout_repo \
     "https://github.com/sxyazi/yazi.git" \
     "$WORKDIR/$pkg_name" \
-    "$pkg_version"
+    v"$pkg_version"
 }
 
 stage_prepare() {

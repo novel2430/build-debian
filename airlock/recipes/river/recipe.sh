@@ -2,34 +2,34 @@
 #
 # This recipe demonstrates the minimal v0 metadata and per-stage overrides.
 
-pkg_name="my-dwl"
-pkg_version="8d1a94e"
+pkg_name="river"
+pkg_version="0.3.14"
 pkg_mode="managed"
 pkg_type="source"
 
 stage_acquire() {
   al_git_checkout_repo \
-    "https://github.com/novel2430/DWL.git" \
+    "https://codeberg.org/river/river-classic.git" \
     "$WORKDIR/$pkg_name" \
-    "$pkg_version"
+    v"$pkg_version"
 }
 
 stage_prepare() {
   SRCDIR="$WORKDIR/$pkg_name"
-  BUILDDIR="$SRCDIR"
+  BUILDDIR="$SRCDIR/build"
   export SRCDIR BUILDDIR
 }
 
 stage_build() {
   (
     cd "$SRCDIR"
-    make
+    unset http_proxy
+    unset https_proxy
+    zig build -Doptimize=ReleaseFast 
   )
 }
 
 stage_stage() {
-  (
-    cd "$SRCDIR"
-    make DESTDIR="$STAGE_DIR" PREFIX="$PREFIX" install
-  )
+  mkdir -p "$STAGE_DIR$PREFIX" || exit 1
+  cp -r --verbose $SRCDIR/zig-out/* "$STAGE_DIR$PREFIX"
 }
