@@ -80,7 +80,7 @@ airlock_install 'fastfetch'
 #### Custom - Terminal ####
 ## ------------------------------------------------
 ## -- wezterm 577474d
-airlock_install 'wezterm'
+# airlock_install 'wezterm'
 ## -- ghostty 1.3.1
 #airlock_install 'ghostty'
 ## ------------------------------------------------
@@ -161,7 +161,7 @@ airlock_install 'alacritty'
 ## -- HMCL
 airlock_install 'hmcl'
 ## -- OpenTTD
-airlock_install 'openttd'
+# airlock_install 'openttd'
 ## -- Ryujinx
 #airlock_install 'ryujinx'
 ## -- PPSSPP
@@ -227,6 +227,8 @@ bash "$CONFIG_DIR/openbox/install.sh"
 bash "$CONFIG_DIR/wayfire/install.sh"
 ## -- labwc
 bash "$CONFIG_DIR/labwc/install.sh"
+## -- hyprland
+bash "$CONFIG_DIR/hyprland/install.sh"
 ## -- DWM
 bash "$CONFIG_DIR/dwm/install.sh"
 ## -- xinitrc & Xresources
@@ -247,6 +249,8 @@ bash "$CONFIG_DIR/pics/install.sh"
 bash "$CONFIG_DIR/rofi/install.sh"
 ## -- Wezterm
 bash "$CONFIG_DIR/wezterm/install.sh"
+## -- Alacritty
+bash "$CONFIG_DIR/alacritty/install.sh"
 ## ------------------------------------------------
 ## -- Wechat (Flatpak Settings)
 bash "$CONFIG_DIR/wechat/install.sh"
