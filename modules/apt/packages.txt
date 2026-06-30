@@ -84,7 +84,6 @@ mpv
 vlc
 firefox-esr
 obs-studio
-celluloid
 evince
 file-roller
 shotcut

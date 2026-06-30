@@ -44,6 +44,16 @@ airlock_install 'scenefx'
 airlock_install 'zig'
 ## -- Rustup
 airlock_install 'rustup'
+## -- GCC 15
+airlock_install 'gcc15'
+## -- Lua 5.5
+airlock_install 'lua55'
+## -- libdrm
+airlock_install 'libdrm'
+## -- pixman
+airlock_install 'pixman'
+## -- wayland
+airlock_install 'wayland'
 ## ------------------------------------------------
 #### Custom - Fonts ####
 ## ------------------------------------------------
@@ -52,7 +62,7 @@ airlock_install 'latex-chinese-fonts'
 ## -- Hack Nerd Fonts
 airlock_install 'HackNerdFont'
 ## -- Nerd Font Symbols - for ghostty
-airlock install 'NerdFontSymbols'
+# airlock install 'NerdFontSymbols'
 ## ------------------------------------------------
 #### Custom - Must have tool ####
 ## ------------------------------------------------
@@ -91,6 +101,17 @@ airlock_install 'my-dwm'
 ## -- labwc
 airlock_install 'labwc'
 ## ------------------------------------------------
+#### Custom - Hyprland ####
+## ------------------------------------------------
+airlock_install 'hyprutils'
+airlock_install 'hyprwire'
+airlock_install 'hyprwayland-scanner'
+airlock_install 'hyprlang'
+airlock_install 'hyprcursor'
+airlock_install 'hyprgraphics'
+airlock_install 'aquamarine'
+airlock_install 'Hyprland'
+## ------------------------------------------------
 #### Custom - Tools for Window Manager ####
 ## ------------------------------------------------
 ## -- Greenclip (X11 clipboard Daemon)
@@ -106,7 +127,7 @@ airlock_install 'i3lock-color'
 ## -- lswt
 airlock_install 'lswt'
 ## -- quickshell 
-airlock_install 'quickshell'
+# airlock_install 'quickshell'
 ## ------------------------------------------------
 #### Custom - TUI Application ####
 ## ------------------------------------------------
@@ -126,7 +147,7 @@ airlock_install 'image-roll'
 ## -- Motrix
 airlock_install 'motrix'
 ## -- Spotify
-airlock_install 'spotify'
+# airlock_install 'spotify'
 ## -- emacs 29.4
 airlock_install 'emacs'
 ## -- Annotator
@@ -149,7 +170,7 @@ airlock_install 'mangojuice'
 ## -- HMCL
 airlock_install 'hmcl'
 ## -- OpenTTD
-airlock_install 'openttd'
+# airlock_install 'openttd'
 ## -- Ryujinx
 airlock_install 'ryujinx'
 ## -- PPSSPP
@@ -215,6 +236,8 @@ bash "$CONFIG_DIR/openbox/install.sh"
 bash "$CONFIG_DIR/wayfire/install.sh"
 ## -- labwc
 bash "$CONFIG_DIR/labwc/install.sh"
+## -- hyprland
+bash "$CONFIG_DIR/hyprland/install.sh"
 ## -- DWM
 bash "$CONFIG_DIR/dwm/install.sh"
 ## -- xinitrc & Xresources
@@ -235,6 +258,8 @@ bash "$CONFIG_DIR/pics/install.sh"
 bash "$CONFIG_DIR/rofi/install.sh"
 ## -- Wezterm
 bash "$CONFIG_DIR/wezterm/install.sh"
+## -- Alacritty
+bash "$CONFIG_DIR/alacritty/install.sh"
 ## ------------------------------------------------
 ## -- Wechat (Flatpak Settings)
 bash "$CONFIG_DIR/wechat/install.sh"
