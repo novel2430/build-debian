@@ -57,8 +57,9 @@ libxcb-cursor-dev
 libxcb-xrm-dev
 xwayland
 libinput-dev
-libxkbcommon-dev
-libxkbcommon-x11-dev
+libxkbcommon-dev/stable-backports
+libxkbcommon-x11-dev/stable-backports
+libxkbcommon-x11-0/stable-backports
 wayland-protocols
 libwayland-dev
 libegl1-mesa-dev
@@ -72,9 +73,11 @@ hwdata
 libdisplay-info-dev
 libliftoff-dev
 liblcms2-dev
-libxkbregistry-dev
+libxkbregistry-dev/stable-backports
 libgl1-mesa-dev
 libglx-mesa0
+glslang-dev
+libmuparser-dev
 
 # =========================
 # Image / Font / GUI / Audio

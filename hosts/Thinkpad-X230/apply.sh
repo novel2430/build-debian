@@ -42,6 +42,16 @@ airlock_install 'tree-sitter'
 airlock_install 'scenefx'
 ## -- Zig 0.15.2 (Ghostty depend on this)
 airlock_install 'zig'
+## -- GCC 15
+airlock_install 'gcc15'
+## -- Lua 5.5
+airlock_install 'lua55'
+## -- libdrm
+airlock_install 'libdrm'
+## -- pixman
+airlock_install 'pixman'
+## -- wayland
+airlock_install 'wayland'
 ## ------------------------------------------------
 #### Custom - Fonts ####
 ## ------------------------------------------------
@@ -87,6 +97,18 @@ airlock_install 'my-dwm'
 ## -- labwc
 #airlock_install 'labwc'
 ## ------------------------------------------------
+#### Custom - Hyprland ####
+## ------------------------------------------------
+airlock_install 'hyprutils'
+airlock_install 'hyprwire'
+airlock_install 'hyprwayland-scanner'
+airlock_install 'hyprlang'
+airlock_install 'hyprcursor'
+airlock_install 'hyprgraphics'
+airlock_install 'aquamarine'
+airlock_install 'Hyprland'
+
+## ------------------------------------------------
 #### Custom - Tools for Window Manager ####
 ## ------------------------------------------------
 ## -- Greenclip (X11 clipboard Daemon)
@@ -131,6 +153,8 @@ airlock_install 'annotator'
 airlock_install 'pwvucontrol'
 ## -- Riff
 #airlock_install 'riff'
+## -- Alacritty
+airlock_install 'alacritty'
 ## ------------------------------------------------
 #### Custom - Gaming Application ####
 ## ------------------------------------------------
