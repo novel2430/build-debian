@@ -1,5 +1,4 @@
 io.github.ilya_zlobintsev.LACT
 com.github.Matoking.protontricks
 org.onlyoffice.desktopeditors
-org.libreoffice.LibreOffice
 com.spotify.Client

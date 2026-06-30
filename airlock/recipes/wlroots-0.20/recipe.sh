@@ -2,14 +2,14 @@
 #
 # This recipe demonstrates the minimal v0 metadata and per-stage overrides.
 
-pkg_name="labwc"
+pkg_name="wlroots-20"
 pkg_version="0.20.1"
 pkg_mode="managed"
 pkg_type="source"
 
 stage_acquire() {
   al_git_checkout_repo \
-    "https://github.com/labwc/labwc.git" \
+    "https://gitlab.freedesktop.org/wlroots/wlroots.git" \
     "$WORKDIR/$pkg_name" \
     "$pkg_version"
 }
@@ -36,8 +36,4 @@ stage_build() {
 
 stage_stage() {
   DESTDIR="$STAGE_DIR" meson install -C "$BUILDDIR"
-
-  # wrapper to /usr/local/bin
-  al_make_wrapper "$STAGE_DIR/usr/local/bin/labwc" \
-    "$PREFIX/bin/labwc"
 }

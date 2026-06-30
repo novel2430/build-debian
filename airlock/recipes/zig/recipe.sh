@@ -3,7 +3,7 @@
 # This recipe demonstrates the minimal v0 metadata and per-stage overrides.
 
 pkg_name="zig"
-pkg_version="0.15.2"
+pkg_version="0.16.0"
 pkg_mode="managed"
 pkg_type="artifact"
 

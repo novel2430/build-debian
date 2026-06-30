@@ -3,7 +3,7 @@
 # This recipe demonstrates the minimal v0 metadata and per-stage overrides.
 
 pkg_name="river"
-pkg_version="0.3.14"
+pkg_version="0.3.17"
 pkg_mode="managed"
 pkg_type="source"
 
@@ -17,7 +17,9 @@ stage_acquire() {
 stage_prepare() {
   SRCDIR="$WORKDIR/$pkg_name"
   BUILDDIR="$SRCDIR/build"
-  export SRCDIR BUILDDIR
+  PREFIX=/opt/edge
+  PKG_CONFIG_PATH="$PREFIX/lib/pkgconfig:$PREFIX/lib64/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
+  export SRCDIR BUILDDIR PREFIX PKG_CONFIG_PATH
 }
 
 stage_build() {
@@ -32,4 +34,6 @@ stage_build() {
 stage_stage() {
   mkdir -p "$STAGE_DIR$PREFIX" || exit 1
   cp -r --verbose $SRCDIR/zig-out/* "$STAGE_DIR$PREFIX"
+  al_make_wrapper "$STAGE_DIR/usr/local/bin/river" \
+    "$PREFIX/bin/river"
 }
