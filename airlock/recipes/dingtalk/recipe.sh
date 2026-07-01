@@ -29,7 +29,7 @@ _extract_data_archive() {
   rm -rf "$rootdir"
   mkdir -p "$rootdir"
 
-  data_archive="$(find "$deb_extract_dir" -maxdepth 1 -type f -name 'data.tar.*' | head -n1)"
+  data_archive="$(find "$deb_extract_dir" -maxdepth 1 -type f -name 'data.tar.*' -print -quit)"
   if [ -z "$data_archive" ]; then
     printf 'data.tar.* not found under %s\n' "$deb_extract_dir" >&2
     return 1

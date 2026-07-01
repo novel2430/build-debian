@@ -4,7 +4,8 @@
 # This entrypoint wires together all library modules and dispatches
 # user commands to the framework core.
 
-set -u
+set -Eeuo pipefail
+shopt -s inherit_errexit 2>/dev/null || true
 
 AIRLOCK_BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 export AIRLOCK_BASE_DIR
@@ -37,6 +38,38 @@ export AIRLOCK_BASE_DIR
 . "$AIRLOCK_BASE_DIR/lib/core.sh"
 
 al_load_config
+
+# Global state for error reporting
+AIRLOCK_CURRENT_RECIPE=""
+AIRLOCK_CURRENT_STAGE=""
+_AL_ERR_TRAP_FIRED=0
+
+al_err_trap() {
+  local code=$?
+  if [ "$_AL_ERR_TRAP_FIRED" -ne 0 ]; then
+    return
+  fi
+  _AL_ERR_TRAP_FIRED=1
+
+  printf '\n' >&2
+  printf '%s\n' "[ERROR] Recipe: ${AIRLOCK_CURRENT_RECIPE:-unknown}" >&2
+  printf '%s\n' "[ERROR] Stage: ${AIRLOCK_CURRENT_STAGE:-unknown}" >&2
+  printf '%s\n' "[ERROR] Command: $BASH_COMMAND" >&2
+  printf '%s\n' "[ERROR] Exit code: $code" >&2
+  printf '%s\n' "[ERROR] Location: ${BASH_SOURCE[1]:-unknown}:${BASH_LINENO}" >&2
+  if [ -n "${WORKDIR:-}" ]; then
+    printf '%s\n' "[ERROR] Work directory preserved at: $WORKDIR" >&2
+  else
+    printf '%s\n' "[ERROR] Work directory: not initialized" >&2
+  fi
+  if [ -n "${STAGE_DIR:-}" ]; then
+    printf '%s\n' "[ERROR] Stage directory preserved at: $STAGE_DIR" >&2
+  else
+    printf '%s\n' "[ERROR] Stage directory: not initialized" >&2
+  fi
+}
+
+trap al_err_trap ERR
 
 show_usage() {
   printf '%sUsage%s\n' "$AL_UI_BOLD$AL_UI_CYAN" "$AL_UI_RESET"

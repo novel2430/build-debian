@@ -53,7 +53,6 @@ al_clear_recipe_lifecycle_functions() {
 # they are executed in the current shell so they can reuse recipe variables.
 al_run_optional_recipe_hook() {
   local hook_name="$1"
-  local rc=0
 
   if ! al_is_function_defined "$hook_name"; then
     return 0
@@ -61,12 +60,6 @@ al_run_optional_recipe_hook() {
 
   al_log_info "Running recipe hook: $hook_name"
   "$hook_name"
-  rc=$?
-
-  if [ "$rc" -ne 0 ]; then
-    al_log_error "Recipe hook failed: $hook_name (exit=$rc)"
-    return "$rc"
-  fi
 
   al_log_info "Recipe hook completed: $hook_name"
   return 0
@@ -91,6 +84,8 @@ al_load_recipe() {
 
   # shellcheck source=/dev/null
   . "$recipe_path"
+
+  AIRLOCK_CURRENT_RECIPE="${pkg_name:-unknown}"
 }
 
 al_install_target() {
@@ -126,24 +121,15 @@ al_clean_cache() {
 }
 
 al_run_track_install() {
-  local rc=0
-
   al_log_info "Running tracked install hook"
 
   if al_is_function_defined track_install; then
     track_install
-    rc=$?
   elif al_is_function_defined al_default_track_install; then
     al_default_track_install
-    rc=$?
   else
     al_log_error "No track_install implementation available for package: $pkg_name"
     return 1
-  fi
-
-  if [ "$rc" -ne 0 ]; then
-    al_log_error "Tracked install hook failed (exit=$rc)"
-    return "$rc"
   fi
 
   al_log_info "Tracked install hook completed"
@@ -151,88 +137,43 @@ al_run_track_install() {
 }
 
 al_install_recipe_managed() {
-  al_run_pipeline || {
-    al_log_error "Install aborted for package: $pkg_name"
-    al_log_info "WORKDIR preserved at: $WORKDIR"
-    al_log_info "STAGE_DIR preserved at: $STAGE_DIR"
-    return 1
-  }
+  al_run_pipeline
 
-  al_maybe_check_commit_conflicts || {
-    al_log_error "Conflict check failed for package: $pkg_name"
-    al_log_info "WORKDIR preserved at: $WORKDIR"
-    al_log_info "STAGE_DIR preserved at: $STAGE_DIR"
-    return 1
-  }
+  al_maybe_check_commit_conflicts
 
-  al_commit_install || {
-    al_log_error "Commit failed for package: $pkg_name"
-    al_log_info "WORKDIR preserved at: $WORKDIR"
-    al_log_info "STAGE_DIR preserved at: $STAGE_DIR"
-    return 1
-  }
+  al_commit_install
 
-  al_record_install || {
-    al_log_error "Record failed for package: $pkg_name"
-    al_log_info "WORKDIR preserved at: $WORKDIR"
-    al_log_info "STAGE_DIR preserved at: $STAGE_DIR"
-    return 1
-  }
+  al_record_install
 
-  al_run_optional_recipe_hook hook_post_commit || {
-    al_log_error "Post-commit hook failed for package: $pkg_name"
-    al_log_info "WORKDIR preserved at: $WORKDIR"
-    al_log_info "STAGE_DIR preserved at: $STAGE_DIR"
-    return 1
-  }
+  al_run_optional_recipe_hook hook_post_commit
 }
 
 al_install_recipe_tracked() {
-  al_run_pipeline || {
-    al_log_error "Tracked pipeline aborted for package: $pkg_name"
-    al_log_info "WORKDIR preserved at: $WORKDIR"
-    al_log_info "STAGE_DIR preserved at: $STAGE_DIR"
-    return 1
-  }
+  al_run_pipeline
 
-  al_run_track_install || {
-    al_log_error "Tracked install failed for package: $pkg_name"
-    al_log_info "WORKDIR preserved at: $WORKDIR"
-    al_log_info "STAGE_DIR preserved at: $STAGE_DIR"
-    return 1
-  }
+  al_run_track_install
 
-  al_record_install || {
-    al_log_error "Record failed for tracked package: $pkg_name"
-    al_log_info "WORKDIR preserved at: $WORKDIR"
-    al_log_info "STAGE_DIR preserved at: $STAGE_DIR"
-    return 1
-  }
+  al_record_install
 
-  al_run_optional_recipe_hook hook_post_install || {
-    al_log_error "Post-install hook failed for tracked package: $pkg_name"
-    al_log_info "WORKDIR preserved at: $WORKDIR"
-    al_log_info "STAGE_DIR preserved at: $STAGE_DIR"
-    return 1
-  }
+  al_run_optional_recipe_hook hook_post_install
 }
 
 al_install_recipe() {
   local recipe_path="$1"
 
-  al_load_recipe "$recipe_path" || return 1
-  al_validate_recipe || return 1
-  al_setup_env || return 1
+  al_load_recipe "$recipe_path"
+  al_validate_recipe
+  al_setup_env
 
   al_log_info "Installing package: $pkg_name ($pkg_version)"
   al_log_info "Mode: $pkg_mode, Type: $pkg_type"
 
   case "$pkg_mode" in
     managed)
-      al_install_recipe_managed || return 1
+      al_install_recipe_managed
       ;;
     tracked)
-      al_install_recipe_tracked || return 1
+      al_install_recipe_tracked
       ;;
     *)
       al_die "Unsupported pkg_mode: $pkg_mode"

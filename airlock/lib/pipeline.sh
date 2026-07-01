@@ -33,28 +33,20 @@ al_run_stage() {
   local stage="$1"
   local recipe_func="stage_${stage}"
   local default_func="al_default_${stage}"
-  local rc=0
 
+  AIRLOCK_CURRENT_STAGE="$stage"
   al_log_stage "BEGIN $stage"
 
   if al_is_function_defined "$recipe_func"; then
     "$recipe_func"
-    rc=$?
   elif al_is_function_defined "$default_func"; then
     "$default_func"
-    rc=$?
   else
     al_log_error "No implementation available for stage: $stage"
     return 1
   fi
 
-  if [ "$rc" -ne 0 ]; then
-    al_log_error "Stage failed: $stage (exit=$rc)"
-    return "$rc"
-  fi
-
   al_log_stage "OK $stage"
-  return 0
 }
 
 al_run_pipeline() {
@@ -63,6 +55,6 @@ al_run_pipeline() {
   pipeline="$(al_pipeline_for_recipe)" || return 1
 
   for stage in $pipeline; do
-    al_run_stage "$stage" || return 1
+    al_run_stage "$stage"
   done
 }
